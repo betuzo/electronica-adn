@@ -1,0 +1,56 @@
+CONTROLLERS
+
+----Admin ventas-----
+Cliente			--> Cliente Controller
+Detalle Cobro		--> Detalle Cobro Controller
+
+
+----Almacen-----
+Proveedor		--> Proveedor Controller
+Entrada Proveedor	--> Entrada Controller	
+Contacto proveedor	--> Contacto provedor controller
+Almacen 		--> Almacen Controller
+Refacciones		--> Refaccion Controller
+Refaccion - Almacen	--> Refaccion Almacen Controller
+----
+
+----Admin General------ 
+Pais			--> Pais Controller
+Estado			--> Estado Controller
+Municipio		--> Municipio Controller
+Colonia			--> Colonia Controller
+Concepto Cobro		--> Concepto Cobro Controller
+Marca Controller
+Modelo Controller
+
+
+
+----Administrador-----
+Usuario			--> Personal Controller
+Rol			--> Role Controller
+Asig seguridad		--> Personal Role Controller 
+Config seguridad	--> Requestmap Controller
+
+
+
+
+***********Controller Pendientes************
+
+CONTROLLERS
+Address Controller
+Detalle Entrada Controller
+Detalle Fecha Entrada Controller
+Detalle Fecha Orden Controller
+Detalle Orden Controller
+Falla Controller
+Orden Controller
+Orden Samsung Controller
+Pago Cliente Controller
+Pago Proveedor Controller
+Sucursal Controller
+Telefono Institucion Controller
+Telefono Persona Controller
+Tienda Controller
+Tipo Falla Controller
+Tipo Fecha Controller
+Tipo Personal Controller
