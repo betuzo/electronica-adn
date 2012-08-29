@@ -2,11 +2,17 @@ package mx.com.ideasydiseno.electronica
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import org.codehaus.groovy.grails.plugins.jasper.*
+
+import org.apache.commons.io.FileUtils
+
 import grails.converters.*
 
 class OrdenSamsungController {
 
     transient springSecurityService
+
+    JasperService jasperService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -202,5 +208,19 @@ class OrdenSamsungController {
         println htmlRender
 
         render([success: success, html: htmlRender] as JSON)
+    }
+
+    def generateReportByOrden() {
+        println params.id
+        def parametros = ['idOrden' : params.id?.toInteger()]
+        println parametros
+        def reportDef = new JasperReportDef(name:'notaOrden.jasper',fileFormat:JasperExportFormat.PDF_FORMAT, parameters:parametros)
+        println reportDef.getFilePath()
+        def data = jasperService.generateReport(reportDef)
+
+        response.setHeader("Content-disposition", "attachment; filename=notaVenta.pdf");
+        response.contentType = "application/pdf"
+        response.characterEncoding = "UTF-8"
+        response.outputStream << data
     }
 }

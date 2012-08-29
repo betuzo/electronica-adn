@@ -90,7 +90,7 @@
 								<li><g:link controller='colonia'>Colonia</g:link></li>
 								<li><g:link controller='conceptoCobro'>conceptoCobro</g:link></li>
 								<li><g:link controller='marca'>Marca</g:link></li>
-								<li><g:link controller='modelos'>Modelo</g:link></li>	
+								<li><g:link controller='modelo'>Modelo</g:link></li>	
 
 							</ul>				
 						</li>

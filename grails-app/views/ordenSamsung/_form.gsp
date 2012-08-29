@@ -45,9 +45,8 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'aplicaGarantia', 'error')} ">
 	<label for="aplicaGarantia">
 		<g:message code="personal.aplicaGarantia.label" default="Aplica Garantia" />
-		<span class="required-indicator">*</span>
 	</label>
-	<g:checkBox name="aplicaGarantia" value="${personalInstance?.aplicaGarantia}" required="" />
+	<g:checkBox name="aplicaGarantia" value="${personalInstance?.aplicaGarantia}" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'descripcion', 'error')} required">
@@ -112,7 +111,7 @@
 	<label for="telefonoPrincipal">
 		<g:message code="ordenSamsung.costoRevision.label" default="Costo Revision" />
 	</label>
-	<g:textField name="costoRevision" value=""/>
+	<g:field type="number" name="costoRevision" value="0"/>
 </div>
 
 <div class="fieldcontain">

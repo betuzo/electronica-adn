@@ -137,7 +137,7 @@ class ColoniaController {
             def coloniaInstance = new Colonia()
             coloniaInstance.municipio = municipioInstance
             coloniaInstance.nombreCompleto = it.d_asenta
-            coloniaInstance.tipoColonia = it.d_tipo_asenta
+            //coloniaInstance.tipoColonia = it.d_tipo_asenta
             if (!coloniaInstance.save(flush: true)) {
                 println "Error al guardar municipios" + coloniaInstance
             }
