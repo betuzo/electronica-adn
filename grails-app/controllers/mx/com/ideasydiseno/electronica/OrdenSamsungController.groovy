@@ -18,6 +18,12 @@ class OrdenSamsungController {
 
     public static final String FECHA_TIPO_ORDEN = "Orden"
 
+    public static final String ORDEN_CONCEPTO_COBRO_REVISION = "Revision"
+
+    public static final String ORDEN_TIPO_FECHA_REGISTRO = "Registro Orden"
+
+    public static final String ORDEN_PAGO_CLIENTE_ANTICIPO = "Anticipo"
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -44,7 +50,7 @@ class OrdenSamsungController {
         }
 
         if (params.costoRevision.toDouble() > 0) {
-            def conceptoCobroInstance = ConceptoCobro.findByConcepto('Revision')
+            def conceptoCobroInstance = ConceptoCobro.findByConcepto(ORDEN_CONCEPTO_COBRO_REVISION)
             if (conceptoCobroInstance){
                 def detalleCobroInstance = new DetalleCobro()
                 detalleCobroInstance.orden = ordenSamsungInstance 
@@ -75,7 +81,7 @@ class OrdenSamsungController {
         
         def user = springSecurityService?.currentUser
         if (user) {
-            def tipoFechaInstance = TipoFecha.findByTipoFecha('Registro Orden')
+            def tipoFechaInstance = TipoFecha.findByTipoFecha(ORDEN_TIPO_FECHA_REGISTRO)
             if (tipoFechaInstance) {
                 def detalleFechaOrdenInstance = new DetalleFechaOrden()
                 detalleFechaOrdenInstance.orden = ordenSamsungInstance
@@ -92,7 +98,7 @@ class OrdenSamsungController {
                 def pagoClienteInstance = new PagoCliente()
                 pagoClienteInstance.orden = ordenSamsungInstance
                 pagoClienteInstance.recibio = user
-                pagoClienteInstance.tipoPago = 'Anticipo'
+                pagoClienteInstance.tipoPago = ORDEN_PAGO_CLIENTE_ANTICIPO
                 pagoClienteInstance.total = params.anticipo.toDouble() 
                 pagoClienteInstance.fechaPago = new Date()    
 

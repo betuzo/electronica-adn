@@ -110,7 +110,7 @@ and 	df.personal_id = pr.id]]>
 		</parameter>
 		<queryString>
 			<![CDATA[select	cc.concepto,
-	to_char(dc.date, 'DD-MON-YYYY HH:MI') as fecha_cobro,
+	dc.date as fecha_cobro,
 	dc.total as costo_total
 from 	detalle_cobro dc,
 	concepto_cobro cc
@@ -118,7 +118,7 @@ where	dc.orden_id = $P{idOrden} and
 	dc.concepto_id = cc.id]]>
 		</queryString>
 		<field name="concepto" class="java.lang.String"/>
-		<field name="fecha_cobro" class="java.lang.String"/>
+		<field name="fecha_cobro" class="java.sql.Timestamp"/>
 		<field name="costo_total" class="java.lang.Double"/>
 	</subDataset>
 	<subDataset name="PagosByOrden" uuid="8bbc2079-52e4-4141-911a-4af3f333f231">
@@ -127,13 +127,13 @@ where	dc.orden_id = $P{idOrden} and
 		</parameter>
 		<queryString>
 			<![CDATA[select	pg.tipo_pago,
-	to_char(pg.fecha_pago, 'DD-MON-YYYY HH:MI') as fecha_pago,
+	pg.fecha_pago,
 	pg.total as pago_total
 from 	pago pg
 where	pg.orden_id = $P{idOrden}]]>
 		</queryString>
 		<field name="tipo_pago" class="java.lang.String"/>
-		<field name="fecha_pago" class="java.lang.String"/>
+		<field name="fecha_pago" class="java.sql.Timestamp"/>
 		<field name="pago_total" class="java.lang.Double"/>
 	</subDataset>
 	<parameter name="idOrden" class="java.lang.Integer">
