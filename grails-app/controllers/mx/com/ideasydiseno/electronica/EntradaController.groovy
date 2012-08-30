@@ -23,11 +23,9 @@ class EntradaController {
     }
 
     def save() {
-        def user =springSecurityService.principal
-        String nom = user.username
+        def user =springSecurityService.currentUser
         Long idTipoFecha = 6
         Long idProveedor = params.proveedor.id
-        Personal p = Personal.find{username == nom}
         TipoFecha t = TipoFecha.find {id == idTipoFecha }
 
         def entradaInstance = new Entrada(params)
@@ -35,17 +33,12 @@ class EntradaController {
             render(view: "create", model: [entradaInstance: entradaInstance])
             return
         }else{
-            println "Id Entrada: " + entradaInstance.id
-            println "Id Usuario: " + p.id
-            println "fecha: " + params.fecha 
-            println "tipo fecha: " + t.id
 
             def detalleFechaEntrada = new DetalleFechaEntrada()
             detalleFechaEntrada.fecha = params.fecha
-            detalleFechaEntrada.personal= new Personal(p)
-            detalleFechaEntrada.tipoFecha= new TipoFecha(t)
-            detalleFechaEntrada.entrada.id = entradaInstance.id
-
+            detalleFechaEntrada.personal= user
+            detalleFechaEntrada.tipoFecha= t
+            detalleFechaEntrada.entrada = entradaInstance
             detalleFechaEntrada.save()
 
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
