@@ -67,8 +67,8 @@
 						<li><g:link class="first" controller='ordenSamsung' action='create'>Levantar orden</g:link></li>
 						<li><a href="#">Admin Ventas &raquo;</a>
 							<ul>
+								<li><g:link controller='ordenSamsung'>Ordenes</g:link></li>
 								<li><g:link controller='cliente'>Cliente</g:link></li>
-								<li><g:link controller='detalleCobro'>Detalle Cobro</g:link></li>
 							</ul>				
 						</li>
 						<li><a href="#">Almacen &raquo;</a>

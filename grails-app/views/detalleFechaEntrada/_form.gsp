@@ -7,7 +7,7 @@
 		<g:message code="detalleFechaEntrada.tipoFecha.label" default="Tipo Fecha" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="tipoFecha" name="tipoFecha.id" from="${mx.com.ideasydiseno.electronica.TipoFecha.list()}" optionKey="id" required="" value="${detalleFechaEntradaInstance?.tipoFecha?.id}" class="many-to-one"/>
+	<g:select id="tipoFecha" name="tipoFecha.id" from="${mx.com.ideasydiseno.electronica.TipoFecha.findAllByTipoUso(mx.com.ideasydiseno.electronica.EntradaController.FECHA_TIPO_ENTRADA)}" optionKey="id" required="" value="${detalleFechaEntradaInstance?.tipoFecha?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: detalleFechaEntradaInstance, field: 'fecha', 'error')} required">

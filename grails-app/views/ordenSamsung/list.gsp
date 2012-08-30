@@ -40,7 +40,7 @@
 				</thead>
 				<tbody>
 				<g:each in="${ordenSamsungInstanceList}" status="i" var="ordenSamsungInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					<tr class="${(fieldValue(bean: ordenSamsungInstance, field: 'status')) == 'Abierto' ? 'ordenOpen' : 'ordenClose'}">
 					
 						<td><g:link action="show" id="${ordenSamsungInstance.id}">${fieldValue(bean: ordenSamsungInstance, field: "cliente")}</g:link></td>
 					

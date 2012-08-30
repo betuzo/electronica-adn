@@ -6,6 +6,8 @@ class EntradaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    public static final String FECHA_TIPO_ENTRADA = "Entrada"
+
     def index() {
         redirect(action: "list", params: params)
     }

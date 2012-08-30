@@ -16,13 +16,20 @@ class OrdenSamsungController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    public static final String FECHA_TIPO_ORDEN = "Orden"
+
     def index() {
         redirect(action: "list", params: params)
     }
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [ordenSamsungInstanceList: OrdenSamsung.list(params), ordenSamsungInstanceTotal: OrdenSamsung.count()]
+    
+        def listOrdenSamsung = OrdenSamsung.list(params)?.sort{-it.getProperty('maxFecha')?.getDate()}
+
+        Collections.reverse(listOrdenSamsung)
+
+        [ordenSamsungInstanceList: listOrdenSamsung, ordenSamsungInstanceTotal: OrdenSamsung.count()]
     }
 
     def create() {
@@ -106,8 +113,10 @@ class OrdenSamsungController {
             redirect(action: "list")
             return
         }
+        println ordenSamsungInstance.maxFecha
+        def next = hasNext(ordenSamsungInstance.fechas?.tipoFecha?.ordenCronologico?.max())
 
-        [ordenSamsungInstance: ordenSamsungInstance]
+        [ordenSamsungInstance: ordenSamsungInstance, next: next]
     }
 
     def edit() {
@@ -170,19 +179,40 @@ class OrdenSamsungController {
         }
     }
 
+    def hasNext(int ordenCronologico) {
+        def maxTipoFecha = TipoFecha.createCriteria().get {
+            projections {
+                max('ordenCronologico')
+            }
+            and {
+                eq("tipoUso", FECHA_TIPO_ORDEN)
+            }
+        }
+        if (maxTipoFecha == ordenCronologico)
+            return false
+        else
+            return true
+    }
+
     def nextStep() {
         def success = true
+        def next = true
         def htmlRender = '' 
 
         def ordenSamsungInstance = OrdenSamsung.get(params.id)
-        println "orderSamsunginstance" + ordenSamsungInstance
         if (!ordenSamsungInstance) {
             success = false
-            htmlRender = "<div class='errorAjax'>No existe la orden</div>"
+            htmlRender = "<div class='property-value'>No existe la orden</div>"
         }else{
             def user = springSecurityService?.currentUser
             def totalFechas = ordenSamsungInstance.fechas.size()
-            def tipoFechaInstance = TipoFecha.findByOrdenCronologico(totalFechas + 1)
+            def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1, FECHA_TIPO_ORDEN)
+            next = hasNext(tipoFechaInstance.ordenCronologico)
+            if (!tipoFechaInstance)
+            {
+                success = false
+                htmlRender = "<div class='property-value'>No existe la orden</div>"  
+            }
             def detalleFechaOrdenInstance = new DetalleFechaOrden()
             detalleFechaOrdenInstance.tipoFecha = tipoFechaInstance
             detalleFechaOrdenInstance.fecha = new Date()
@@ -191,7 +221,7 @@ class OrdenSamsungController {
 
             if (!detalleFechaOrdenInstance.save(flush: true)) {
                 success = false
-                htmlRender = "<div class='errorAjax'> No se puede guardar la sigueinte Fecha</div>"
+                htmlRender = "<div class='property-value'> No se puede guardar la sigueinte Fecha</div>"
             }
             ordenSamsungInstance.fechas.add(detalleFechaOrdenInstance)
         }
@@ -204,10 +234,7 @@ class OrdenSamsungController {
         catch(Exception e) {
             e.printStackTrace()
         }
-        
-        println htmlRender
-
-        render([success: success, html: htmlRender] as JSON)
+        render([success: success, html: htmlRender, next: next] as JSON)
     }
 
     def generateReportByOrden() {

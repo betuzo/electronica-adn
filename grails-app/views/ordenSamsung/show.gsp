@@ -10,6 +10,10 @@
 		function resultNextStep(data) {
 			if (!data.success)
 				alert("Se genero un problema, contacte el area de sistemas...");
+			else{
+				if (!data.next)
+					$('#nextStep').hide();
+			}
 
 			$("#seccFechas").html(data.html);
 	    }
@@ -184,7 +188,9 @@
 					<g:hiddenField name="id" value="${ordenSamsungInstance?.id}" />
 					<g:link class="edit" action="edit" id="${ordenSamsungInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-					<g:submitToRemote class="edit" url="[controller: 'ordenSamsung', action: 'nextStep']" value="Siguiente" onSuccess="resultNextStep(data)" onFailure="resultNextStep(data)"/>
+					<g:if test="${next}">
+						<g:submitToRemote id="nextStep" class="edit" url="[controller: 'ordenSamsung', action: 'nextStep']" value="Siguiente" onSuccess="resultNextStep(data)" onFailure="resultNextStep(data)"/>
+					</g:if>
 					<g:link class="edit" action="generateReportByOrden" id="${ordenSamsungInstance?.id}"><g:message code="default.button.report.label" default="Nota de Venta" /></g:link>
 					<div class="edit">Buscar en Almacen</div>
 				</fieldset>

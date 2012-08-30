@@ -610,6 +610,14 @@ th.desc a {
 	background: #ffffff;
 }
 
+.ordenOpen {
+	background: #D1ECB6;
+}
+
+.ordenClose {
+	background: #ECB6B6;
+}
+
 th:hover, tr:hover {
 	background: #b6e7f1;
 }
