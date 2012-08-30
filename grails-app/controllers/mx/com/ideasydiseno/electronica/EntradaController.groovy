@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class EntradaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    def springSecurityService
 
     public static final String FECHA_TIPO_ENTRADA = "Entrada"
 
@@ -22,14 +23,35 @@ class EntradaController {
     }
 
     def save() {
+        def user =springSecurityService.principal
+        String nom = user.username
+        Long idTipoFecha = 6
+        Long idProveedor = params.proveedor.id
+        Personal p = Personal.find{username == nom}
+        TipoFecha t = TipoFecha.find {id == idTipoFecha }
+
         def entradaInstance = new Entrada(params)
         if (!entradaInstance.save(flush: true)) {
             render(view: "create", model: [entradaInstance: entradaInstance])
             return
+        }else{
+            println "Id Entrada: " + entradaInstance.id
+            println "Id Usuario: " + p.id
+            println "fecha: " + params.fecha 
+            println "tipo fecha: " + t.id
+
+            def detalleFechaEntrada = new DetalleFechaEntrada()
+            detalleFechaEntrada.fecha = params.fecha
+            detalleFechaEntrada.personal= new Personal(p)
+            detalleFechaEntrada.tipoFecha= new TipoFecha(t)
+            detalleFechaEntrada.entrada.id = entradaInstance.id
+
+            detalleFechaEntrada.save()
+
+            flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
+            redirect(action: "show", id: entradaInstance.id)
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
-        redirect(action: "show", id: entradaInstance.id)
     }
 
     def show() {
