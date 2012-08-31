@@ -24,22 +24,45 @@ class EntradaController {
 
     def save() {
         def user =springSecurityService.currentUser
-        Long idTipoFecha = 6
-        Long idProveedor = params.proveedor.id
-        TipoFecha t = TipoFecha.find {id == idTipoFecha }
+        
 
         def entradaInstance = new Entrada(params)
+        println "*****************" + params
         if (!entradaInstance.save(flush: true)) {
             render(view: "create", model: [entradaInstance: entradaInstance])
             return
         }else{
+            if (user) {
+                def tipoFechaInstance = TipoFecha.findByTipoUso(FECHA_TIPO_ENTRADA)
+                println tipoFechaInstance
+                if (tipoFechaInstance) {
+                    
+                    //Guardando Detalle fecha entrada
+                    def detalleFechaEntrada = new DetalleFechaEntrada()
+                    detalleFechaEntrada.fecha = params.fecha
+                    detalleFechaEntrada.personal= user
+                    detalleFechaEntrada.tipoFecha= tipoFechaInstance
+                    detalleFechaEntrada.entrada = entradaInstance
+                    detalleFechaEntrada.save()
 
-            def detalleFechaEntrada = new DetalleFechaEntrada()
-            detalleFechaEntrada.fecha = params.fecha
-            detalleFechaEntrada.personal= user
-            detalleFechaEntrada.tipoFecha= t
-            detalleFechaEntrada.entrada = entradaInstance
-            detalleFechaEntrada.save()
+                    //Guardando pago
+                    println "params ******* " + params
+                    if (params.tipoPago != "" && params.totalPago != "0") {
+                        def pagoProverdorInstance = new PagoProveedor()
+                        pagoProverdorInstance.tipoPago=params.tipoPago
+                        pagoProverdorInstance.total=params.totalPago.toLong()
+                        pagoProverdorInstance.fechaPago=params.fechaPago
+                        pagoProverdorInstance.entrada=entradaInstance
+                        pagoProverdorInstance.realizo=user
+                        pagoProverdorInstance.save()   
+                    }
+                    
+                    
+                }
+
+
+            }
+
 
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
             redirect(action: "show", id: entradaInstance.id)
