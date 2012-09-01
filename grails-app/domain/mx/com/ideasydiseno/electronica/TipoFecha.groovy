@@ -16,5 +16,5 @@ class TipoFecha {
 
     String toString(){
         return "${tipoFecha}"
-    }
+    }   
 }

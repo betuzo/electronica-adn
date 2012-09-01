@@ -166,6 +166,21 @@ ul#navigation li a.last {
 	padding: 0 25px;
 }
 
+#form-pagos{
+	margin: .5em auto;
+	border-radius: 1em;
+	border: .3em solid #007294;
+	padding: .5em;
+	width: 500px;
+}
+
+#form-refacciones{
+	margin: .5em auto;
+	border-radius: 1em;
+	border: .3em solid #007294;
+	padding: .5em;
+	width: 900px;
+}
 
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
@@ -782,3 +797,4 @@ a.skip {
     -webkit-box-shadow: 0 0 50px #000;
 	
 }
+
