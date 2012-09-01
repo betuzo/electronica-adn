@@ -18,6 +18,6 @@ class DetalleOrden {
 	}
 
     String toString(){
-        return "${refaccion} ${cantidad} ${precio}"
+        return "${refaccion} - \$ ${total}"
     }
 }
