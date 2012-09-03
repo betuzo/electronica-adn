@@ -391,6 +391,20 @@ fieldset,
 	margin-left: 27%;
 }
 
+.fieldcontain .property-value-open {
+	display: block;
+	background: #D1ECB6;
+	font-size: 2em;
+	text-align: center;
+}
+
+.fieldcontain .property-value-close {
+	display: block;
+	background: #ECB6B6;
+	font-size: 2em;
+	text-align: center;
+}
+
 label {
 	cursor: pointer;
 	display: inline-block;

@@ -16,6 +16,7 @@
 			}
 
 			$("#seccFechas").html(data.html);
+			$("#statusOrden").text(data.valStatus);
 	    }
 		</g:javascript>
 	</head>
@@ -35,6 +36,13 @@
 			</g:if>
 			<ol class="property-list ordenSamsung">
 			
+				<g:if test="${ordenSamsungInstance?.maxFecha}">
+				<li class="fieldcontain">
+
+					<span id="statusOrden" class="${(fieldValue(bean: ordenSamsungInstance, field: 'status')) == 'Abierto' ? 'property-value-open' : 'property-value-close'}" aria-labelledby="maxFecha-label"><g:fieldValue bean="${ordenSamsungInstance}" field="maxDetalleFecha"/></span>
+					
+				</li>
+				</g:if>
 				<g:if test="${ordenSamsungInstance?.cliente}">
 				<li class="fieldcontain">
 					<span id="cliente-label" class="property-label"><g:message code="ordenSamsung.cliente.label" default="Cliente" /></span>
@@ -52,6 +60,16 @@
 					
 				</li>
 				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.tienda}">
+				<li class="fieldcontain">
+					<span id="tienda-label" class="property-label"><g:message code="ordenSamsung.tienda.label" default="Tienda" /></span>
+					
+						<span class="property-value" aria-labelledby="tienda-label"><g:link controller="tienda" action="show" id="${ordenSamsungInstance?.tienda?.id}">${ordenSamsungInstance?.tienda?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+
 			
 				<g:if test="${ordenSamsungInstance?.marca}">
 				<li class="fieldcontain">
@@ -89,24 +107,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${ordenSamsungInstance?.total}">
-				<li class="fieldcontain">
-					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total" /></span>
-					
-						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.total}" type="currency" currencyCode="MXN" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${ordenSamsungInstance?.status}">
-				<li class="fieldcontain">
-					<span id="status-label" class="property-label"><g:message code="ordenSamsung.status.label" default="Status" /></span>
-					
-						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${ordenSamsungInstance}" field="status"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${ordenSamsungInstance?.observaciones}">
 				<li class="fieldcontain">
 					<span id="observaciones-label" class="property-label"><g:message code="ordenSamsung.observaciones.label" default="Observaciones" /></span>
@@ -121,17 +121,6 @@
 					<span id="noOrdenServicio-label" class="property-label"><g:message code="ordenSamsung.noOrdenServicio.label" default="No Orden Servicio" /></span>
 					
 						<span class="property-value" aria-labelledby="noOrdenServicio-label"><g:fieldValue bean="${ordenSamsungInstance}" field="noOrdenServicio"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${ordenSamsungInstance?.cobros}">
-				<li class="fieldcontain">
-					<span id="cobros-label" class="property-label"><g:message code="ordenSamsung.cobros.label" default="Cobros" /></span>
-					
-						<g:each in="${ordenSamsungInstance.cobros}" var="c">
-						<span class="property-value" aria-labelledby="cobros-label"><g:link controller="detalleCobro" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
 					
 				</li>
 				</g:if>
@@ -170,14 +159,70 @@
 					
 				</li>
 				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.cobros}">
+				<li class="fieldcontain">
+					<span id="cobros-label" class="property-label"><g:message code="ordenSamsung.cobros.label" default="Cobros" /></span>
+					
+						<g:each in="${ordenSamsungInstance.cobros}" var="c">
+						<span class="property-value" aria-labelledby="cobros-label"><g:link controller="detalleCobro" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
 			
-				<g:if test="${ordenSamsungInstance?.refacciones}">
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="ordenSamsung.refacciones.label" default="Refacciones" /></span>
 					
+						<div id="seccRefacciones">
 						<g:each in="${ordenSamsungInstance.refacciones}" var="r">
 						<span class="property-value" aria-labelledby="refacciones-label"><g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
 						</g:each>
+						</div>
+					
+				</li>
+
+				<g:if test="${ordenSamsungInstance?.totalCobros}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Cobros" /></span>
+					
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalCobros}" type="currency" currencyCode="MXN" /></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.totalRefacciones}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Refacciones" /></span>
+					
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalRefacciones}" type="currency" currencyCode="MXN" /></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.total}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total" /></span>
+					
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.total}" type="currency" currencyCode="MXN" /></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.totalPagos}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Pagos" /></span>
+					
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalPagos}" type="currency" currencyCode="MXN" /></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.totalAdeudo}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Adeudo" /></span>
+					
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalAdeudo}" type="currency" currencyCode="MXN" /></span>
 					
 				</li>
 				</g:if>

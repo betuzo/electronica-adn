@@ -27,7 +27,7 @@ class DetalleOrdenController {
         }
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'detalleOrden.label', default: 'DetalleOrden'), detalleOrdenInstance.id])
-        redirect(action: "show", id: detalleOrdenInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: detalleOrdenInstance.orden.id)
     }
 
     def show() {
@@ -79,7 +79,7 @@ class DetalleOrdenController {
         }
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'detalleOrden.label', default: 'DetalleOrden'), detalleOrdenInstance.id])
-        redirect(action: "show", id: detalleOrdenInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: detalleOrdenInstance.orden.id)
     }
 
     def delete() {

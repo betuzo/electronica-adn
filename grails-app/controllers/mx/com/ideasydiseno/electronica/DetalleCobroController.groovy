@@ -27,7 +27,7 @@ class DetalleCobroController {
         }
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro'), detalleCobroInstance.id])
-        redirect(action: "show", id: detalleCobroInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: detalleCobroInstance.orden.id)
     }
 
     def show() {
@@ -79,7 +79,7 @@ class DetalleCobroController {
         }
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro'), detalleCobroInstance.id])
-        redirect(action: "show", id: detalleCobroInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: detalleCobroInstance.orden.id)
     }
 
     def delete() {
