@@ -52,6 +52,12 @@
 			            }
 			        });
 			    });
+			    $("#precio").change(function() {
+			    	$("#total").val($("#precio").val() * $("#cantidad").val());
+			    });
+			    $("#cantidad").change(function() {
+			    	$("#total").val($("#precio").val() * $("#cantidad").val());
+			    });
 			});
 		</g:javascript>
 		<g:layoutHead/>

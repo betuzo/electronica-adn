@@ -12,6 +12,7 @@ class Pago {
     }
 
     String toString(){
-        return "${tipoPago} ${total} ${fechaPago}"
+        def formattedDate = fechaPago.format('yyyy-MM-dd')
+        return "${tipoPago} - \$ ${total} ${formattedDate}"
     }
 }

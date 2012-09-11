@@ -23,7 +23,7 @@
 		<g:message code="detalleOrden.precio.label" default="Precio" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="precio" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precio')}"/>
+	<g:field type="number" name="precio" required="" value="${detalleOrdenInstance.precio}" step="0.01"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'total', 'error')} required">
@@ -31,7 +31,7 @@
 		<g:message code="detalleOrden.total.label" default="Total" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'total')}"/>
+	<g:field type="number" name="total" required="" value="${detalleOrdenInstance.total}" step="0.01"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'lote', 'error')} required">

@@ -27,7 +27,7 @@ class PagoClienteController {
         }
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'pagoCliente.label', default: 'PagoCliente'), pagoClienteInstance.id])
-        redirect(action: "show", id: pagoClienteInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: pagoClienteInstance.orden.id)
     }
 
     def show() {
@@ -79,7 +79,7 @@ class PagoClienteController {
         }
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'pagoCliente.label', default: 'PagoCliente'), pagoClienteInstance.id])
-        redirect(action: "show", id: pagoClienteInstance.id)
+        redirect(controller: "ordenSamsung", action: "show", id: pagoClienteInstance.orden.id)
     }
 
     def delete() {

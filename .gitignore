@@ -9,3 +9,4 @@ build.xml
 .project
 DataSource.groovy
 devDb.h2.db
+.DS_Store

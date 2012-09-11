@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="precio-label" class="property-label"><g:message code="detalleOrden.precio.label" default="Precio" /></span>
 					
-						<span class="property-value" aria-labelledby="precio-label"><g:fieldValue bean="${detalleOrdenInstance}" field="precio"/></span>
+						<span class="property-value" aria-labelledby="precio-label"><g:formatNumber number="${detalleOrdenInstance.precio}" type="currency" currencyCode="MXN" /></span>
 					
 				</li>
 				</g:if>
@@ -54,7 +54,7 @@
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="detalleOrden.total.label" default="Total" /></span>
 					
-						<span class="property-value" aria-labelledby="total-label"><g:fieldValue bean="${detalleOrdenInstance}" field="total"/></span>
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${detalleOrdenInstance.total}" type="currency" currencyCode="MXN" /></span>
 					
 				</li>
 				</g:if>

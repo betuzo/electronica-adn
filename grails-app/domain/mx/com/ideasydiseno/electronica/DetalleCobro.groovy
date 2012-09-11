@@ -15,6 +15,6 @@ class DetalleCobro {
     }
 
     String toString(){
-        return "${concepto} ${total}"
+        return "${concepto} - \$ ${total}"
     }
 }

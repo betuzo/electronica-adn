@@ -203,7 +203,8 @@ class OrdenSamsungController {
     def nextStep() {
         def success = true
         def next = true
-        def htmlRender = '' 
+        def htmlRender = ''
+        def valStatus = ''
 
         def ordenSamsungInstance = OrdenSamsung.get(params.id)
         if (!ordenSamsungInstance) {
@@ -230,6 +231,7 @@ class OrdenSamsungController {
                 htmlRender = "<div class='property-value'> No se puede guardar la sigueinte Fecha</div>"
             }
             ordenSamsungInstance.fechas.add(detalleFechaOrdenInstance)
+            valStatus = detalleFechaOrdenInstance.toString()
         }
 
         try {
@@ -240,7 +242,8 @@ class OrdenSamsungController {
         catch(Exception e) {
             e.printStackTrace()
         }
-        render([success: success, html: htmlRender, next: next] as JSON)
+
+        render([success: success, html: htmlRender, next: next, valStatus: valStatus] as JSON)
     }
 
     def generateReportByOrden() {
