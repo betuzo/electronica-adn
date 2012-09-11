@@ -182,6 +182,13 @@ ul#navigation li a.last {
 	width: 900px;
 }
 
+
+.label-refacciones{
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 0.25em 0 0;
+	color: #000;
+}
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
 .ie7 body,

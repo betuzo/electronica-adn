@@ -12,9 +12,15 @@
 			document.getElementById('form-refacciones').style.display='none';
 			text.value = " ";
 			caja.value = 0;
+
 			function overlay() {
 				el = document.getElementById("overlay");
 				el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+			}
+
+			function obtenerElemento() { 
+			alert("hola por que no pasa por aqui");
+				alert(" hola  " +  document.getElementById('cantidad').value);
 			}
 
 			$(document).ready(function(){
@@ -43,6 +49,77 @@
 					el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
 				}); 
 			});
+
+
+
+						num=0;
+			function crear(obj) {
+				num++;
+				fi = document.getElementById('fiel'); // 1
+				contenedor = document.createElement('div'); // 2
+				contenedor.id = 'div'+num; // 3
+
+				fi.appendChild(contenedor); // 4
+				lbl = document.createElement('label');
+				lbl.innerHTML = 'Refaccion: ';
+				lbl.setAttribute('class', 'label-refacciones')
+				contenedor.appendChild(lbl);
+
+				ele = document.createElement('select'); // 5
+				ele.name = 'refaccion'+num; // 6
+				ele.setAttribute('class', 'many-to-one');
+				
+				ele.setAttribute('optionKey','id');
+				ele.setAttribute('value','${detalleEntradaInstance?.refaccion?.id}');
+				ele.value='${detalleEntradaInstance?.refaccion?.id}';
+				lbl.appendChild(ele);
+				contenedor.appendChild(ele); // 7
+
+				lbl = document.createElement('label');
+				lbl.innerHTML = 'Cantidad: ';
+				contenedor.appendChild(lbl);
+				ele = document.createElement('input'); // 5
+				ele.type = 'text'; // 6
+				ele.name = 'cantidad'+num; // 6
+				ele.size='6';
+				lbl.appendChild(ele);
+				contenedor.appendChild(ele); // 7
+
+				lbl = document.createElement('label');
+				lbl.innerHTML = 'Precio';
+				contenedor.appendChild(lbl);
+				ele = document.createElement('input'); // 5
+				ele.type = 'text'; // 6
+				ele.name = 'precio'+num; // 6
+				ele.size='6';
+				lbl.appendChild(ele);
+				contenedor.appendChild(ele); // 7
+
+				lbl = document.createElement('label');
+				lbl.innerHTML = 'Total: ';
+				contenedor.appendChild(lbl);
+				ele = document.createElement('input'); // 5
+				ele.type = 'text'; // 6
+				ele.name = 'total'+num; // 6
+				ele.size='6';
+				lbl.appendChild(ele);
+				contenedor.appendChild(ele); // 7
+
+
+
+				ele = document.createElement('input'); // 5
+				ele.type = 'button'; // 6
+				ele.value = 'Eliminar'; // 8
+				ele.name = 'div'+num; // 8
+				ele.size='6';
+				ele.onclick = function () {borrar(this.name)} // 9
+				contenedor.appendChild(ele); // 7
+			}
+
+			function borrar(obj) {
+				fi = document.getElementById('fiel'); // 1
+				fi.removeChild(document.getElementById(obj)); // 10
+			}
 		</g:javascript>
 
 	</head>
@@ -162,31 +239,16 @@
 						</label>
 						Agregar refacciones <img id="slide-refacciones-open" href="#"src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar refacciones" height="30px" width="30px"/> 
 						<div id= "form-refacciones">
-							<table>			
-								<thead>
-									<tr>
-										<th><g:message code="detalleEntrada.refaccion.label" default="Refaccion" /></th>
-										
-										<g:sortableColumn property="precioUnitario" title="${message(code: 'detalleEntrada.precioUnitario.label', default: 'Precio')}" />
-
-										<g:sortableColumn property="cantidad" title="${message(code: 'detalleEntrada.cantidad.label', default: 'Cantidad')}" />
-									
-										<g:sortableColumn property="total" title="${message(code: 'detalleEntrada.total.label', default: 'Total')}" />
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td id="td1">Refaccion o1</td>
-										<td>10.00</td>
-										<td>1000</td>
-										<td>10000</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="fieldcontain">
-								<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
+						<br>
+							<div id="fiel">
+								<input type="button" value="Generar Acción" onclick="crear(this)" />
 							</div>
+						<br>
+						<div class="fieldcontain">
+							<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
+							<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
+						</div>
+
 						</div>
 
 					</div>
@@ -195,7 +257,11 @@
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>
-			
+			<br>
+			<div id="fiel">
+			<input type="button" value="Generar Acción" onclick="crear(this)" />
+			</div>
+			<br>
 <!-- Agregar refacciones -->
 			<div id="overlay">
 				<div id="overlayContainer">
@@ -231,11 +297,12 @@
 							</label>
 							<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'total')}"/>
 						</div>
-							<div class="fielcontain">
-								<fieldset class="buttons">
-								<g:submitButton name="create" class="ready" value="${message(code: 'default.button.ready.label', default: 'Listo')}" /> 
-								<input type="button" id="open-modal" class="close" value="Cerrar" onclick="overlay()" />
-							</fieldset>
+						<br>
+						<div class="fielcontain">
+						<fieldset class="buttons">
+							<input type="button" id="agregar-refaccion" class="ready" value="Listo" onClick="obtenerElemento()"/>
+							<input type="button" id="open-modal" class="close" value="Cerrar" onclick="overlay()" />
+						</fieldset>
 						</div>
 						
 					</p>
