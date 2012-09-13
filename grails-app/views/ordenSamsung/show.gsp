@@ -212,9 +212,7 @@
 				<g:if test="${ordenSamsungInstance?.totalPagos}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Pagos" /></span>
-					
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalPagos}" type="currency" currencyCode="MXN" /></span>
-					
 				</li>
 				</g:if>
 
@@ -223,7 +221,6 @@
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Adeudo" /></span>
 					
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalAdeudo}" type="currency" currencyCode="MXN" /></span>
-					
 				</li>
 				</g:if>
 			

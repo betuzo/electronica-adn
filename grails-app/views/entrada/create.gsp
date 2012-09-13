@@ -19,8 +19,7 @@
 			}
 
 			function obtenerElemento() { 
-			alert("hola por que no pasa por aqui");
-				alert(" hola  " +  document.getElementById('cantidad').value);
+
 			}
 
 			$(document).ready(function(){
@@ -239,16 +238,34 @@
 						</label>
 						Agregar refacciones <img id="slide-refacciones-open" href="#"src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar refacciones" height="30px" width="30px"/> 
 						<div id= "form-refacciones">
-						<br>
-							<div id="fiel">
-								<input type="button" value="Generar Acción" onclick="crear(this)" />
-							</div>
-						<br>
-						<div class="fieldcontain">
-							<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-							<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
-						</div>
+							<table>
+								<thead>
+									<tr>
+										<th>Refaccion</th>
+									
+										<th>Precio</th>
+										
+										<th>Cantidad</th>
 
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<g:each in="${refaccionInstance}" var="r">
+										<tr >
+											<td><span>${r?.encodeAsHTML()}</span></td>
+						 					<td><span>${r?.encodeAsHTML()}</span></td>
+											<td><span>${r?.encodeAsHTML()}</span></td>
+											<td><span>${r?.encodeAsHTML()}</span></td>
+										</tr>
+									</g:each>
+								</tbody>
+							</table>
+							<br>
+							<div class="fieldcontain">
+								<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
+								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
+							</div>
 						</div>
 
 					</div>
@@ -258,53 +275,50 @@
 				</fieldset>
 			</g:form>
 			<br>
-			<div id="fiel">
-			<input type="button" value="Generar Acción" onclick="crear(this)" />
-			</div>
-			<br>
 <!-- Agregar refacciones -->
 			<div id="overlay">
 				<div id="overlayContainer">
 					<p>
-						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
-							<label for="refaccion">
-								<g:message code="detalleEntrada.refaccion.label" default="Refaccion" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:select id="refaccion" name="refaccion.id" from="${mx.com.ideasydiseno.electronica.Refaccion.list()}" optionKey="id" required="" value="${detalleEntradaInstance?.refaccion?.id}" class="many-to-one"/>
-						</div>
+						<g:form name="form-refacciones" url="[controller:'entrada', action:'refaccionTable']">
+							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
+								<label for="refaccion">
+									<g:message code="detalleEntrada.refaccion.label" default="Refaccion" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:select id="refaccion" name="refaccion.id" from="${mx.com.ideasydiseno.electronica.Refaccion.list()}" optionKey="id" required="" value="${detalleEntradaInstance?.refaccion?.id}" class="many-to-one"/>
+							</div>
 
-						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'cantidad', 'error')} required">
-							<label for="cantidad">
-								<g:message code="detalleEntrada.cantidad.label" default="Cantidad" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:field type="number" name="cantidad" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'cantidad')}"/>
-						</div>
+							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'cantidad', 'error')} required">
+								<label for="cantidad">
+									<g:message code="detalleEntrada.cantidad.label" default="Cantidad" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:field type="number" name="cantidad" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'cantidad')}"/>
+							</div>
 
-						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'precioUnitario', 'error')} required">
-							<label for="precioUnitario">
-								<g:message code="detalleEntrada.precioUnitario.label" default="Precio Unitario" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:field type="number" name="precioUnitario" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'precioUnitario')}"/>
-						</div>
+							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'precioUnitario', 'error')} required">
+								<label for="precioUnitario">
+									<g:message code="detalleEntrada.precioUnitario.label" default="Precio Unitario" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:field type="number" name="precioUnitario" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'precioUnitario')}"/>
+							</div>
 
-						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'total', 'error')} required">
-							<label for="total">
-								<g:message code="detalleEntrada.total.label" default="Total" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'total')}"/>
-						</div>
-						<br>
-						<div class="fielcontain">
-						<fieldset class="buttons">
-							<input type="button" id="agregar-refaccion" class="ready" value="Listo" onClick="obtenerElemento()"/>
-							<input type="button" id="open-modal" class="close" value="Cerrar" onclick="overlay()" />
-						</fieldset>
-						</div>
-						
+							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'total', 'error')} required">
+								<label for="total">
+									<g:message code="detalleEntrada.total.label" default="Total" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'total')}"/>
+							</div>
+							<br>
+							<div class="fielcontain">
+								<fieldset class="buttons">
+									<g:submitButton name="refaccion" id="agregar-refaccion" class="ready" value="Listo"/> 
+									<input type="button" id="open-modal" class="close" value="Cerrar" onclick="overlay()" />
+								</fieldset>
+							</div>
+						</g:form>
 					</p>
 				</div>
 			</div>

@@ -2,6 +2,8 @@ package mx.com.ideasydiseno.electronica
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import grails.converters.*
+
 class EntradaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -27,7 +29,7 @@ class EntradaController {
         
 
         def entradaInstance = new Entrada(params)
-        println "*****************" + params
+        //println "*****************" + params
         if (!entradaInstance.save(flush: true)) {
             render(view: "create", model: [entradaInstance: entradaInstance])
             return
@@ -140,4 +142,79 @@ class EntradaController {
             redirect(action: "show", id: params.id)
         }
     }
+    
+    def refaccionInstance = new DetalleEntrada()
+
+    def refaccionTable(){
+        def htmlRender = ''
+        def success = true
+        println params
+
+        if (!params) {
+            println "parametros diferentes de null"
+            refaccionInstance.refaccion = params.refaccion
+            refaccionInstance.cantidad = params.cantidad
+            refaccionInstance.precioUnitario=params.precioUnitario
+            refaccionInstance.total = params.total
+        }
+        
+        
+
+        htmlRender = "<td>hola</td>"
+
+        render ([html:htmlRender] as JSON)
+    }
+
+   /* def nextStep() {
+        Refaccion refaccion
+        int cantidad
+        double precioUnitario
+        double total
+
+
+        def success = true
+        def next = true
+        def htmlRender = ''
+        def valStatus = ''
+
+        def ordenSamsungInstance = OrdenSamsung.get(params.id)
+        if (!ordenSamsungInstance) {
+            success = false
+            htmlRender = "<div class='property-value'>No existe la orden</div>"
+        }else{
+            def user = springSecurityService?.currentUser
+            def totalFechas = ordenSamsungInstance.fechas.size()
+            def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1, FECHA_TIPO_ORDEN)
+            next = hasNext(tipoFechaInstance.ordenCronologico)
+            if (!tipoFechaInstance)
+            {
+                success = false
+                htmlRender = "<div class='property-value'>No existe la orden</div>"  
+            }
+            def detalleFechaOrdenInstance = new DetalleFechaOrden()
+            detalleFechaOrdenInstance.tipoFecha = tipoFechaInstance
+            detalleFechaOrdenInstance.fecha = new Date()
+            detalleFechaOrdenInstance.personal = user
+            detalleFechaOrdenInstance.orden = ordenSamsungInstance
+
+            if (!detalleFechaOrdenInstance.save(flush: true)) {
+                success = false
+                htmlRender = "<div class='property-value'> No se puede guardar la sigueinte Fecha</div>"
+            }
+            ordenSamsungInstance.fechas.add(detalleFechaOrdenInstance)
+            valStatus = detalleFechaOrdenInstance.toString()
+        }
+
+        try {
+            ordenSamsungInstance.fechas.each {
+                htmlRender = htmlRender + "<span class='property-value' aria-labelledby='fechas-label'>" + g.link([controller:"detalleFechaOrden", action:"show", id:it.id], it?.encodeAsHTML())+ "</span>"
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace()
+        }
+
+        render([success: success, html: htmlRender, next: next, valStatus: valStatus] as JSON)
+    } */
+
 }
