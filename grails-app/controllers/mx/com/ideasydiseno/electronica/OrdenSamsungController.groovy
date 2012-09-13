@@ -259,4 +259,9 @@ class OrdenSamsungController {
         response.characterEncoding = "UTF-8"
         response.outputStream << data
     }
+
+    def prueba() {
+        println params
+
+    }
 }
