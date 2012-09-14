@@ -19,7 +19,7 @@
 			}
 
 			function obtenerElemento() { 
-
+			
 			}
 
 			$(document).ready(function(){
@@ -199,7 +199,8 @@
 							<g:message code="entrada.pagos.label" default="Pagos" />
 						</label>
 						<!-- <g:link controller="pagoProveedor" action="create" params="['entrada.id': entradaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'pagoProveedor.label', default: 'PagoProveedor')])}</g:link> -->
-						Agregar pagos <img id="slide-pagos-open" href="#"src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+						Agregar pagos <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+
 						<div id="form-pagos">
 							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 								<label for="tipoPago">
@@ -231,7 +232,7 @@
 						</div>
 						
 					</div>
-
+<!--Agregar refacciones -->
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'refacciones', 'error')} ">
 						<label for="refacciones">
 							<g:message code="entrada.refacciones.label" default="Refacciones" />

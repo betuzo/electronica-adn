@@ -26,17 +26,13 @@ class EntradaController {
 
     def save() {
         def user =springSecurityService.currentUser
-        
-
         def entradaInstance = new Entrada(params)
-        //println "*****************" + params
         if (!entradaInstance.save(flush: true)) {
             render(view: "create", model: [entradaInstance: entradaInstance])
             return
         }else{
             if (user) {
                 def tipoFechaInstance = TipoFecha.findByTipoUso(FECHA_TIPO_ENTRADA)
-                println tipoFechaInstance
                 if (tipoFechaInstance) {
                     
                     //Guardando Detalle fecha entrada
@@ -48,7 +44,6 @@ class EntradaController {
                     detalleFechaEntrada.save()
 
                     //Guardando pago
-                    println "params ******* " + params
                     if (params.tipoPago != "" && params.totalPago != "0") {
                         def pagoProverdorInstance = new PagoProveedor()
                         pagoProverdorInstance.tipoPago=params.tipoPago
@@ -57,19 +52,12 @@ class EntradaController {
                         pagoProverdorInstance.entrada=entradaInstance
                         pagoProverdorInstance.realizo=user
                         pagoProverdorInstance.save()   
-                    }
-                    
-                    
+                    }   
                 }
-
-
             }
-
-
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
             redirect(action: "show", id: entradaInstance.id)
         }
-
     }
 
     def show() {
@@ -90,11 +78,12 @@ class EntradaController {
             redirect(action: "list")
             return
         }
-
         [entradaInstance: entradaInstance]
     }
 
     def update() {
+        def user =springSecurityService.currentUser
+        println "******" + params
         def entradaInstance = Entrada.get(params.id)
         if (!entradaInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'entrada.label', default: 'Entrada'), params.id])
@@ -104,21 +93,50 @@ class EntradaController {
 
         if (params.version) {
             def version = params.version.toLong()
+            println "version" + version
             if (entradaInstance.version > version) {
+                println "entra a verificar la version"
                 entradaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'entrada.label', default: 'Entrada')] as Object[],
                           "Another user has updated this Entrada while you were editing")
                 render(view: "edit", model: [entradaInstance: entradaInstance])
                 return
             }
+            if (user) {
+                if (params.tipoFecha != null) {
+                    def fechaInstance = TipoFecha.get(params.tipoFecha.id)
+                    if (fechaInstance) {
+                    //Guardando Detalle fecha entrada
+                    def detalleFechaEntrada = new DetalleFechaEntrada()
+                    detalleFechaEntrada.fecha = params.fecha
+                    detalleFechaEntrada.personal= user
+                    detalleFechaEntrada.tipoFecha= fechaInstance
+                    detalleFechaEntrada.entrada = entradaInstance
+                    detalleFechaEntrada.save()
+                 } 
+                }
+                
+                 //Guardando pagos
+                if (params.tipoPago != "" && params.totalPago != "0") {
+                    def pagoProverdorInstance = new PagoProveedor()
+                    pagoProverdorInstance.tipoPago=params.tipoPago
+                    pagoProverdorInstance.total=params.totalPago.toLong()
+                    pagoProverdorInstance.fechaPago=params.fechaPago
+                    pagoProverdorInstance.entrada=entradaInstance
+                    pagoProverdorInstance.realizo=user
+                    pagoProverdorInstance.save()   
+                }
+                //Guardando Herramientas
+            }
         }
-
         entradaInstance.properties = params
+        println "entradaInstance.properties" + entradaInstance.properties 
 
         if (!entradaInstance.save(flush: true)) {
             render(view: "edit", model: [entradaInstance: entradaInstance])
             return
         }
+
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
         redirect(action: "show", id: entradaInstance.id)
@@ -164,57 +182,5 @@ class EntradaController {
 
         render ([html:htmlRender] as JSON)
     }
-
-   /* def nextStep() {
-        Refaccion refaccion
-        int cantidad
-        double precioUnitario
-        double total
-
-
-        def success = true
-        def next = true
-        def htmlRender = ''
-        def valStatus = ''
-
-        def ordenSamsungInstance = OrdenSamsung.get(params.id)
-        if (!ordenSamsungInstance) {
-            success = false
-            htmlRender = "<div class='property-value'>No existe la orden</div>"
-        }else{
-            def user = springSecurityService?.currentUser
-            def totalFechas = ordenSamsungInstance.fechas.size()
-            def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1, FECHA_TIPO_ORDEN)
-            next = hasNext(tipoFechaInstance.ordenCronologico)
-            if (!tipoFechaInstance)
-            {
-                success = false
-                htmlRender = "<div class='property-value'>No existe la orden</div>"  
-            }
-            def detalleFechaOrdenInstance = new DetalleFechaOrden()
-            detalleFechaOrdenInstance.tipoFecha = tipoFechaInstance
-            detalleFechaOrdenInstance.fecha = new Date()
-            detalleFechaOrdenInstance.personal = user
-            detalleFechaOrdenInstance.orden = ordenSamsungInstance
-
-            if (!detalleFechaOrdenInstance.save(flush: true)) {
-                success = false
-                htmlRender = "<div class='property-value'> No se puede guardar la sigueinte Fecha</div>"
-            }
-            ordenSamsungInstance.fechas.add(detalleFechaOrdenInstance)
-            valStatus = detalleFechaOrdenInstance.toString()
-        }
-
-        try {
-            ordenSamsungInstance.fechas.each {
-                htmlRender = htmlRender + "<span class='property-value' aria-labelledby='fechas-label'>" + g.link([controller:"detalleFechaOrden", action:"show", id:it.id], it?.encodeAsHTML())+ "</span>"
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace()
-        }
-
-        render([success: success, html: htmlRender, next: next, valStatus: valStatus] as JSON)
-    } */
 
 }
