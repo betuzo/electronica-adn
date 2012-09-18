@@ -54,3 +54,8 @@ Tienda Controller
 Tipo Falla Controller
 Tipo Fecha Controller
 Tipo Personal Controller
+
+##### Menu seguridad ######
+
+
+

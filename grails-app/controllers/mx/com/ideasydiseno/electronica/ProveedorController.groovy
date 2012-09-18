@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class ProveedorController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    def springSecurityService
 
     def index() {
         redirect(action: "list", params: params)
@@ -20,14 +21,32 @@ class ProveedorController {
     }
 
     def save() {
+        println "param *********  " + params
+        def user =springSecurityService.currentUser
         def proveedorInstance = new Proveedor(params)
         if (!proveedorInstance.save(flush: true)) {
             render(view: "create", model: [proveedorInstance: proveedorInstance])
             return
+        }else{
+            if (user) {
+                println "aquí los params: " + params
+                println "parametros insitutcion: " + params.institucion
+                println "Tipo telefono: " + params.tipoTelefono
+                println "telefono: " + params.tipoTelefono
+                //guardando telefonoIstitucion
+                def telefonoInstitucion = new TelefonoInstitucion();
+                telefonoInstitucion.tipoTelefonoContacto=params.tipoTelefonoContacto
+                telefonoInstitucion.telefonoContacto= params.telefonoContacto
+                telefonoInstitucion.institucion = proveedor.instance; 
+                telefonoInstitucion.save();
+            }
+
         }
+
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'proveedor.label', default: 'Proveedor'), proveedorInstance.id])
         redirect(action: "show", id: proveedorInstance.id)
+
     }
 
     def show() {

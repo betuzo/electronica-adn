@@ -93,9 +93,7 @@ class EntradaController {
 
         if (params.version) {
             def version = params.version.toLong()
-            println "version" + version
             if (entradaInstance.version > version) {
-                println "entra a verificar la version"
                 entradaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'entrada.label', default: 'Entrada')] as Object[],
                           "Another user has updated this Entrada while you were editing")

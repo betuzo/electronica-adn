@@ -20,6 +20,7 @@ class TelefonoInstitucionController {
     }
 
     def save() {
+        println params
         def telefonoInstitucionInstance = new TelefonoInstitucion(params)
         if (!telefonoInstitucionInstance.save(flush: true)) {
             render(view: "create", model: [telefonoInstitucionInstance: telefonoInstitucionInstance])

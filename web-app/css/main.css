@@ -190,6 +190,14 @@ ul#navigation li a.last {
 	width: 900px;
 }
 
+#form-telefono-proveedor{
+	margin: .5em auto;
+	border-radius: 1em;
+	border: .3em solid #007294;
+	padding: .5em;
+	width: 400px;
+}
+
 
 .label-refacciones{
 	cursor: pointer;
