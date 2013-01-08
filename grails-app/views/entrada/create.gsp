@@ -51,7 +51,7 @@
 
 
 
-						num=0;
+			num=0;
 			function crear(obj) {
 				num++;
 				fi = document.getElementById('fiel'); // 1
@@ -191,46 +191,6 @@
 							<g:message code="entrada.fechas.label" default="Fecha" />	
 						</label>
 						<g:datePicker name="fecha" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
-					</div>
-
-<!-- form pagos -->
-					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'pagos', 'error')} ">
-						<label for="pagos">
-							<g:message code="entrada.pagos.label" default="Pagos" />
-						</label>
-						<!-- <g:link controller="pagoProveedor" action="create" params="['entrada.id': entradaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'pagoProveedor.label', default: 'PagoProveedor')])}</g:link> -->
-						Agregar pagos <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-
-						<div id="form-pagos">
-							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
-								<label for="tipoPago">
-									<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
-								<label for="total">
-									<g:message code="pagoProveedor.total.label" default="Total" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
-								<label for="fechaPago">
-									<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
-							</div>
-							<div class="fieldcontain">
-								<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-							</div>
-
-						</div>
-						
 					</div>
 <!--Agregar refacciones -->
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'refacciones', 'error')} ">

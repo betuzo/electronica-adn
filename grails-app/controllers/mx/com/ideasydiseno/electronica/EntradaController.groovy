@@ -181,4 +181,8 @@ class EntradaController {
         render ([html:htmlRender] as JSON)
     }
 
+    def addPago() {
+        println params
+    }
+
 }

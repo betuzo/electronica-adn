@@ -160,7 +160,8 @@
 									<g:datePicker name="fecha" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
 								</div>
 								<div>
-									<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'Xion.png')}" alt="Cerrar" heigth="30px" width="30px"/>	
+									<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'Xion.png')}" alt="Cerrar" heigth="30px" width="30px"/>
+									<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="30px" width="30px"/>
 								</div>
 							</div>
 						</li>
@@ -175,7 +176,11 @@
 						
 					<ul class="one-to-many">
 					<g:each in="${entradaInstance?.pagos?}" var="p">
-					    <li><g:link controller="pagoProveedor" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+					    <li>
+					    	<g:link controller="pagoProveedor" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link>
+					    	<img id="slide-refacciones-open" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar pagos" height="30px" width="30px"/> 
+					    </li>
+
 					</g:each>
 					<li class="add">
 					<!--
@@ -209,6 +214,7 @@
 							</div>
 							<div class="fieldcontain">
 								<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="30px" width="30px"/>
 							</div>
 
 						</div>
@@ -225,7 +231,10 @@
 <!--Agregar refacciones-->	
 					<ul class="one-to-many">
 					<g:each in="${entradaInstance?.refacciones?}" var="r">
-					    <li><g:link controller="detalleEntrada" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+					    <li>
+					    	<g:link controller="detalleEntrada" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link>
+					    	<img id="slide-refacciones-open" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="30px" width="30px"/>
+					    </li>
 					</g:each>
 					<li class="add">
 					<!--
@@ -263,6 +272,7 @@
 							<div class="fieldcontain">
 								<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
 								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
+								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="30px" width="30px"/>
 							</div>
 						</div>
 					</div>

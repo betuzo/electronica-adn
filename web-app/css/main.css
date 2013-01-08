@@ -799,7 +799,10 @@ a.skip {
 	left: -9999px;
 }
 
-
+#guardarajax {
+    border: 0px;
+    background: url(../images/Floppy.png) no-repeat;
+}
 
 
 /* Modal Windows */
