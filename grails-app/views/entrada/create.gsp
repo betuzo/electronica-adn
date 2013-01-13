@@ -8,10 +8,12 @@
 		<g:javascript>
 			var caja = document.getElementById('totalPago');
 			var text = document.getElementById('tipoPago');
-			document.getElementById('form-pagos').style.display='none';
+			//var el = $('#form-refacciones');
+			var el = document.getElementById('form-refacciones');
 			document.getElementById('form-refacciones').style.display='none';
-			text.value = " ";
-			caja.value = 0;
+			el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+			//text.value = " ";
+			//caja.value = 0;
 
 			function overlay() {
 				el = document.getElementById("overlay");

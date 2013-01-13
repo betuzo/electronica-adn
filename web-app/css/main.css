@@ -187,7 +187,7 @@ ul#navigation li a.last {
 	border-radius: 1em;
 	border: .3em solid #007294;
 	padding: .5em;
-	width: 900px;
+	width: auto;
 }
 
 #form-telefono-proveedor{
