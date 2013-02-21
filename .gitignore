@@ -10,3 +10,5 @@ build.xml
 DataSource.groovy
 devDb.h2.db
 .DS_Store
+.settings
+.groovy

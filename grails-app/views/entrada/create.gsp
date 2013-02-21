@@ -44,83 +44,12 @@
 				$("#slide-refacciones-close").click(function(){
 					$("#form-refacciones").slideUp();
 				});
-
+				
 				$("#open-modal").click(function(){
 					el = document.getElementById("overlay");
 					el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
 				}); 
 			});
-
-
-
-			num=0;
-			function crear(obj) {
-				num++;
-				fi = document.getElementById('fiel'); // 1
-				contenedor = document.createElement('div'); // 2
-				contenedor.id = 'div'+num; // 3
-
-				fi.appendChild(contenedor); // 4
-				lbl = document.createElement('label');
-				lbl.innerHTML = 'Refaccion: ';
-				lbl.setAttribute('class', 'label-refacciones')
-				contenedor.appendChild(lbl);
-
-				ele = document.createElement('select'); // 5
-				ele.name = 'refaccion'+num; // 6
-				ele.setAttribute('class', 'many-to-one');
-				
-				ele.setAttribute('optionKey','id');
-				ele.setAttribute('value','${detalleEntradaInstance?.refaccion?.id}');
-				ele.value='${detalleEntradaInstance?.refaccion?.id}';
-				lbl.appendChild(ele);
-				contenedor.appendChild(ele); // 7
-
-				lbl = document.createElement('label');
-				lbl.innerHTML = 'Cantidad: ';
-				contenedor.appendChild(lbl);
-				ele = document.createElement('input'); // 5
-				ele.type = 'text'; // 6
-				ele.name = 'cantidad'+num; // 6
-				ele.size='6';
-				lbl.appendChild(ele);
-				contenedor.appendChild(ele); // 7
-
-				lbl = document.createElement('label');
-				lbl.innerHTML = 'Precio';
-				contenedor.appendChild(lbl);
-				ele = document.createElement('input'); // 5
-				ele.type = 'text'; // 6
-				ele.name = 'precio'+num; // 6
-				ele.size='6';
-				lbl.appendChild(ele);
-				contenedor.appendChild(ele); // 7
-
-				lbl = document.createElement('label');
-				lbl.innerHTML = 'Total: ';
-				contenedor.appendChild(lbl);
-				ele = document.createElement('input'); // 5
-				ele.type = 'text'; // 6
-				ele.name = 'total'+num; // 6
-				ele.size='6';
-				lbl.appendChild(ele);
-				contenedor.appendChild(ele); // 7
-
-
-
-				ele = document.createElement('input'); // 5
-				ele.type = 'button'; // 6
-				ele.value = 'Eliminar'; // 8
-				ele.name = 'div'+num; // 8
-				ele.size='6';
-				ele.onclick = function () {borrar(this.name)} // 9
-				contenedor.appendChild(ele); // 7
-			}
-
-			function borrar(obj) {
-				fi = document.getElementById('fiel'); // 1
-				fi.removeChild(document.getElementById(obj)); // 10
-			}
 		</g:javascript>
 
 	</head>
@@ -243,6 +172,7 @@
 				<div id="overlayContainer">
 					<p>
 						<g:form name="form-refacciones" url="[controller:'entrada', action:'refaccionTable']">
+							
 							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
 								<label for="refaccion">
 									<g:message code="detalleEntrada.refaccion.label" default="Refaccion" />
@@ -274,11 +204,12 @@
 								</label>
 								<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'total')}"/>
 							</div>
-							<br>
+							
+							<br/>
 							<div class="fielcontain">
 								<fieldset class="buttons">
 									<g:submitButton name="refaccion" id="agregar-refaccion" class="ready" value="Listo"/> 
-									<input type="button" id="open-modal" class="close" value="Cerrar" onclick="overlay()" />
+									<input type="button" id="close-modal" class="close" value="Cerrar" onclick="overlay()" />
 								</fieldset>
 							</div>
 						</g:form>

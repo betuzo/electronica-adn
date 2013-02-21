@@ -8,6 +8,7 @@ class Entrada {
 	String status
 	String observaciones
 
+    
 	static hasMany = [refacciones: DetalleEntrada, 
 					  fechas: DetalleFechaEntrada,
 					  pagos: PagoProveedor]

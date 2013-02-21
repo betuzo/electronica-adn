@@ -15,6 +15,6 @@ class Refaccion {
     }
 
     String toString(){
-        return "${clave}"
+        return "${clave} - ${descripcion}"
     }
 }

@@ -307,7 +307,7 @@ group by od.id, pr.nombre,
 		<band height="90" splitType="Stretch">
 			<image>
 				<reportElement uuid="b3724b90-b365-41dc-b117-1564e9e92f12" x="34" y="0" width="503" height="79"/>
-				<imageExpression><![CDATA["/Users/mobiik/opt/grails/electronica-adn/web-app/images/dimove_report.png"]]></imageExpression>
+				<imageExpression><![CDATA["/Users/adan/devGrails/electronica-adn/web-app/images/dimove_report.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

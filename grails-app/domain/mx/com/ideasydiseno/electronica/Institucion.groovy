@@ -29,6 +29,6 @@ class Institucion {
     }
 
     String toString(){
-        return "${nombre}"
+        return "${nombre} - ${descripcion}"
     }
 }

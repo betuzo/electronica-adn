@@ -31,7 +31,7 @@ class OrdenSamsungController {
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
     
-        def listOrdenSamsung = OrdenSamsung.list(params)?.sort{-it.getProperty('maxFecha')?.getDate()}
+        def listOrdenSamsung = OrdenSamsung.list(params)?.sort{it.getProperty('maxFecha')?.getDate()}
 
         Collections.reverse(listOrdenSamsung)
 
@@ -119,9 +119,11 @@ class OrdenSamsungController {
             redirect(action: "list")
             return
         }
-        println ordenSamsungInstance.maxFecha
-        def next = hasNext(ordenSamsungInstance.fechas?.tipoFecha?.ordenCronologico?.max())
-
+        def next 
+        println "maxFecha: " + ordenSamsungInstance.maxFecha
+        if(ordenSamsungInstance.maxFecha != null){
+            next = hasNext(ordenSamsungInstance.fechas?.tipoFecha?.ordenCronologico?.max())
+        }
         [ordenSamsungInstance: ordenSamsungInstance, next: next]
     }
 
