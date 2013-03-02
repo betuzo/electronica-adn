@@ -25,6 +25,7 @@ class EntradaController {
     }
 
     def save() {
+        println ("params " + params)
         def user =springSecurityService.currentUser
         def entradaInstance = new Entrada(params)
         if (!entradaInstance.save(flush: true)) {
@@ -58,6 +59,7 @@ class EntradaController {
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
             redirect(action: "show", id: entradaInstance.id)
         }
+
     }
 
     def show() {
@@ -210,7 +212,36 @@ class EntradaController {
 
     def saveFechaEntrada(){
         def user =springSecurityService.currentUser
-		def htmlRender = ''
+		def htmlRender
+        println ("***" + params)
+
+        def fechaInstance = TipoFecha.get(params.tipoFechaEntrada)
+        println("fechaInstance: " + fechaInstance )
+        def entradaInstance = Entrada.get(params.id)
+        println("entradaInstance: " + entradaInstance)
+        println("User persona: " + user)
+        def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada) 
+        println("fecha en date: " + fecha)
+
+        def detalleFechaEntrada = new DetalleFechaEntrada()
+            detalleFechaEntrada.fecha = fecha
+            detalleFechaEntrada.personal= user
+            detalleFechaEntrada.tipoFecha= fechaInstance
+            detalleFechaEntrada.entrada = entradaInstance
+            detalleFechaEntrada.save()
+
+
+        println (detalleFechaEntrada.id)
+        htmlRender = "<li><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</<spam></a></li>"
+        htmlRender = detalleEntrada
+        render ([html:htmlRender] as JSON)
+    }
+
+    def saveFechaEntradaShow(){
+        println("Entra a guardar fecha show")
+
+        def user =springSecurityService.currentUser
+        def htmlRender =''
         println ("***" + params)
 
         def fechaInstance = TipoFecha.get(params.tipoFechaEntrada)
@@ -229,7 +260,8 @@ class EntradaController {
             detalleFechaEntrada.save()
 
         println (detalleFechaEntrada.id)
-        htmlRender = "<li><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</<spam></a></li>"
+        htmlRender = "<spam id='delete-detalleFechaEntrada-"+detalleFechaEntrada.id+"' class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</spam></a>  <img id='detalleFechaEntrada-"+detalleFechaEntrada.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
+        //htmlRender = 'ola ke ace'
         render ([html:htmlRender] as JSON)
     }
 
@@ -252,6 +284,27 @@ class EntradaController {
         println(pagoProveedor.id)
         htmlRender = "<li><a href=/electronica-adn/pagoProveedor/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</<spam></a></li>"
 
+        render ([html:htmlRender] as JSON)   
+    }
+
+    def savePagoShow(){
+        println ("**Pago** ==> " + params)
+        def user =springSecurityService.currentUser
+        def htmlRender = ''
+        def entradaInstance = Entrada.get(params.id)
+        def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
+        def totalPago = params.totalPago as int
+        
+        def pagoProveedor = new PagoProveedor()
+        pagoProveedor.realizo=user
+        pagoProveedor.entrada=entradaInstance
+        pagoProveedor.tipoPago=params.tipoPago
+        pagoProveedor.total=totalPago
+        pagoProveedor.fechaPago=fecha
+        pagoProveedor.save()
+
+        println(pagoProveedor.id)
+        htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
         render ([html:htmlRender] as JSON)   
     }
 }

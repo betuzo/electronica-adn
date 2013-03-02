@@ -2,6 +2,8 @@ package mx.com.ideasydiseno.electronica
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import grails.converters.*
+
 class DetalleFechaEntradaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -83,6 +85,9 @@ class DetalleFechaEntradaController {
     }
 
     def delete() {
+
+        println ("entra a eliminar DetalleFechaEntrada: " + params)
+
         def detalleFechaEntradaInstance = DetalleFechaEntrada.get(params.id)
         if (!detalleFechaEntradaInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'detalleFechaEntrada.label', default: 'DetalleFechaEntrada'), params.id])
@@ -99,5 +104,11 @@ class DetalleFechaEntradaController {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'detalleFechaEntrada.label', default: 'DetalleFechaEntrada'), params.id])
             redirect(action: "show", id: params.id)
         }
+
+        println ("llega hasta el final")
+
+        def data = 'hola data'
+
+        render ([html:data] as JSON)
     }
 }

@@ -6,49 +6,36 @@
 		<g:set var="entityName" value="${message(code: 'entrada.label', default: 'Entrada')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 		<g:javascript>
-			var caja = document.getElementById('totalPago');
-			var text = document.getElementById('tipoPago');
-			//var el = $('#form-refacciones');
-			var el = document.getElementById('form-refacciones');
-			document.getElementById('form-refacciones').style.display='none';
-			el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
-			//text.value = " ";
-			//caja.value = 0;
+			$(document).on('ready', function(){
+				var tipoFecha = $("#tipoFechaEntrada").val();
+				$("#totalPago").val("0");
+				$("#tipoPago").val(" ");
+				$("#form-fecha").css("display", "none");
+				$("#form-pagos").css("display", "none");
 
-			function overlay() {
-				el = document.getElementById("overlay");
-				el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
-			}
+				/*fechas*/
+				$("#slide-fecha-open").on("click", function(){
+					$("#form-fecha").slideDown();
+				});
 
-			function obtenerElemento() { 
-			
-			}
+				$("#slide-fecha-close").on("click", function(){
+					$("#form-fecha").slideUp();
+				});
 
-			$(document).ready(function(){
-				$("#slide-pagos-open").click(function(){
-					text.value = "";
-					caja.value = "";
+				/*pagos*/
+				$("#slide-pagos-open").on("click", function(){
+					$("#totalPago").val("");
+					$("#tipoPago").val("");
 					$("#form-pagos").slideDown();
 				});
-				
-				$("#slide-pagos-close").click(function(){
+
+				$("#slide-pagos-close").on("click", function(){
+					$("#totalPago").val("0");
+					$("#tipoPago").val(" ");
 					$("#form-pagos").slideUp();
-					text.value = " ";
-					caja.value = 0;
 				});
 
-				$("#slide-refacciones-open").click(function(){
-					$("#form-refacciones").slideDown();
-				});
-				
-				$("#slide-refacciones-close").click(function(){
-					$("#form-refacciones").slideUp();
-				});
-				
-				$("#open-modal").click(function(){
-					el = document.getElementById("overlay");
-					el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
-				}); 
+
 			});
 		</g:javascript>
 
@@ -123,8 +110,45 @@
 						</label>
 						<g:datePicker name="fecha" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
 					</div>
-<!--Agregar refacciones -->
-					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'refacciones', 'error')} ">
+
+<!--Agregar pagos-->
+					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'pagos', 'error')} ">
+						<label for="pagos">
+							<g:message code="entrada.pagos.label" default="Pago" />	
+						</label>
+						Agregar pago <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+					</div>
+					<div id="form-pagos">
+						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
+							<label for="tipoPago">
+								<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
+						</div>
+
+						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
+							<label for="total">
+								<g:message code="pagoProveedor.total.label" default="Total" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+						</div>
+						
+						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
+							<label for="fechaPago">
+								<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
+						</div>
+
+						<div class="fieldcontain">
+							<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+						</div>
+					</div>
+
+					<!--div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'refacciones', 'error')} ">
 						<label for="refacciones">
 							<g:message code="entrada.refacciones.label" default="Refacciones" />
 						</label>
@@ -161,62 +185,12 @@
 						</div>
 
 					</div>
-				</fieldset>
+				</fieldset -->
+				<br><br>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>
-			<br>
-<!-- Agregar refacciones -->
-			<div id="overlay">
-				<div id="overlayContainer">
-					<p>
-						<g:form name="form-refacciones" url="[controller:'entrada', action:'refaccionTable']">
-							
-							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
-								<label for="refaccion">
-									<g:message code="detalleEntrada.refaccion.label" default="Refaccion" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:select id="refaccion" name="refaccion.id" from="${mx.com.ideasydiseno.electronica.Refaccion.list()}" optionKey="id" required="" value="${detalleEntradaInstance?.refaccion?.id}" class="many-to-one"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'cantidad', 'error')} required">
-								<label for="cantidad">
-									<g:message code="detalleEntrada.cantidad.label" default="Cantidad" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:field type="number" name="cantidad" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'cantidad')}"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'precioUnitario', 'error')} required">
-								<label for="precioUnitario">
-									<g:message code="detalleEntrada.precioUnitario.label" default="Precio Unitario" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:field type="number" name="precioUnitario" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'precioUnitario')}"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'total', 'error')} required">
-								<label for="total">
-									<g:message code="detalleEntrada.total.label" default="Total" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'total')}"/>
-							</div>
-							
-							<br/>
-							<div class="fielcontain">
-								<fieldset class="buttons">
-									<g:submitButton name="refaccion" id="agregar-refaccion" class="ready" value="Listo"/> 
-									<input type="button" id="close-modal" class="close" value="Cerrar" onclick="overlay()" />
-								</fieldset>
-							</div>
-						</g:form>
-					</p>
-				</div>
-			</div>
-
 		</div>
 	</body>
 </html>

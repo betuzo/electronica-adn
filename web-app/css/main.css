@@ -804,6 +804,15 @@ a.skip {
     background: url(../images/Floppy.png) no-repeat;
 }
 
+.btnGuardar{
+	background-image: url(../images/Floppy.png);
+	background-size:80px 60px;
+	background-repeat:no-repeat;
+}
+
+#slide-fecha-open:hover{
+	background-size:80px 60px;
+}
 
 /* Modal Windows */
 
