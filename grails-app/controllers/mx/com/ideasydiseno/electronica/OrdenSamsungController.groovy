@@ -220,7 +220,7 @@ class OrdenSamsungController {
             if (!tipoFechaInstance)
             {
                 success = false
-                htmlRender = "<div class='property-value'>No existe la orden</div>"  
+                htmlRender = "<div class='property-value'>No existe la Orden</div>"  
             }
             def detalleFechaOrdenInstance = new DetalleFechaOrden()
             detalleFechaOrdenInstance.tipoFecha = tipoFechaInstance
