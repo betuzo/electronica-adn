@@ -18,7 +18,7 @@ environments {
           dialect = org.hibernate.dialect.PostgreSQLDialect
       
           //uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
-          uri = new URI(System.env.DATABASE_URL?:"postgres://postgres:betuzomobiik@localhost/electronica")
+          uri = new URI(System.env.DATABASE_URL?:"postgres://postgres:root@localhost/electronica")
 
           url = "jdbc:postgresql://"+uri.host+uri.path
           username = uri.userInfo.split(":")[0]
