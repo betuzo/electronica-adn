@@ -151,22 +151,6 @@
 	<g:select id="sucursal" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${personalInstance?.sucursal?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountExpired', 'error')} ">
-	<label for="accountExpired">
-		<g:message code="personal.accountExpired.label" default="Account Expired" />
-		
-	</label>
-	<g:checkBox name="accountExpired" value="${personalInstance?.accountExpired}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountLocked', 'error')} ">
-	<label for="accountLocked">
-		<g:message code="personal.accountLocked.label" default="Account Locked" />
-		
-	</label>
-	<g:checkBox name="accountLocked" value="${personalInstance?.accountLocked}" />
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'compras', 'error')} ">
 	<label for="compras">
 		<g:message code="personal.compras.label" default="Compras" />
@@ -182,39 +166,6 @@
 </li>
 </ul>
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'enabled', 'error')} ">
-	<label for="enabled">
-		<g:message code="personal.enabled.label" default="Enabled" />
-		
-	</label>
-	<g:checkBox name="enabled" value="${personalInstance?.enabled}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'ordenes', 'error')} ">
-	<label for="ordenes">
-		<g:message code="personal.ordenes.label" default="Ordenes" />
-		
-	</label>
-	
-<ul class="one-to-many">
-<g:each in="${personalInstance?.ordenes?}" var="o">
-    <li><g:link controller="detalleFechaOrden" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="detalleFechaOrden" action="create" params="['personal.id': personalInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleFechaOrden.label', default: 'DetalleFechaOrden')])}</g:link>
-</li>
-</ul>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'passwordExpired', 'error')} ">
-	<label for="passwordExpired">
-		<g:message code="personal.passwordExpired.label" default="Password Expired" />
-		
-	</label>
-	<g:checkBox name="passwordExpired" value="${personalInstance?.passwordExpired}" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'telefonos', 'error')} ">
@@ -233,4 +184,41 @@
 </ul>
 
 </div>
+
+
+<g:if test="${personalInstance?.id > 0}">
+			
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'passwordExpired', 'error')} ">
+	<label for="passwordExpired">
+		<g:message code="personal.passwordExpired.label" default="Password Expired" />
+		
+	</label>
+	<g:checkBox name="passwordExpired" value="${personalInstance?.passwordExpired}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'enabled', 'error')} ">
+	<label for="enabled">
+		<g:message code="personal.enabled.label" default="Enabled" />
+		
+	</label>
+	<g:checkBox name="enabled" value="${personalInstance?.enabled}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountExpired', 'error')} ">
+	<label for="accountExpired">
+		<g:message code="personal.accountExpired.label" default="Account Expired" />
+		
+	</label>
+	<g:checkBox name="accountExpired" value="${personalInstance?.accountExpired}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountLocked', 'error')} ">
+	<label for="accountLocked">
+		<g:message code="personal.accountLocked.label" default="Account Locked" />
+		
+	</label>
+	<g:checkBox name="accountLocked" value="${personalInstance?.accountLocked}" />
+</div>
+
+</g:if>
 

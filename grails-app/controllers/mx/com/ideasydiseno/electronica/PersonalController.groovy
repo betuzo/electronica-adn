@@ -21,6 +21,7 @@ class PersonalController {
 
     def save() {
         def personalInstance = new Personal(params)
+        personalInstance.enabled = true
         if (!personalInstance.save(flush: true)) {
             render(view: "create", model: [personalInstance: personalInstance])
             return
