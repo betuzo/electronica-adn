@@ -15,6 +15,38 @@
 				//$("#form-refacciones").css("display", "none");
 
 				/**FECHAS**/
+				$.ajax({
+					url:"${request.contextPath}/entrada/hasNext",
+					dataType: "json",
+					type:'post',
+					data:{id: $('#id').val()},
+					cache:false,
+					success: function(data){
+						$("#nextFecha").css('display', " " +data.html+" ");
+					},
+					error: function(data){
+						console.log(" Error: " + data);
+					}
+				});
+
+				$("#nextFecha").on("click", function(){
+					$.ajax({
+						url:"${request.contextPath}/entrada/nextFecha",
+						dataType: "json",
+						type:'post',
+						data:{id: $('#id').val(), tipoFechaEntrada: $("#tipoFechaEntrada").val()},
+						cache:false,
+						success: function(data){
+							$("#fecha-container ul").append(data.html);
+							$("#nextFecha").css('display', " " +data.img+" ");
+						},
+						error: function(data){
+							console.log("Error: " + data);
+						}
+					});
+				});
+
+
 				$("#slide-fecha-open").on("click", function(){
 					$("#form-fecha").slideDown();
 				});
@@ -25,9 +57,6 @@
 
 				$("#save-slide-fecha").on("click", function(){
 					var fechaEntrada = $("#fechaEntrada_day").val() + "/" + $("#fechaEntrada_month").val() + "/" + $("#fechaEntrada_year").val();
-					console.log("id del elemento que estamos guardando: " + $('#id').val());
-					console.log("tipo fecha entrada: " + $("#tipoFechaEntrada").val());
-					console.log("fecha Entrada: " + fechaEntrada);
 					$.ajax({
 						url:"${request.contextPath}/entrada/saveFechaEntrada",
 						dataType: "json",
@@ -35,11 +64,10 @@
 						data:{id: $('#id').val(), tipoFechaEntrada: $("#tipoFechaEntrada").val(), fechaEntrada: fechaEntrada},
 						cache:false,
 						success: function(data){
-							console.log("hola que hace el success" + data.html);
 							$("#fecha-container ul").append(data.html);
 						},
 						error: function(data){
-							console.log("hola que hace el error");
+							console.log("Error: " + data);
 						}
 					});
 				});
@@ -60,7 +88,6 @@
 
 				$("#save-slide-pagos").on('click', function(){
 					var fechaPago = $("#fechaPago_day").val() + "/" + $("#fechaPago_month").val() + "/" + $("#fechaPago_year").val();
-					console.log("guardando pagos");
 					$.ajax({
 						url:"${request.contextPath}/entrada/savePago",
 						dataType:"json",
@@ -68,11 +95,10 @@
 						data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val(), fechaPago: fechaPago},
 						cache:false,
 						success: function(data){
-							console.log("success pagos: " + data.html);
 							$("#pago-container ul").append(data.html);
 						},
 						error: function(data){
-							console.log("Error pago");
+							console.log("Error: " + data);
 						}
 					});
 				});
@@ -105,7 +131,6 @@
 				})
 
 				$("#refaccion").on('change', function(){
-					console.log("cambio de refaccion");
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val(""); 
@@ -127,7 +152,6 @@
 
 
 				$("#add-modal-refacciones").on("click", function(){
-					console.log("Entra a refacciones");
 					$.ajax({
 						url:"${request.contextPath}/entrada/addRefaccion",
 						dataType:"json",
@@ -135,16 +159,13 @@
 						data:{id: $('#id').val(), refaccion:$("#refaccion").val(), cantidad:$("#cantidadRefaccion").val(), precio: $("#precioUnitario").val()},
 						cache:false,
 						success: function(data){
-							console.log("success pagos: " + data.html);
 							$("#tableRefacciones tbody:first").append(data.html)
 						},
 						error: function(data){
-							console.log("Error pago");
+							console.log("Error: " + data);
 						}
 					});
 				});
-
-				console.log("fin de cargar (document).on");
 			});
 		</g:javascript>
 	</head>
@@ -221,7 +242,7 @@
 						</label>
 
 						<ul id="fechasEntrada" class="one-to-many">
-						Agregar fecha entrada <img id="slide-fecha-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
+						Agregar fecha entrada <img id="nextFecha" href="#" src="${resource(dir: 'images', file: 'next.png')}" alt="Agregar fecha" height="20px" width="20px"/>
 							<g:each in="${entradaInstance?.fechas?}" var="f">
 							    <li><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
 							</g:each>

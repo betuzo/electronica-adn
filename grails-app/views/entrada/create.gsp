@@ -104,13 +104,6 @@
 						<g:textField name="observaciones" maxlength="50" value="${entradaInstance?.observaciones}"/>
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'fechas', 'error')} ">
-						<label for="fechas">
-							<g:message code="entrada.fechas.label" default="Fecha" />	
-						</label>
-						<g:datePicker name="fecha" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
-					</div>
-
 <!--Agregar pagos-->
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'pagos', 'error')} ">
 						<label for="pagos">

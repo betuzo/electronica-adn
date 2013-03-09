@@ -10,6 +10,22 @@
 		
 		<g:javascript>
 			$(document).on("ready", function(){
+				
+				$.ajax({
+					url:"${request.contextPath}/entrada/hasNext",
+					dataType: "json",
+					type:'post',
+					data:{id: $('#id').val()},
+					cache:false,
+					success: function(data){
+						$("#nextFecha").css('display', " " +data.html+" ");
+					},
+					error: function(data){
+						console.log(" Error: " + data);
+					}
+				});
+
+
 				var tipoFecha = $("#tipoFechaEntrada").val();
 				$("#totalPago").val("0");
 				$("#tipoPago").val(" ");
@@ -18,6 +34,23 @@
 				$("#form-refacciones").css("display", "none");
 
 				/**FECHAS**/
+				$("#nextFecha").on("click", function(){
+					$.ajax({
+						url:"${request.contextPath}/entrada/nextFechaShow",
+						dataType: "json",
+						type:'post',
+						data:{id: $('#id').val(), tipoFechaEntrada: $("#tipoFechaEntrada").val()},
+						cache:false,
+						success: function(data){
+							$("#add-fechas").append(data.html);
+							$("#nextFecha").css('display', " " +data.img+" ");
+						},
+						error: function(data){
+							console.log("Error: " + data);
+						}
+					});
+				});
+
 				$("#slide-fecha-open").on("click", function(){
 					$("#form-fecha").slideDown();
 				});
@@ -27,11 +60,7 @@
 				});
 
 				$("#save-slide-fecha").on("click", function(){
-
 					var fechaEntrada = $("#fechaEntrada_day").val() + "/" + $("#fechaEntrada_month").val() + "/" + $("#fechaEntrada_year").val();
-					console.log("id del elemento que estamos guardando: " + $('#id').val());
-					console.log("tipo fecha entrada: " + $("#tipoFechaEntrada").val());
-					console.log("fecha Entrada: " + fechaEntrada);
 					$.ajax({
 						url:"${request.contextPath}/entrada/saveFechaEntradaShow",
 						dataType: "json",
@@ -42,7 +71,7 @@
 							$("#add-fechas").append(data.html);
 						},
 						error: function(data){
-							console.log("hola que hace el error");
+							console.log("Error: " + data);
 						}
 					});
 				});
@@ -53,10 +82,8 @@
 					var objDelete = $(this).attr('id');
 					var arrayDelete = objDelete.split('-');
 					var urlDelete = "${request.contextPath}/"+arrayDelete[0]+"/delete";
-					var elimina = confirm("desea eliminar");
-					console.log("valor de eliminar: " + elimina);
+					var elimina = confirm("¿Está usted seguro?");
 					if(elimina){
-						console.log("entra a aliminar: " + urlDelete);
 						$.ajax({
 							url: urlDelete,
 							dataType: "json",
@@ -67,21 +94,16 @@
 								console.log("console success delete " + arrayDelete[0]);
 							},
 							error: function(data){
-								console.log("hola que hace el error");
+								console.log("Error: " + data);
 								var deleteContenedor= "delete-"+arrayDelete[0]+"-"+arrayDelete[1];
-								console.log("id del contenedor a eliminar: " + deleteContenedor);
 								$("#"+deleteContenedor+" ").remove();
 							}
 						});
 					}
 				});
-
-
-
 				/**PAGOS**/
 				
 				$("#slide-pagos-open").on("click", function(){
-					console.log("entra a pagos");
 					$("#totalPago").val("");
 					$("#tipoPago").val("");
 					$("#form-pagos").slideDown();
@@ -95,7 +117,6 @@
 
 				$("#save-slide-pagos").on('click', function(){
 					var fechaPago = $("#fechaPago_day").val() + "/" + $("#fechaPago_month").val() + "/" + $("#fechaPago_year").val();
-					console.log("guardando pagos");
 					$.ajax({
 						url:"${request.contextPath}/entrada/savePagoShow",
 						dataType:"json",
@@ -103,11 +124,10 @@
 						data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val(), fechaPago: fechaPago},
 						cache:false,
 						success: function(data){
-							console.log("success pagos: " + data.html);
 							$("#add-pago").append(data.html);
 						},
 						error: function(data){
-							console.log("Error pago");
+							console.log("Error: " + data);
 						}
 					});
 				});
@@ -140,7 +160,6 @@
 				})
 
 				$("#refaccion").on('change', function(){
-					console.log("cambio de refaccion");
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val(""); 
@@ -162,7 +181,6 @@
 
 
 				$("#add-modal-refacciones").on("click", function(){
-					console.log("Entra a refacciones");
 					$.ajax({
 						url:"${request.contextPath}/entrada/addRefaccion",
 						dataType:"json",
@@ -170,11 +188,10 @@
 						data:{id: $('#id').val(), refaccion:$("#refaccion").val(), cantidad:$("#cantidadRefaccion").val(), precio: $("#precioUnitario").val()},
 						cache:false,
 						success: function(data){
-							console.log("success pagos: " + data.html);
 							$("#tableRefacciones tbody:first").append(data.html)
 						},
 						error: function(data){
-							console.log("Error pago");
+							console.log("Error: " + data);
 						}
 					});
 				});
@@ -242,11 +259,10 @@
 
 				<li id="add-fechas" class="fieldcontain">
 					<span id="fechas-label" class="property-label"><g:message code="entrada.fechas.label" default="Fechas" /></span>
-						 &nbsp; &nbsp; &nbsp;Agregar fecha entrada <img id="slide-fecha-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
+						 &nbsp; &nbsp; &nbsp;Fecha entrada <img id="nextFecha" href="#" src="${resource(dir: 'images', file: 'next.png')}" alt="Agregar fecha" height="20px" width="20px"/>
 						
 						<g:each in="${entradaInstance.fechas}" var="f">
-						<span id="delete-detalleFechaEntrada-${f.id}" class="property-value" aria-labelledby="fechas-label"><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link>
-							<img id="detalleFechaEntrada-${f.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Fecha" height="20px" width="20px"/></span>
+						<span id="delete-detalleFechaEntrada-${f.id}" class="property-value" aria-labelledby="fechas-label"><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 
