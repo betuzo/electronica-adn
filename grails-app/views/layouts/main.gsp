@@ -85,7 +85,7 @@
 								<li><g:link controller='almacen'>Almacen</g:link></li>
 								<li><g:link controller='refaccion'>Refacciones</g:link></li>
 								<li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li>
-								<li><g:link controller='tienda'>Tienda</g:link><li>
+								<li><g:link controller='tienda'>Tienda</g:link></li>
 							</ul>				
 						</li>
 						<li><a href="#">Admin General &raquo;</a>
@@ -97,8 +97,7 @@
 								<li><g:link controller='conceptoCobro'>conceptoCobro</g:link></li>
 								<li><g:link controller='marca'>Marca</g:link></li>
 								<li><g:link controller='modelo'>Modelo</g:link></li>
-								<li><glink controller='tipoFalla'>Tipo Falla</glink></li>	
-
+								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>	
 							</ul>				
 						</li>
 						<li><a href="#">Administrador &raquo;</a>
