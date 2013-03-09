@@ -34,12 +34,33 @@
 	<g:textField name="calle" value="${proveedorInstance?.calle}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado.pais', 'error')} required">
+	<label for="pais">
+		<g:message code="proveedor.pais.label" default="Pais" />
+	</label>
+	<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado', 'error')} required">
+	<label for="estado">
+		<g:message code="proveedor.estado.label" default="Estado" />
+	</label>
+	<g:select id="estado" name="municipio.estado.id" from="${proveedorInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio', 'error')} required">
+	<label for="municipio">
+		<g:message code="proveedor.municipio.label" default="Municipio" />
+	</label>
+	<g:select id="municipio" name="municipio.id" from="${proveedorInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'colonia', 'error')} ">
 	<label for="colonia">
 		<g:message code="proveedor.colonia.label" default="Colonia" />
 		
 	</label>
-	<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${proveedorInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="colonia" name="colonia.id" from="${proveedorInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${proveedorInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'codigoPostal', 'error')} ">
