@@ -81,7 +81,7 @@
 			<h1>Electronica Dimove</h1>
 			<hr>
 			<br>
-			<p>Bienvenidos a Electrónica Dimove, somos su Centro de Servicio Electrónico mas confiable de la regi&oacute;n. Somos Centro Oficial de Servicios de Panasonic, Elektra, Samsung, AOC. </p>
+			<p>Bienvenidos a Electrónica Dimove, somos su centro de Servicio Electrónico Autorizado. Centro oficial de servicios Panasonic, Samsung,  AOC y Elektra. </p>
 			<br>
 			<div id="img-main"><img src="${resource(dir: 'images', file: 'electronica_main.jpeg')}" alt="Grails" height="120px" width="500px"/></div>
 		</div>
