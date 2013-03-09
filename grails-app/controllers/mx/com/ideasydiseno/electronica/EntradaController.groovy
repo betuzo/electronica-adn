@@ -35,14 +35,15 @@ class EntradaController {
             if (user) {
                 def tipoFechaInstance = TipoFecha.findByTipoUso(FECHA_TIPO_ENTRADA)
                 if (tipoFechaInstance) {
-                    
                     //Guardando Detalle fecha entrada
                     def detalleFechaEntrada = new DetalleFechaEntrada()
-                    detalleFechaEntrada.fecha = params.fecha
+                    detalleFechaEntrada.fecha = new Date()
                     detalleFechaEntrada.personal= user
                     detalleFechaEntrada.tipoFecha= tipoFechaInstance
                     detalleFechaEntrada.entrada = entradaInstance
                     detalleFechaEntrada.save()
+
+
 
                     //Guardando pago
                     if (params.tipoPago != "" && params.totalPago != "0") {
@@ -306,5 +307,83 @@ class EntradaController {
         println(pagoProveedor.id)
         htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
         render ([html:htmlRender] as JSON)   
+    }
+
+    def nextFechaShow(){
+        def htmlRender=''
+        def imgState='visible'
+        def user =springSecurityService.currentUser
+        def detalleFechaEntrada = new DetalleFechaEntrada()
+        println ("**NEXT FECHA** ==> " + params)
+        def entradaInstance = Entrada.get(params.id)
+        def totalFechas = entradaInstance.fechas.size()
+        def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+        if((totalFechas + 1) == listFechaEntrada){
+            imgState = 'none'
+        }
+
+        println ("Total de fechas" + totalFechas)
+        def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
+        println("tamaño de la fecha" + tipoFechaInstance)
+                
+        if (tipoFechaInstance != null) {
+            println("tamaño de la fecha" + tipoFechaInstance)
+            println ("*******")
+            
+            detalleFechaEntrada.fecha = new Date()
+            detalleFechaEntrada.personal= user
+            detalleFechaEntrada.tipoFecha= tipoFechaInstance
+            detalleFechaEntrada.entrada = entradaInstance
+            detalleFechaEntrada.save()    
+        }
+
+
+        htmlRender = "<spam id='delete-detalleFechaEntrada-"+detalleFechaEntrada.id+"' class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</spam></a></spam>"
+        render ([html:htmlRender, img:imgState] as JSON)
+    }
+
+    def nextFecha(){
+        def htmlRender=''
+        def imgState='visible'
+        def user =springSecurityService.currentUser
+        def detalleFechaEntrada = new DetalleFechaEntrada()
+        println ("**NEXT FECHA** ==> " + params)
+        def entradaInstance = Entrada.get(params.id)
+        def totalFechas = entradaInstance.fechas.size()
+        def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+        if((totalFechas + 1) == listFechaEntrada){
+            imgState = 'none'
+        }
+
+        println ("Total de fechas" + totalFechas)
+        def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
+        println("tamaño de la fecha" + tipoFechaInstance)
+                
+        if (tipoFechaInstance != null) {
+            println("tamaño de la fecha" + tipoFechaInstance)
+            println ("*******")
+            
+            detalleFechaEntrada.fecha = new Date()
+            detalleFechaEntrada.personal= user
+            detalleFechaEntrada.tipoFecha= tipoFechaInstance
+            detalleFechaEntrada.entrada = entradaInstance
+            detalleFechaEntrada.save()    
+        }
+
+
+        htmlRender = "<li><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</<spam></a></li>"
+        render ([html:htmlRender, img:imgState] as JSON)
+    }
+
+    def hasNext(){
+        def htmlRender='visible'
+        def entradaInstance = Entrada.get(params.id)
+        def totalFechas = entradaInstance.fechas.size()
+        def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+        if(totalFechas >= listFechaEntrada){
+            htmlRender = 'none'
+        }
+        println ("Lista de fecha entrada: " + listFechaEntrada + "  total de fechas: " + totalFechas + "     " + (totalFechas >= listFechaEntrada))
+        render ([html:htmlRender] as JSON)    
     }
 }
