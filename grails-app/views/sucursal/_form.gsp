@@ -34,12 +34,33 @@
 	<g:textField name="calle" value="${sucursalInstance?.calle}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'municipio.estado.pais', 'error')} required">
+	<label for="pais">
+		<g:message code="sucursal.pais.label" default="Pais" />
+	</label>
+	<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${sucursalInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'municipio.estado', 'error')} required">
+	<label for="estado">
+		<g:message code="sucursal.estado.label" default="Estado" />
+	</label>
+	<g:select id="estado" name="municipio.estado.id" from="${sucursalInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${sucursalInstance?.colonia?.municipio?.estado?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'municipio', 'error')} required">
+	<label for="municipio">
+		<g:message code="sucursal.municipio.label" default="Municipio" />
+	</label>
+	<g:select id="municipio" name="municipio.id" from="${sucursalInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${sucursalInstance?.colonia?.municipio?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'colonia', 'error')} ">
 	<label for="colonia">
 		<g:message code="sucursal.colonia.label" default="Colonia" />
 		
 	</label>
-	<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${sucursalInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="colonia" name="colonia.id" from="${sucursalInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${sucursalInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'codigoPostal', 'error')} ">
