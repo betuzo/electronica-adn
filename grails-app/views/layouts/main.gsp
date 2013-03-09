@@ -85,7 +85,7 @@
 								<li><g:link controller='almacen'>Almacen</g:link></li>
 								<li><g:link controller='refaccion'>Refacciones</g:link></li>
 								<li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li>
-
+								<li><g:link controller='tienda'>Tienda</g:link><li>
 							</ul>				
 						</li>
 						<li><a href="#">Admin General &raquo;</a>
@@ -96,7 +96,8 @@
 								<li><g:link controller='colonia'>Colonia</g:link></li>
 								<li><g:link controller='conceptoCobro'>conceptoCobro</g:link></li>
 								<li><g:link controller='marca'>Marca</g:link></li>
-								<li><g:link controller='modelo'>Modelo</g:link></li>	
+								<li><g:link controller='modelo'>Modelo</g:link></li>
+								<li><glink controller='tipoFalla'>Tipo Falla</glink></li>	
 
 							</ul>				
 						</li>
@@ -123,7 +124,7 @@
 			<div id="page">
 				<br>
 				<g:layoutBody/>
-				<div class="footer" role="contentinfo"> Electronica Dimove, Efren Rebolledo #150 col. Centro Actopan Hgo, México</div>
+				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. ventas@electronicadimove.com</div>
 				<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 				<g:javascript library="application"/>
 		        <r:layoutResources />
