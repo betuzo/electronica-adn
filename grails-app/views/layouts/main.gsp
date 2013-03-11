@@ -22,7 +22,7 @@
 				});
 			    $("#pais").change(function() {
 			    	$.ajax({
-			        	url: "/electronica-adn/address/paisSelected",
+			        	url: "/address/paisSelected",
 			            data: { id: this.value, idEstado: $("#estado").val() },
 			            cache: false,
 			            success: function(html) {
@@ -33,7 +33,7 @@
 			    });
 			    $("#estado").change(function() {
 			    	$.ajax({
-			        	url: "/electronica-adn/address/estadoSelected",
+			        	url: "/address/estadoSelected",
 			            data: { id: this.value, idMunicipio: $("#municipio").val() },
 			            cache: false,
 			            success: function(html) {
@@ -44,7 +44,7 @@
 			    });
 			    $("#municipio").change(function() {
 			    	$.ajax({
-			        	url: "/electronica-adn/address/municipioSelected",
+			        	url: "/address/municipioSelected",
 			            data: { id: this.value, idColonia: $("#colonia").val() },
 			            cache: false,
 			            success: function(html) {
