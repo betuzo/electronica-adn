@@ -16,7 +16,7 @@ class Institucion {
 	static hasMany = [telefonos: TelefonoInstitucion]
 
     static constraints = {
-     	nombre blank:false
+     	nombre blank:false, unique: true
     	descripcion blank:false
     	fechaRegistro blank:false
     	calle blank:true

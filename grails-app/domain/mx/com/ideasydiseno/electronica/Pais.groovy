@@ -12,6 +12,10 @@ class Pais {
     	nombreCompleto blank:true
 	}
 
+    static mapping = {
+        estados sort:'nombre', order:'asc'
+    }
+
     String toString(){
         return "${nombre}"
     }

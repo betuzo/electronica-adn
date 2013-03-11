@@ -14,6 +14,10 @@ class Municipio {
     	nombreCompleto blank:true
 	}
 
+    static mapping = {
+        colonias sort:'nombreCompleto', order:'asc'
+    }
+
     String toString(){
         return "${nombre}"
     }

@@ -14,6 +14,10 @@ class Estado {
     	abreviatura blank:true
 	}
 
+    static mapping = {
+        municipios sort:'nombre', order:'asc'
+    }
+
     String toString(){
         return "${nombre}"
     }
