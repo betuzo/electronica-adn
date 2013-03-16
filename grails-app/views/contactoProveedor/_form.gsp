@@ -42,12 +42,25 @@
 	<g:datePicker name="fechaRegistro" precision="day"  value="${contactoProveedorInstance?.fechaRegistro}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'calle', 'error')} ">
-	<label for="calle">
-		<g:message code="contactoProveedor.calle.label" default="Calle" />
-		
+<div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'municipio.estado.pais', 'error')} required">
+	<label for="pais">
+		<g:message code="contactoProveedor.pais.label" default="Pais" />
 	</label>
-	<g:textField name="calle" value="${contactoProveedorInstance?.calle}"/>
+	<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${contactoProveedorInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'municipio.estado', 'error')} required">
+	<label for="estado">
+		<g:message code="contactoProveedor.estado.label" default="Estado" />
+	</label>
+	<g:select id="estado" name="municipio.estado.id" from="${contactoProveedorInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${contactoProveedorInstance?.colonia?.municipio?.estado?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'municipio', 'error')} required">
+	<label for="municipio">
+		<g:message code="contactoProveedor.municipio.label" default="Municipio" />
+	</label>
+	<g:select id="municipio" name="municipio.id" from="${contactoProveedorInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${contactoProveedorInstance?.colonia?.municipio?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'colonia', 'error')} ">
@@ -56,6 +69,14 @@
 		
 	</label>
 	<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${contactoProveedorInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'calle', 'error')} ">
+	<label for="calle">
+		<g:message code="contactoProveedor.calle.label" default="Calle" />
+		
+	</label>
+	<g:textField name="calle" value="${contactoProveedorInstance?.calle}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contactoProveedorInstance, field: 'codigoPostal', 'error')} ">

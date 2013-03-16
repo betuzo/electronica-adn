@@ -100,4 +100,9 @@ class AlmacenController {
             redirect(action: "show", id: params.id)
         }
     }
+
+    def detalleAlmacen(){
+        
+
+    }
 }

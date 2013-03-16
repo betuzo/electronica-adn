@@ -30,15 +30,17 @@ class ProveedorController {
         }else{
             if (user) {
                 println "aquí los params: " + params
-                println "parametros insitutcion: " + params.institucion
+                println "parametros insitutcion: " + proveedorInstance
+                println "telefono: " + params.telefono
                 println "Tipo telefono: " + params.tipoTelefono
-                println "telefono: " + params.tipoTelefono
                 //guardando telefonoIstitucion
-                def telefonoInstitucion = new TelefonoInstitucion();
-                telefonoInstitucion.tipoTelefonoContacto=params.tipoTelefonoContacto
-                telefonoInstitucion.telefonoContacto= params.telefonoContacto
-                telefonoInstitucion.institucion = proveedor.instance; 
-                telefonoInstitucion.save();
+                def telefonoInstitucion = new TelefonoInstitucion()
+                telefonoInstitucion.tipoTelefono = params.tipoTelefono
+                telefonoInstitucion.telefono = params.telefono
+                telefonoInstitucion.institucion = proveedorInstance 
+                telefonoInstitucion.save(flus:true)
+
+
             }
 
         }

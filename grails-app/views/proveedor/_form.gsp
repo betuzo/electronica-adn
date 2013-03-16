@@ -26,14 +26,6 @@
 	<g:datePicker name="fechaRegistro" precision="day"  value="${proveedorInstance?.fechaRegistro}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'calle', 'error')} ">
-	<label for="calle">
-		<g:message code="proveedor.calle.label" default="Calle" />
-		
-	</label>
-	<g:textField name="calle" value="${proveedorInstance?.calle}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado.pais', 'error')} required">
 	<label for="pais">
 		<g:message code="proveedor.pais.label" default="Pais" />
@@ -61,6 +53,14 @@
 		
 	</label>
 	<g:select id="colonia" name="colonia.id" from="${proveedorInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${proveedorInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'calle', 'error')} ">
+	<label for="calle">
+		<g:message code="proveedor.calle.label" default="Calle" />
+		
+	</label>
+	<g:textField name="calle" value="${proveedorInstance?.calle}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'codigoPostal', 'error')} ">

@@ -132,7 +132,7 @@
 		<g:message code="personal.password.label" default="Password" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="password" required="" value="${personalInstance?.password}"/>
+	<input type="password" name="password" required="" value="${personalInstance?.password}" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'tipoPersonal', 'error')} required">

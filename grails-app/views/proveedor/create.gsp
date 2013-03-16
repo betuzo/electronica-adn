@@ -6,31 +6,7 @@
 		<g:set var="entityName" value="${message(code: 'proveedor.label', default: 'Proveedor')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 		<g:javascript>
-			document.getElementById('form-telefono-proveedor').style.display='none';
-
-			var tipoTelefono = document.getElementById('tipoTelefono');
-			var telefono= document.getElementById('telefono');
-			telefonoContacto.value = " ";
-			tipoTelefonoContacto.value = " ";
-
-
-			$(document).ready(function(){
-
-				$('#slide-telefono-open').click(function(){
-					$('#form-telefono-proveedor').slideDown();
-					telefonoContacto.value = "";
-					tipoTelefonoContacto.value = "";
-				});
-
-				$('#form-telefono-close').click(function(){
-					$('#form-telefono-proveedor').slideUp();
-					telefonoContacto.value = " ";
-					tipoTelefonoContacto.value = " ";
-				});
-
-				
-			});
-
+			
 		</g:javascript>
 	</head>
 	<body>
@@ -79,13 +55,27 @@
 						<g:datePicker name="fechaRegistro" precision="day"  value="${proveedorInstance?.fechaRegistro}"  />
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'calle', 'error')} ">
-						<label for="calle">
-							<g:message code="proveedor.calle.label" default="Calle" />
-							
+					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado.pais', 'error')} required">
+						<label for="pais">
+							<g:message code="proveedor.pais.label" default="Pais" />
 						</label>
-						<g:textField name="calle" value="${proveedorInstance?.calle}"/>
+						<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one"/>
 					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado', 'error')} required">
+						<label for="estado">
+							<g:message code="proveedor.estado.label" default="Estado" />
+						</label>
+						<g:select id="estado" name="municipio.estado.id" from="${proveedorInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.id}" class="many-to-one"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio', 'error')} required">
+						<label for="municipio">
+							<g:message code="proveedor.municipio.label" default="Municipio" />
+						</label>
+						<g:select id="municipio" name="municipio.id" from="${proveedorInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.id}" class="many-to-one"/>
+					</div>
+
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'colonia', 'error')} ">
 						<label for="colonia">
@@ -93,6 +83,14 @@
 							
 						</label>
 						<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${proveedorInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'calle', 'error')} ">
+						<label for="calle">
+							<g:message code="proveedor.calle.label" default="Calle" />
+							
+						</label>
+						<g:textField name="calle" value="${proveedorInstance?.calle}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'codigoPostal', 'error')} ">
@@ -151,64 +149,24 @@
 					</ul>
 
 					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'entradas', 'error')} ">
-						<label for="entradas">
-							<g:message code="proveedor.entradas.label" default="Entradas" />
-							
+<!--telefonos-->
+					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
+						<label for="tipoTelefono">
+							<g:message code="telefonoInstitucion.tipoTelefono.label" default="Tipo Telefono" />
+							<span class="required-indicator">*</span>
 						</label>
-						
-					<ul class="one-to-many">
-					<g:each in="${proveedorInstance?.entradas?}" var="e">
-					    <li><g:link controller="entrada" action="show" id="${e.id}">${e?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					<li class="add">
-					<g:link controller="entrada" action="create" params="['proveedor.id': proveedorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'entrada.label', default: 'Entrada')])}</g:link>
-					</li>
-					</ul>
-
+						<g:textField name="tipoTelefono" required="" value="${telefonoInstitucionInstance?.tipoTelefono}"/>
 					</div>
-<!-- Agregar telefonos-->
-					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'telefonos', 'error')} ">
-						<label for="telefonos">
-							<g:message code="proveedor.telefonos.label" default="Telefonos" />
-							
+
+					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'telefono', 'error')} required">
+						<label for="telefono">
+							<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
+							<span class="required-indicator">*</span>
 						</label>
-						
-					<ul class="one-to-many">
-					<g:each in="${proveedorInstance?.telefonos?}" var="t">
-					    <li><g:link controller="telefonoInstitucion" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					<li class="add">
-					<!--
-					<g:link controller="telefonoInstitucion" action="create" params="['proveedor.id': proveedorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'telefonoInstitucion.label', default: 'TelefonoInstitucion')])}</g:link>
-					-->
-					Agregar Telefono <img id="slide-telefono-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-						<div id="form-telefono-proveedor">
-							<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
-								<label for="tipoTelefono">
-									<g:message code="telefonoInstitucion.tipoTelefono.label" default="Tipo Telefono" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:textField name="tipoTelefonoContacto" required="" value="${telefonoInstitucionInstance?.tipoTelefono}"/>
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'telefono', 'error')} required">
-								<label for="telefono">
-									<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:textField name="telefonoContacto" required="" value="${telefonoInstitucionInstance?.telefono}"/>
-							</div>
-							<div>
-								<img id="form-telefono-close" href="#" src="${resource (dir:'images', file:'Xion.png')}" alt="Cerrar" heigth="30px" width="30px"/>	
-							</div>
-						</div>
+						<g:textField name="telefono" required="" value="${telefonoInstitucionInstance?.telefono}"/>
 					</div>
-					</li>
-					</ul>
 
-					</div>
+				</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

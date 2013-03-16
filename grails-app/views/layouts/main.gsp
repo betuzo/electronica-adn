@@ -94,7 +94,7 @@
 								<li><g:link controller='estado'>Estado</g:link></li>
 								<li><g:link controller='municipio'>Municipio</g:link></li>
 								<li><g:link controller='colonia'>Colonia</g:link></li>
-								<li><g:link controller='conceptoCobro'>conceptoCobro</g:link></li>
+								<li><g:link controller='conceptoCobro'>Concepto Cobro</g:link></li>
 								<li><g:link controller='marca'>Marca</g:link></li>
 								<li><g:link controller='modelo'>Modelo</g:link></li>
 								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>	
@@ -123,7 +123,11 @@
 			<div id="page">
 				<br>
 				<g:layoutBody/>
+<<<<<<< HEAD
 				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. contacto@electronicadimove.com</div>
+=======
+				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México.  ventas@electronicadimove.com</div>
+>>>>>>> Bugs
 				<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 				<g:javascript library="application"/>
 		        <r:layoutResources />
