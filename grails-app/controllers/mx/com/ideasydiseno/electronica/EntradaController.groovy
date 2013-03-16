@@ -193,7 +193,10 @@ class EntradaController {
     def addRefaccion(){
         println ("params refaccion ==> " + params)
         def htmlRender=''
+        def user =springSecurityService.currentUser
         def detalleEntrada = new DetalleEntrada()
+
+        def refaccionAlmacen = new RefaccionAlmacen()
         if (params) {
             println ("los params son diferentes de null")
             def entradaInstance = Entrada.get(params.id)
@@ -201,9 +204,17 @@ class EntradaController {
             detalleEntrada.entrada= entradaInstance
             detalleEntrada.refaccion= refaccionInstance
             detalleEntrada.cantidad= params.cantidad as int
-            detalleEntrada.precioUnitario = params.precio as int
+            detalleEntrada.precioUnitario = params.precio as double
             detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario 
             detalleEntrada.save()
+
+            refaccionAlmacen.almacen = user?.almacen
+            refaccionAlmacen.refaccion = refaccionInstance
+            refaccionAlmacen.cantidad = params.cantidad as int
+            refaccionAlmacen.precio = params.precio as double
+            refaccionAlmacen.entrada = detalleEntrada
+            refaccionAlmacen.save()
+
             println ("refacciones: " + detalleEntrada)
         }
         htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"

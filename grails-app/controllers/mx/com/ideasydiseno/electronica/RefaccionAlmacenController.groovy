@@ -100,4 +100,19 @@ class RefaccionAlmacenController {
             redirect(action: "show", id: params.id)
         }
     }
+
+    def lotesByRefaccion = {
+        def refaccion = Refaccion.get(params.idRefaccion)
+        def lotes = RefaccionAlmacen.findAllByRefaccion(refaccion)
+
+        println "Lotes debug ${lotes}"
+
+        render g.select(optionKey: 'id', 
+                        from: lotes, 
+                        id: 'lotes', 
+                        name: 'lotes.id', 
+                        class: 'many-to-one', 
+                        required: '', 
+                        value: '')
+    }
 }

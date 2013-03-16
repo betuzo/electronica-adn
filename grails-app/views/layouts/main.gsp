@@ -22,7 +22,7 @@
 				});
 			    $("#pais").change(function() {
 			    	$.ajax({
-			        	url: "/address/paisSelected",
+			        	url: "${request.contextPath}/address/paisSelected",
 			            data: { id: this.value, idEstado: $("#estado").val() },
 			            cache: false,
 			            success: function(html) {
@@ -33,7 +33,7 @@
 			    });
 			    $("#estado").change(function() {
 			    	$.ajax({
-			        	url: "/address/estadoSelected",
+			        	url: "${request.contextPath}/address/estadoSelected",
 			            data: { id: this.value, idMunicipio: $("#municipio").val() },
 			            cache: false,
 			            success: function(html) {
@@ -44,7 +44,7 @@
 			    });
 			    $("#municipio").change(function() {
 			    	$.ajax({
-			        	url: "/address/municipioSelected",
+			        	url: "${request.contextPath}/address/municipioSelected",
 			            data: { id: this.value, idColonia: $("#colonia").val() },
 			            cache: false,
 			            success: function(html) {
@@ -123,7 +123,7 @@
 			<div id="page">
 				<br>
 				<g:layoutBody/>
-				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. ventas@electronicadimove.com</div>
+				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. contacto@electronicadimove.com</div>
 				<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 				<g:javascript library="application"/>
 		        <r:layoutResources />

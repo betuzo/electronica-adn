@@ -18,6 +18,81 @@
 			$("#seccFechas").html(data.html);
 			$("#statusOrden").text(data.valStatus);
 	    }
+
+	    $(document).on("ready", function(){
+	    	$("#slide-refacciones-open").on("click", function(){
+				$("#form-refacciones").slideDown();
+			});
+
+			$("#slide-refacciones-close").on("click", function(){
+				$("#form-refacciones").slideUp();
+			});
+
+			$("#open-modal").on("click", function(){
+				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+				$("#overlay").css('visibility', show);
+				$("#cantidadRefaccion").val("");
+				$("#precio").val("");
+				$("#totalRefaccion").val(""); 
+
+			});
+
+			$("#close-modal").on("click", function(){
+				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+				$("#overlay").css('visibility', show);
+				$("#cantidadRefaccion").val("");
+				$("#precioUnitario").val("");
+				$("#totalRefaccion").val(""); 
+			})
+
+			$("#refaccion").on('change', function(){
+				$("#cantidadRefaccion").val("");
+				$("#precio").val("");
+				$("#totalRefaccion").val("");
+				$.ajax({
+					url:"${request.contextPath}/refaccionAlmacen/lotesByRefaccion",
+					data:{idRefaccion: $('#refaccion').val()},
+					cache:false,
+					success: function(html) {
+			            $("#lotes").html(html);
+					},
+					error: function(html){
+						console.log("Error: " + html);
+					}
+				});
+			});
+
+			$("#precio").on('change', function(){
+				var cantidad = $("#cantidadRefaccion").val();
+				var precio = $("#precio").val();
+				var result = parseFloat(cantidad) * parseFloat(precio);
+				$("#totalRefaccion").val(result);
+			});
+
+			$("#cantidadRefaccion").on("change", function(){
+				var cantidad = $("#cantidadRefaccion").val();
+				var precio = $("#precio").val();
+				var result = parseFloat(cantidad) * parseFloat(precio);
+				$("#totalRefaccion").val(result);
+			});
+
+
+			$("#add-modal-refacciones").on("click", function(){
+				$.ajax({
+					url:"${request.contextPath}/entrada/addRefaccion",
+					dataType:"json",
+					type:"post",
+					data:{id: $('#id').val(), refaccion:$("#refaccion").val(), cantidad:$("#cantidadRefaccion").val(), precio: $("#precio").val()},
+					cache:false,
+					success: function(data){
+						$("#tableRefacciones tbody:first").append(data.html)
+					},
+					error: function(data){
+						console.log("Error: " + data);
+					}
+				});
+			});
+		});
 		</g:javascript>
 	</head>
 	<body>
@@ -173,14 +248,52 @@
 			
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="ordenSamsung.refacciones.label" default="Refacciones" /></span>
-					
-						<div id="seccRefacciones">
+					&nbsp; &nbsp; &nbsp;Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
 						<g:each in="${ordenSamsungInstance.refacciones}" var="r">
-						<span class="property-value" aria-labelledby="refacciones-label"><g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="refacciones-label">
+							<g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link>
+							<img id="delete-refacciones" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Refacción" height="20px" width="20px"/>
+						</span>
 						</g:each>
-						</div>
-					
 				</li>
+				<div id="form-refacciones">
+					<table id="tableRefacciones">
+						<thead>
+							<tr>
+								<th>Refaccion</th>
+							
+								<th>Precio</th>
+								
+								<th>Cantidad</th>
+
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<g:each in="${ordenSamsungInstance?.refacciones?}" status="i" var="detalleOrdenInstance">
+								<tr id="delete-detalleEntrada-${detalleOrdenInstance.id}" class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								
+									<td><g:link controller="detalleEntrada" action="show" id="${detalleEntradaInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
+								
+									<td>${fieldValue(bean: detalleOrdenInstance, field: "cantidad")}</td>
+								
+									<td>${fieldValue(bean: detalleOrdenInstance, field: "precio")}</td>
+								
+									<td>${fieldValue(bean: detalleOrdenInstance, field: "total")}</td>
+
+									<td><img id="detalleEntrada-${detalleOrdenInstance.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="20px" width="20px"/></td>
+								
+								</tr>
+							</g:each>
+						</tbody>
+					</table>
+					<br>
+					<div class="fieldcontain">
+						<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
+						<img id="open-modal" href="#" src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="25px" width="25px"/>
+					</div>
+				</div>
 
 				<g:if test="${ordenSamsungInstance?.totalCobros}">
 				<li class="fieldcontain">
@@ -237,6 +350,56 @@
 					<div class="edit">Buscar en Almacen</div>
 				</fieldset>
 			</g:form>
+			<div id="overlay">
+				<div id="overlayContainer">
+					<p>
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'refaccion', 'error')} required">
+							<label for="refaccion">
+								<g:message code="detalleOrden.refaccion.label" default="Refaccion" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:select id="refaccion" name="refaccion.id" from="${mx.com.ideasydiseno.electronica.Refaccion.list()}" optionKey="id" required="" value="${detalleOrdenInstance?.refaccion?.id}" class="many-to-one"/>
+						</div>
+
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'municipiosAlcance', 'error')} ">
+							<label for="lotes">
+								<g:message code="detalleOrden.lotes.label" default="Lote" />
+							</label>
+							<g:select name="lotes" from="" multiple="multiple" optionKey="id" size="3" value="" class="many-to-many"/>
+						</div>
+
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'cantidad', 'error')} required">
+							<label for="cantidad">
+								<g:message code="detalleOrden.cantidad.label" default="Cantidad" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:field type="number" id="cantidadRefaccion" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
+						</div>
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'precio', 'error')} required">
+							<label for="precio">
+								<g:message code="detalleOrden.precio.label" default="Precio Unitario" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:field type="number" id="precio" name="precio" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precio')}"/>
+						</div>
+
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'total', 'error')} required">
+							<label for="total">
+								<g:message code="detalleOrden.total.label" default="Total" />
+								<span class="required-indicator">*</span>
+							</label>
+							<input id="totalRefaccion" disable />
+						</div>
+						<br>
+						<div class="fielcontain">
+							<fieldset class="buttons">
+								<input type="button" id="add-modal-refacciones" class="ready" value="Listo"/> 
+								<input type="button" id="close-modal" class="close" value="Cerrar"/>
+							</fieldset>
+						</div>
+					</p>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
