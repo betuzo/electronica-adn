@@ -14,7 +14,7 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'dimove_icon.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
-		<g:javascript src='jquery-1.7.1.min.js'/>
+		<g:javascript src='jquery-1.9.1.min.js'/>
 		<g:javascript>
 			$(document).ready(function() { 	
 				$('#pais').ready(function() {
@@ -123,11 +123,7 @@
 			<div id="page">
 				<br>
 				<g:layoutBody/>
-<<<<<<< HEAD
 				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. contacto@electronicadimove.com</div>
-=======
-				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México.  ventas@electronicadimove.com</div>
->>>>>>> Bugs
 				<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 				<g:javascript library="application"/>
 		        <r:layoutResources />

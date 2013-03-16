@@ -2628,13 +2628,13 @@ of the horizontal scrollbar.*/
 .jqx-left-arrow
 {
     background: transparent;
-    background-image: url('left.png');
+    /*background-image: url('left.png');*/
     cursor: pointer;
 }
 .jqx-right-arrow
 {
     background: transparent;
-    background-image: url('right.png');
+    /*background-image: url('right.png');*/
     cursor: pointer;
 }
 
