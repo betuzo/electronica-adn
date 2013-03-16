@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var theme = getDemoTheme();
-            var url = "customers.xml";
+            var url = "${request.contextPath}/customers.xml";
             // prepare the data
             var source =
             {
