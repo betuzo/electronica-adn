@@ -18,9 +18,6 @@ class ClienteController {
     }
 
     def clienteOrden() {
-
-        println "pasa por cliente controller"
-
         def response = [:]
         def html = ''
         response.exito = "1"
