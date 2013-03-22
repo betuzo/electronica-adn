@@ -18,6 +18,6 @@ class RefaccionAlmacen {
     }
 
     String toString(){
-        return "Lote: ${id} ${refaccion} ${cantidad} ${precio} ${entrada?.entrada?.proveedor}"
+        return "Existencia ${cantidad} Precio ${precio} - ${entrada?.entrada?.proveedor}"
     }
 }

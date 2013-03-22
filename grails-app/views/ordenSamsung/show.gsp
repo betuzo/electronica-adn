@@ -347,7 +347,6 @@
 						<g:submitToRemote id="nextStep" class="edit" url="[controller: 'ordenSamsung', action: 'nextStep']" value="Siguiente" onSuccess="resultNextStep(data)" onFailure="resultNextStep(data)"/>
 					</g:if>
 					<g:link class="edit" action="generateReportByOrden" id="${ordenSamsungInstance?.id}"><g:message code="default.button.report.label" default="Nota de Venta" /></g:link>
-					<div class="edit">Buscar en Almacen</div>
 				</fieldset>
 			</g:form>
 			<div id="overlay">
