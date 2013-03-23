@@ -262,8 +262,27 @@ class OrdenSamsungController {
         response.outputStream << data
     }
 
-    def prueba() {
-        println params
+    def addRefaccion() {
+        println params.lote[0]
+        def htmlRender=''
+        def detalleOrden = new DetalleOrden()
+        if (params) {
+            def ordenInstance = Orden.get(params.id)
+            def refaccionInstance = Refaccion.get(params.refaccion)
+            def refaccionAlmacenInstance = RefaccionAlmacen.get(params.lote)
+            detalleOrden.orden = ordenInstance
+            detalleOrden.refaccion = refaccionInstance
+            detalleOrden.lote = refaccionAlmacenInstance
+            detalleOrden.cantidad = params.cantidad as int
+            detalleOrden.precio = params.precio as double
+            detalleOrden.total = detalleOrden.cantidad * detalleOrden.precio 
+            detalleOrden.save()
 
+            refaccionAlmacenInstance.cantidad = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad 
+            refaccionAlmacenInstance.save()
+        }
+        htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
+
+        render ([html:htmlRender] as JSON) 
     }
 }

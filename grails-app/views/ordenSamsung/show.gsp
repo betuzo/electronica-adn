@@ -79,10 +79,10 @@
 
 			$("#add-modal-refacciones").on("click", function(){
 				$.ajax({
-					url:"${request.contextPath}/entrada/addRefaccion",
+					url:"${request.contextPath}/ordenSamsung/addRefaccion",
 					dataType:"json",
 					type:"post",
-					data:{id: $('#id').val(), refaccion:$("#refaccion").val(), cantidad:$("#cantidadRefaccion").val(), precio: $("#precio").val()},
+					data:{id: $('#id').val(), refaccion:$("#refaccion").val(), lote:$("#lotes").val(), cantidad:$("#cantidadRefaccion").val(), precio: $("#precio").val()},
 					cache:false,
 					success: function(data){
 						$("#tableRefacciones tbody:first").append(data.html)
@@ -92,6 +92,8 @@
 					}
 				});
 			});
+
+			$("#refaccion").change();
 		});
 		</g:javascript>
 	</head>
@@ -364,7 +366,7 @@
 							<label for="lotes">
 								<g:message code="detalleOrden.lotes.label" default="Lote" />
 							</label>
-							<g:select name="lotes" from="" multiple="multiple" optionKey="id" size="3" value="" class="many-to-many"/>
+							<g:select name="lotes" from="" optionKey="id" size="3" value="" class="many-to-many"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'cantidad', 'error')} required">
