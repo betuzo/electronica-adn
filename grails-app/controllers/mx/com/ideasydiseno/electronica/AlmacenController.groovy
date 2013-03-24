@@ -102,7 +102,14 @@ class AlmacenController {
     }
 
     def detalleAlmacen(){
-        
+        def almacenList = Almacen.findAll()
+        println almacenList
+        almacenList.each{ almacen ->
+            println "id almacen: $almacen.id - sucursal: $almacen.sucursal Almacen: $almacen.refacciones"
+        }
+        almacenList.refacciones.each{ ref ->
+            println "=============>>>>>> $ref.refaccion"    
+        }
 
     }
 }

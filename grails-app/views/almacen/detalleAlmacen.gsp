@@ -14,111 +14,83 @@
      <script type="text/javascript" src="${resource(dir: 'jqwidgets', file: 'jqxgrid.selection.js')}" ></script>
      <script type="text/javascript" src="${resource(dir: 'jqwidgets', file: 'gettheme.js')}" ></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            var theme = getDemoTheme();
-            var url = "${request.contextPath}/customers.xml";
-            // prepare the data
-            var source =
-            {
-                datatype: "xml",
-                datafields: [
-                    { name: 'CompanyName', map: 'm\\:properties>d\\:CompanyName', type: 'string' },
-                    { name: 'ContactName', map: 'm\\:properties>d\\:ContactName', type: 'string' },
-                    { name: 'ContactTitle', map: 'm\\:properties>d\\:ContactTitle', type: 'string' },
-                    { name: 'City', map: 'm\\:properties>d\\:City', type: 'string' },
-                    { name: 'PostalCode', map: 'm\\:properties>d\\:PostalCode', type: 'string' },
-                    { name: 'Country', map: 'm\\:properties>d\\:Country', type: 'string' }
-                ],
-                root: "entry",
-                record: "content",
-                id: 'm\\:properties>d\\:CustomerID',
-                url: url
+        $(document).on('ready', function(){
+            var data = new Array();
+            var firstNames =
+            [
+                "Andrew", "Nancy", "Shelley", "Regina", "Yoshi", "Antoni", "Mayumi", "Ian", "Peter", "Lars", "Petra", "Martin", "Sven", "Elio", "Beate", "Cheryl", "Michael", "Guylene"
+            ];
+            var lastNames =
+            [
+                "Fuller", "Davolio", "Burke", "Murphy", "Nagase", "Saavedra", "Ohno", "Devling", "Wilson", "Peterson", "Winkler", "Bein", "Petersen", "Rossi", "Vileid", "Saylor", "Bjorn", "Nodier"
+            ];
+            var productNames =
+            [
+                "Black Tea", "Green Tea", "Caffe Espresso", "Doubleshot Espresso", "Caffe Latte", "White Chocolate Mocha", "Cramel Latte", "Caffe Americano", "Cappuccino", "Espresso Truffle", "Espresso con Panna", "Peppermint Mocha Twist"
+            ];
+            var priceValues =
+            [
+                "2.25", "1.5", "3.0", "3.3", "4.5", "3.6", "3.8", "2.5", "5.0", "1.75", "3.25", "4.0"
+            ];
+            for (var i = 0; i < 50; i++) {
+                var row = {};
+                var productindex = Math.floor(Math.random() * productNames.length);
+                var price = parseFloat(priceValues[productindex]);
+                var quantity = 1 + Math.round(Math.random() * 10);
+                row["firstname"] = firstNames[Math.floor(Math.random() * firstNames.length)];
+                row["lastname"] = lastNames[Math.floor(Math.random() * lastNames.length)];
+                row["productname"] = productNames[productindex];
+                row["price"] = price;
+                row["quantity"] = quantity;
+                row["total"] = price * quantity;
+                data[i] = row;
+                console.log("===>data: " + data[i].total + row.total);
             };
-            var dataAdapter = new $.jqx.dataAdapter(source);
-            // Create jqxGrid
-            $("#jqxgrid").jqxGrid(
-            {
-                width: 600,
-                source: dataAdapter,
-                groupable: true,
-                theme: theme,
-                columns: [
-                  { text: 'Company Name', datafield: 'CompanyName', width: 250 },
-                  { text: 'City', datafield: 'City', width: 120 },
-                  { text: 'Country', datafield: 'Country' }
-                ],
-                groups: ['City']
-            });
-            $("#expand").jqxButton({ theme: theme });
-            $("#collapse").jqxButton({ theme: theme });
-            $("#expandall").jqxButton({ theme: theme });
-            $("#collapseall").jqxButton({ theme: theme });
-            // expand group.
-            $("#expand").on('click', function () {      
-                var groupnum = parseInt($("#groupnum").val());
-                if (!isNaN(groupnum)) {
-                    $("#jqxgrid").jqxGrid('expandgroup', groupnum);
-                }
-            });
-            // collapse group.
-            $("#collapse").on('click', function () {
-                var groupnum = parseInt($("#groupnum").val());
-                if (!isNaN(groupnum)) {
-                    $("#jqxgrid").jqxGrid('collapsegroup', groupnum);
-                }
-            });
-            // expand all groups.
-            $("#expandall").on('click', function () {
-                $("#jqxgrid").jqxGrid('expandallgroups');
-            });
-            // collapse all groups.
-            $("#collapseall").on('click', function () {
-                $("#jqxgrid").jqxGrid('collapseallgroups');
-            });
-            // trigger expand and collapse events.
-            $("#jqxgrid").on('groupexpand', function (event) {
-                var args = event.args;
-                $("#expandedgroup").text("Group: " + args.group + ", Level: " + args.level);
-            });
-            $("#jqxgrid").on('groupcollapse', function (event) {
-                var args = event.args;
-                $("#collapsedgroup").text("Group: " + args.group + ", Level: " + args.level);
-            });
+
+            console.log(data);
+
+            var loadGrid = function (){
+                $.ajax({
+                    url:"$(request.contextPath)/",
+                    dataType:"json",
+                    beforeSend: function () {
+                        $("jqxgrid").html('');
+                    },
+                    error: function (json, textStatus, errorThrown) {
+                        alert(' Error :' + errorThrown);
+                    },
+                    success: function (data) {
+                        var gridData = data;
+                        var gridSource =
+                        {
+                            localdata: gridData,
+                            datatype: 'json'
+                        };
+                        var gridDataAdapter = new $.jqx.dataAdapter(gridSource);
+                        $("#jqxgrid").jqxGrid(
+                        {
+                            width: 670,
+                            source: gridDataAdapter,
+                            editable: true,
+                            pageable: true,
+                            autoheight: true,
+                            selectionmode: 'singlecell',
+                            columns: [
+                              { text: 'Name', datafield: 'name', width: 250 },
+                              { text: 'Beverage Type', datafield: 'type', width: 250 },
+                              { text: 'Calories', datafield: 'calories', width: 180 },
+                              { text: 'Total Fat', datafield: 'totalfat', width: 120 },
+                              { text: 'Protein', datafield: 'protein', minwidth: 120 }]
+                        });
+                    }
+                });
+            }
         });
     </script>
 </head>
 <body class='default'>
-    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
+    <div id='jqxWidget'>
         <div id="jqxgrid">
         </div>
-        <div style="margin-top: 30px;">
-            <div style="float: left; margin-left: 20px;">
-                <input value="Expand Group" type="button" id='expand' />
-                <br />
-                <input style="margin-top: 10px;" value="Collapse Group" type="button" id='collapse' />
-                <br />
-                <span style="margin-top: 10px;">Group:</span>
-                <input value="1" id="groupnum" style="margin-top: 10px; width: 20px;" type="text" />
-            </div>
-            <div style="float: left; margin-left: 20px;">
-                <input value="Expand All Groups" type="button" id='expandall' />
-                <br />
-                <input style="margin-top: 10px; margin-bottom: 10px;" value="Collapse All Groups"
-                    type="button" id='collapseall' />
-                <br />
-            </div>
-            <div style="float: left; margin-left: 20px;">
-                <div style="font-weight: bold;">
-                    <span>Event Log:</span>
-                </div>
-                <div style="margin-top: 10px;">
-                    <span>Expanded Group:</span> <span id="expandedgroup"></span>
-                </div>
-                <div style="margin-top: 10px;">
-                    <span>Collapsed Group:</span> <span id="collapsedgroup"></span>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

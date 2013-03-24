@@ -208,7 +208,7 @@ class EntradaController {
             detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario 
             detalleEntrada.save()
 
-            refaccionAlmacen.almacen = user?.almacen
+            refaccionAlmacen.almacen = user?.sucursal?.almacen
             refaccionAlmacen.refaccion = refaccionInstance
             refaccionAlmacen.cantidad = params.cantidad as int
             refaccionAlmacen.precio = params.precio as double

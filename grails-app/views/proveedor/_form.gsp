@@ -103,22 +103,6 @@
 	<g:field type="email" name="email" value="${proveedorInstance?.email}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'contactos', 'error')} ">
-	<label for="contactos">
-		<g:message code="proveedor.contactos.label" default="Contactos" />
-		
-	</label>
-	
-<ul class="one-to-many">
-<g:each in="${proveedorInstance?.contactos?}" var="c">
-    <li><g:link controller="contactoProveedor" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="contactoProveedor" action="create" params="['proveedor.id': proveedorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'contactoProveedor.label', default: 'ContactoProveedor')])}</g:link>
-</li>
-</ul>
-
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'entradas', 'error')} ">
 	<label for="entradas">
