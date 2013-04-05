@@ -20,12 +20,20 @@ class PersonalController {
     }
 
     def save() {
+        println "====>>" + params
+        
         def personalInstance = new Personal(params)
         personalInstance.enabled = true
         if (!personalInstance.save(flush: true)) {
             render(view: "create", model: [personalInstance: personalInstance])
             return
         }
+
+        def telefonoPersona = new TelefonoPersona()
+        telefonoPersona.tipoTelefono = params.tipoTelefono
+        telefonoPersona.telefono = params.telefono
+        telefonoPersona.persona = personalInstance
+        telefonoPersona.save(flus:true)
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'personal.label', default: 'Personal'), personalInstance.id])
         redirect(action: "show", id: personalInstance.id)

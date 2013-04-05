@@ -41,21 +41,3 @@
 	</label>
 	<g:select id="entrada" name="entrada.id" from="${mx.com.ideasydiseno.electronica.DetalleEntrada.list()}" optionKey="id" required="" value="${refaccionAlmacenInstance?.entrada?.id}" class="many-to-one"/>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'salidas', 'error')} ">
-	<label for="salidas">
-		<g:message code="refaccionAlmacen.salidas.label" default="Salidas" />
-		
-	</label>
-	
-<ul class="one-to-many">
-<g:each in="${refaccionAlmacenInstance?.salidas?}" var="s">
-    <li><g:link controller="detalleOrden" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="detalleOrden" action="create" params="['refaccionAlmacen.id': refaccionAlmacenInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleOrden.label', default: 'DetalleOrden')])}</g:link>
-</li>
-</ul>
-
-</div>
-

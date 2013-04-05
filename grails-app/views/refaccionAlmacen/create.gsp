@@ -28,7 +28,63 @@
 			</g:hasErrors>
 			<g:form action="save" >
 				<fieldset class="form">
-					<g:render template="form"/>
+					
+					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'refaccion', 'error')} required">
+						<label for="refaccion">
+							<g:message code="refaccionAlmacen.refaccion.label" default="Refaccion" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:select id="refaccion" name="refaccion.id" from="${mx.com.ideasydiseno.electronica.Refaccion.list()}" optionKey="id" required="" value="${refaccionAlmacenInstance?.refaccion?.id}" class="many-to-one"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'cantidad', 'error')} required">
+						<label for="cantidad">
+							<g:message code="refaccionAlmacen.cantidad.label" default="Cantidad" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:field type="number" name="cantidad" required="" value="${fieldValue(bean: refaccionAlmacenInstance, field: 'cantidad')}"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'precio', 'error')} required">
+						<label for="precio">
+							<g:message code="refaccionAlmacen.precio.label" default="Precio" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:field type="number" name="precio" required="" value="${fieldValue(bean: refaccionAlmacenInstance, field: 'precio')}"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'almacen', 'error')} required">
+						<label for="almacen">
+							<g:message code="refaccionAlmacen.almacen.label" default="Almacen" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:select id="almacen" name="almacen.id" from="${mx.com.ideasydiseno.electronica.Almacen.list()}" optionKey="id" required="" value="${refaccionAlmacenInstance?.almacen?.id}" class="many-to-one"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'entrada', 'error')} required">
+						<label for="entrada">
+							<g:message code="refaccionAlmacen.entrada.label" default="Entrada" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:select id="entrada" name="entrada.id" from="${mx.com.ideasydiseno.electronica.DetalleEntrada.list()}" optionKey="id" required="" value="${refaccionAlmacenInstance?.entrada?.id}" class="many-to-one"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
+						<label for="tipoTelefono">
+							<g:message code="telefonoInstitucion.tipoTelefono.label" default="Tipo Telefono" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:textField name="tipoTelefono" required="" value="${telefonoInstitucionInstance?.tipoTelefono}"/>
+					</div>
+
+					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'telefono', 'error')} required">
+						<label for="telefono">
+							<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:textField name="telefono" required="" value="${telefonoInstitucionInstance?.telefono}"/>
+					</div>
+
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
