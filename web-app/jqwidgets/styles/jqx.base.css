@@ -2435,7 +2435,7 @@ of the horizontal scrollbar.*/
 /*applied to the slider's thumb when the slider is in horizontal mode*/
 .jqx-slider-slider-horizontal
 {   
-    background-image: url(images/slider_horizontal_classic.png);
+    background-image: url('images/slider_horizontal_classic.png');
     background-repeat: no-repeat;
     margin-top: -5px;
     -moz-border-radius: 7px;
@@ -2447,7 +2447,7 @@ of the horizontal scrollbar.*/
 .jqx-slider-slider-vertical
 {
     margin-left: -5px;
-    background-image: url(images/slider_vertical_classic.png);
+    background-image: url('images/slider_vertical_classic.png');
     background-repeat: no-repeat;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;

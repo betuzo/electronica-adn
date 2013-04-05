@@ -2,6 +2,8 @@ package mx.com.ideasydiseno.electronica
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import grails.converters.*
+
 class AlmacenController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -102,14 +104,33 @@ class AlmacenController {
     }
 
     def detalleAlmacen(){
-        def almacenList = Almacen.findAll()
-        println almacenList
-        almacenList.each{ almacen ->
-            println "id almacen: $almacen.id - sucursal: $almacen.sucursal Almacen: $almacen.refacciones"
-        }
-        almacenList.refacciones.each{ ref ->
-            println "=============>>>>>> $ref.refaccion"    
-        }
+        
+    }
 
+    def jsonAlmacen(){
+        def almacenList = Almacen.findAll()
+        def listAlmacen = []
+        def mapAlmacen = [:]
+        almacenList.each{ it ->
+            println "==> Nombre Sucursal: $it.sucursal"
+            println "==> Refaccion: $it.refacciones.refaccion"
+            println "==> Cantidad: $it.refacciones.cantidad"
+            println "==> Precio: $it.refacciones.precio"
+            println "==> Nombre Proveedor: $it.refacciones.entrada"
+            it.refacciones.eachWithIndex{ref, i ->
+                println "refacciones $ref.refaccion.clave - $ref.refaccion.descripcion"
+                mapAlmacen.put("sucursal", "sucursal")
+                mapAlmacen.put("refaccion","$ref.refaccion.clave - $ref.refaccion.descripcion")
+                mapAlmacen.put("cantidad",ref.cantidad)
+                mapAlmacen.put("precio",ref.precio)
+                mapAlmacen.put("proveedor",ref.entrada.entrada.proveedor.nombre)
+                mapAlmacen.put("id",(i + 1) )
+                listAlmacen << mapAlmacen
+            }
+        }
+        listAlmacen.each{ it ->
+            println "**** lista del mapa "+ it
+        }
+        render ([html:listAlmacen] as JSON)
     }
 }
