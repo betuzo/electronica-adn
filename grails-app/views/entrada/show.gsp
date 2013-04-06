@@ -31,7 +31,7 @@
 				$("#tipoPago").val(" ");
 				$("#form-fecha").css("display", "none");
 				$("#form-pagos").css("display", "none");
-				$("#form-refacciones").css("display", "none");
+				//$("#form-refacciones").css("display", "none");
 
 				/**FECHAS**/
 				$("#nextFecha").on("click", function(){
@@ -329,15 +329,9 @@
 			
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="entrada.refacciones.label" default="Refacción" /></span>
-					&nbsp; &nbsp; &nbsp;Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
-						<g:each in="${entradaInstance.refacciones}" var="r">
-						<span class="property-value" aria-labelledby="refacciones-label">
-							<g:link controller="detalleEntrada" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link>
-							<img id="delete-refacciones" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Refacción" height="20px" width="20px"/>
-						</span>
-						</g:each>
-
+					<span class="property-value" aria-labelledby="refacciones-label"> Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> </span>
 				</li>
+
 				<div id="form-refacciones">
 					<table id="tableRefacciones">
 						<thead>
