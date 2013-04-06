@@ -26,6 +26,12 @@ class TiendaController {
             return
         }
 
+         def telefonoInstitucion = new TelefonoInstitucion()
+            telefonoInstitucion.tipoTelefono = params.tipoTelefono
+            telefonoInstitucion.telefono = params.telefono
+            telefonoInstitucion.institucion = tiendaInstance 
+            telefonoInstitucion.save(flus:true)
+
 		flash.message = message(code: 'default.created.message', args: [message(code: 'tienda.label', default: 'Tienda'), tiendaInstance.id])
         redirect(action: "show", id: tiendaInstance.id)
     }

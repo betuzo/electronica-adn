@@ -178,39 +178,6 @@
 						<g:select id="sucursal" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${personalInstance?.sucursal?.id}" class="many-to-one"/>
 					</div>
 
-					<!--div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'compras', 'error')} ">
-						<label for="compras">
-							<g:message code="personal.compras.label" default="Compras" />
-							
-						</label>
-						
-					<ul class="one-to-many">
-					<g:each in="${personalInstance?.compras?}" var="c">
-					    <li><g:link controller="detalleFechaEntrada" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					<li class="add">
-					<g:link controller="detalleFechaEntrada" action="create" params="['personal.id': personalInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleFechaEntrada.label', default: 'DetalleFechaEntrada')])}</g:link>
-					</li>
-					</ul>
-
-					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'telefonos', 'error')} ">
-						<label for="telefonos">
-							<g:message code="personal.telefonos.label" default="Telefonos" />
-							
-						</label>
-						
-					<ul class="one-to-many">
-					<g:each in="${personalInstance?.telefonos?}" var="t">
-					    <li><g:link controller="telefonoPersona" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					<li class="add">
-					<g:link controller="telefonoPersona" action="create" params="['personal.id': personalInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'telefonoPersona.label', default: 'TelefonoPersona')])}</g:link>
-					</li>
-					</ul>
-
-					</div-->
 
 					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
 						<label for="tipoTelefono">
