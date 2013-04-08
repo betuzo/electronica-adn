@@ -114,14 +114,6 @@
 								<g:datePicker name="fechaRegistro" precision="day"  value="${clienteInstance?.fechaRegistro}"  />
 							</div>
 
-							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
-								<label for="calle">
-									<g:message code="cliente.calle.label" default="Calle" />
-									
-								</label>
-								<g:textField name="calle" value="${clienteInstance?.calle}"/>
-							</div>
-
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'municipio.estado.pais', 'error')} required">
 								<label for="pais">
 									<g:message code="usuario.pais.label" default="Pais" />
@@ -149,6 +141,14 @@
 									
 								</label>
 								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+							</div>
+
+							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
+								<label for="calle">
+									<g:message code="cliente.calle.label" default="Calle" />
+									
+								</label>
+								<g:textField name="calle" value="${clienteInstance?.calle}"/>
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'codigoPostal', 'error')} ">

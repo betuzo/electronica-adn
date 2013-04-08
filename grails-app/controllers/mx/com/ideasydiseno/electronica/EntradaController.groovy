@@ -50,7 +50,7 @@ class EntradaController {
                         def pagoProverdorInstance = new PagoProveedor()
                         pagoProverdorInstance.tipoPago=params.tipoPago
                         pagoProverdorInstance.total=params.totalPago.toLong()
-                        pagoProverdorInstance.fechaPago=params.fechaPago
+                        pagoProverdorInstance.fechaPago= new Date()
                         pagoProverdorInstance.entrada=entradaInstance
                         pagoProverdorInstance.realizo=user
                         pagoProverdorInstance.save()   
@@ -283,7 +283,7 @@ class EntradaController {
         def user =springSecurityService.currentUser
         def htmlRender = ''
         def entradaInstance = Entrada.get(params.id)
-        def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
+        //def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
         def totalPago = params.totalPago as int
         
         def pagoProveedor = new PagoProveedor()
@@ -291,7 +291,7 @@ class EntradaController {
         pagoProveedor.entrada=entradaInstance
         pagoProveedor.tipoPago=params.tipoPago
         pagoProveedor.total=totalPago
-        pagoProveedor.fechaPago=fecha
+        pagoProveedor.fechaPago= new Date()
         pagoProveedor.save()
 
         println(pagoProveedor.id)
@@ -313,7 +313,7 @@ class EntradaController {
         pagoProveedor.entrada=entradaInstance
         pagoProveedor.tipoPago=params.tipoPago
         pagoProveedor.total=totalPago
-        pagoProveedor.fechaPago=params.fechaPago
+        pagoProveedor.fechaPago= new Date()
         if(!pagoProveedor.save(flush:true)){
             success=false
         }

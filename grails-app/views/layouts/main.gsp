@@ -21,6 +21,7 @@
 				$('#pais').ready(function() {
 					$("#pais").change();
 				});
+				
 			    $("#pais").change(function() {
 			    	$.ajax({
 			        	url: "${request.contextPath}/address/paisSelected",

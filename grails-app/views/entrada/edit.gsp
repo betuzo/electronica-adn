@@ -370,20 +370,12 @@
 									</label>
 									<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
 								</div>
-
-								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
-									<label for="fechaPago">
-										<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
-										<span class="required-indicator">*</span>
-									</label>
-									<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
-								</div>
-
-								<fieldset class="buttons">
-									<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
-									<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
-								</fieldset>
-							</g:fieldset>
+							</fieldset>
+							<br>
+							<fieldset class="buttons">
+								<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+							</fieldset>
 						</g:formRemote>
 					</div>
 
