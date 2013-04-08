@@ -303,21 +303,22 @@ class EntradaController {
         println ("**Pago** ==> " + params)
         def user =springSecurityService.currentUser
         def htmlRender = ''
-        def entradaInstance = Entrada.get(params.id)
-        def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
-        def totalPago = params.totalPago as int
+        def entradaInstance = Entrada.get(params.idEntradaPago) 
+        def totalPago = params.totalPago as double
+        def success = true
         
         def pagoProveedor = new PagoProveedor()
         pagoProveedor.realizo=user
         pagoProveedor.entrada=entradaInstance
         pagoProveedor.tipoPago=params.tipoPago
         pagoProveedor.total=totalPago
-        pagoProveedor.fechaPago=fecha
-        pagoProveedor.save()
+        pagoProveedor.fechaPago=params.fechaPago
+        if(!pagoProveedor.save(flush:true)){
+            success=false
+        }
 
-        println(pagoProveedor.id)
         htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
-        render ([html:htmlRender] as JSON)   
+        render ([html:htmlRender, success:success] as JSON)   
     }
 
     def nextFechaShow(){

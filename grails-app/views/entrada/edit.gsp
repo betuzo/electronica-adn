@@ -265,7 +265,7 @@
 							<g:datePicker id="fechaEntrada" name="fechaEntrada" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
 						</div>
 						<div>
-							<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'Xion.png')}" alt="Cerrar" heigth="30px" width="30px"/>
+							<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'cerrar.png')}" alt="Cerrar" heigth="30px" width="30px"/>
 							<img id="save-slide-fecha" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="25px" width="25px"/>
 						</div>
 					</div>

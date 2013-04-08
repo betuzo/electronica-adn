@@ -7,8 +7,19 @@
 		<g:set var="entityName" value="${message(code: 'entrada.label', default: 'Entrada')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 		<jv:generateValidation domain="pagoProveedor" form="formPagos" display="list" container="errors"/>
-		
+		<g:javascript src='jTPS.js'/>
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'jTPS.css')}" type="text/css">
 		<g:javascript>
+
+			function addPago(data) {
+				console.log("lo que trae el data: ==> " + data);
+				if (!data.success){
+					alert("Se genero un problema, contacte el area de sistemas...");
+				}
+
+				$("#add-pago").append(data.html);
+		    }
+
 			$(document).on("ready", function(){
 				
 				$.ajax({
@@ -195,8 +206,66 @@
 						}
 					});
 				});
+
+				/*jTPS*/
+				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'ALL'],scrollStep:1,scrollDelay:30,
+					clickCallback:function () {	
+						// target table selector
+						var table = '#tableRefacciones';
+						// store pagination + sort in cookie 
+						document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
+							'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
+							'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
+					}
+				});
+
+				// reinstate sort and pagination if cookie exists
+				var cookies = document.cookie.split(';');
+				for (var ci = 0, cie = cookies.length; ci < cie; ci++) {
+					var cookie = cookies[ci].split('=');
+					if (cookie[0] == 'jTPS') {
+						var commands = cookie[1].split(',');
+						for (var cm = 0, cme = commands.length; cm < cme; cm++) {
+							var command = commands[cm].split(':');
+							if (command[0] == 'sortasc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click();
+							} else if (command[0] == 'sortdesc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click().click();
+							} else if (command[0] == 'page' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .pageSelector:eq(' + parseInt(command[1]) + ')').click();
+							}
+						}
+					}
+				}
+
+				// bind mouseover for each tbody row and change cell (td) hover style
+				$('#tableRefacciones tbody tr:not(.stubCell)').bind('mouseover mouseout',
+					function (e) {
+						// hilight the row
+						e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
+					}
+				);
+
+
+
+
 			});
 		</g:javascript>
+		<style >
+		#tableRefacciones thead th {
+			white-space: nowrap;
+			overflow-x:hidden;
+			padding: 2px;
+			font-family: Tahoma;
+			font-size: 10pt;
+		}
+
+		#tableRefacciones tbody td {
+			padding: 2px;
+			font-family: Tahoma;
+			font-size: 10pt;
+		}
+		</style>
 
 	</head>
 	<body>
@@ -282,7 +351,7 @@
 						<g:datePicker id="fechaEntrada" name="fechaEntrada" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
 					</div>
 					<div>
-						<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'Xion.png')}" alt="Cerrar" heigth="30px" width="30px"/>
+						<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'cerrar.png')}" alt="Cerrar" heigth="30px" width="30px"/>
 						<img id="save-slide-fecha" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="25px" width="25px"/>
 					</div>
 				</div>
@@ -298,33 +367,40 @@
 						</g:each>
 				</li>
 				<div id="form-pagos">
-					<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
-						<label for="tipoPago">
-							<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
-					</div>
+					<g:form name="myForm" >
+						<fieldset class="form">
+							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
+								<label for="tipoPago">
+									<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
+							</div>
 
-					<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
-						<label for="total">
-							<g:message code="pagoProveedor.total.label" default="Total" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
-					</div>
+							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
+								<label for="total">
+									<g:message code="pagoProveedor.total.label" default="Total" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+							</div>
 
-					<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
-						<label for="fechaPago">
-							<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
-					</div>
-					<div class="fieldcontain">
-						<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-						<img id="save-slide-pagos" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="25px" width="25px"/>
-					</div>
+							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
+								<label for="fechaPago">
+									<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
+									<span class="required-indicator">*</span>
+								</label>
+								<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
+							</div>
+							<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
+						</fieldset>
+						
+						<fieldset class="buttons">
+							<g:submitToRemote name="guardarPago" class="saveIcon" value="Guardar" onSuccess="addPago(data)" onFailure="addPago(data)" url="[controller: 'entrada', action: 'savePagoShow']"></g:submitToRemote>
+							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+						</fieldset>
+					</g:form>
+
 				</div>
 			
 				<li class="fieldcontain">
@@ -343,12 +419,13 @@
 								<th>Cantidad</th>
 
 								<th>Total</th>
+
+								<th>Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
-
 							<g:each in="${entradaInstance?.refacciones?}" status="i" var="detalleEntradaInstance">
-								<tr id="delete-detalleEntrada-${detalleEntradaInstance.id}" class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<tr id="delete-detalleEntrada-${detalleEntradaInstance.id}" >
 								
 									<td><g:link controller="detalleEntrada" action="show" id="${detalleEntradaInstance.id}">${fieldValue(bean: detalleEntradaInstance, field: "refaccion")}</g:link></td>
 								
@@ -363,12 +440,21 @@
 								</tr>
 							</g:each>
 						</tbody>
+						<tfoot class="nav">
+							<tr>
+								<td colspan=7>
+									<div class="pagination"></div>
+									<div class="paginationTitle">Page</div>
+									<div class="selectPerPage"></div>
+									<div class="status"> </div>
+									<fieldset class="buttonsGrid">
+										<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
+										<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+									</fieldset>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
-					<br>
-					<div class="fieldcontain">
-						<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-						<img id="open-modal" href="#" src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="25px" width="25px"/>
-					</div>
 				</div>
 			
 			</ol>

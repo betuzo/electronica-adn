@@ -137,7 +137,7 @@
 						</div>
 
 						<div class="fieldcontain">
-							<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+							<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'cerrar.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
 						</div>
 					</div>
 
@@ -176,9 +176,8 @@
 								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
 							</div>
 						</div>
-
-					</div>
-				</fieldset -->
+					</div-->
+				</fieldset>
 				<br><br>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

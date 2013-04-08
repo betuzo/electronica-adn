@@ -7,7 +7,7 @@
 /* FONT STACK */
 body,
 input, select, textarea {
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-family: Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 /* BASE LAYOUT */
@@ -168,9 +168,9 @@ ul#navigation li a.last {
 
 #form-pagos{
 	margin: .5em auto;
-	border-radius: 1em;
-	border: .3em solid #007294;
-	padding: .5em;
+	border-radius: .3em;
+	border: .2em solid #DFDFDF;
+	/*padding: .5em;*/
 	width: 500px;
 }
 
@@ -183,11 +183,11 @@ ul#navigation li a.last {
 }
 
 #form-refacciones{
-	margin: .5em auto;
-	border-radius: 1em;
-	border: .3em solid #007294;
-	padding: .5em;
-	width: auto;
+	margin: .2em auto;
+	border-radius: .1em;
+	border: .2em solid #DFDFDF;*/
+	/*padding: .5em;*/
+	width: auto; 
 }
 
 #form-telefono-proveedor{
@@ -377,6 +377,12 @@ img {
 	background-image: url(../images/skin/database_add.png);
 }
 
+.icon-grid{
+	/*border: solid #000;*/
+	display: inline-block;
+	font-family: Tahoma;
+	font-size: 9pt;	
+}
 /* CREATE/EDIT FORMS AND SHOW PAGES */
 
 fieldset,
@@ -586,10 +592,10 @@ input:invalid:focus, select:invalid:focus, textarea:invalid:focus {
 /* TABLES */
 
 table {
-	border-top: 1px solid #DFDFDF;
+	border: 1px solid #DFDFDF;
 	border-collapse: collapse;
 	width: 100%;
-	margin-bottom: 1em;
+	/*margin-bottom: 1em;*/
 }
 
 tr {
@@ -727,6 +733,16 @@ th:hover, tr:hover {
 	border: none;
 }
 
+.buttonsGrid {
+	background-color: #efefef;
+	overflow: hidden;
+	padding: 0.3em;
+	margin: 0.1em 0 0 0;
+	border: none;
+}
+
+
+.buttonsGrid div,
 .buttons input,
 .buttons div,
 .buttons a {
@@ -747,7 +763,7 @@ th:hover, tr:hover {
 
 .buttons input:hover, .buttons input:focus,
 .buttons div:hover, .buttons div:focus,
-.buttons a:hover, .buttons a:focus {
+.buttons a:hover, .buttons a:focus, .buttonsGrid div:hover {
 	background-color: #999999;
 	color: #ffffff;
 	outline: none;
@@ -764,7 +780,7 @@ th:hover, tr:hover {
 	text-decoration: underline;
 }
 
-.buttons .delete, .buttons .edit, .buttons .save, .buttons .search, .buttons .close, .buttons .ready {
+.buttons .delete, .buttons .edit, .buttons .save, .buttons .search, .buttons .close, .buttons .ready, .buttons .closeIcon , .buttons .saveIcon, .buttonsGrid .searchIcon, .buttonsGrid .closeIcon {
 	background-position: 0.7em center;
 	background-repeat: no-repeat;
 	text-indent: 25px;
@@ -781,6 +797,25 @@ th:hover, tr:hover {
 .buttons .save {
 	background-image: url(../images/skin/database_save.png);
 }
+
+.buttons .closeIcon, .buttonsGrid .closeIcon  {
+	background-image: url(../images/cerrar.png);
+	background-size:25px 25px;
+	/*background-repeat:no-repeat;*/
+}
+
+.buttonsGrid .searchIcon {
+	background-image: url(../images/Search.png);
+	background-size:25px 25px;
+	/*background-repeat:no-repeat;*/
+}
+
+.buttons .saveIcon {
+	background-image: url(../images/Floppy.png);
+	background-size:25px 25px;
+	/*background-repeat:no-repeat;*/
+}
+
 
 .buttons .search {
 	background-image: url(../images/skin/search.gif);
