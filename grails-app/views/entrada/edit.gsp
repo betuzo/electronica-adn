@@ -5,7 +5,18 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'entrada.label', default: 'Entrada')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<g:javascript src='jTPS.js'/>
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'jTPS.css')}" type="text/css">
 		<g:javascript>
+			function addRefaccion(data){
+				console.log("=====> refaccion " + data +"  "+data.success);
+				if (!data.success){
+					alert("Se genero un problema, contacte el area de sistemas...");
+				}else{
+					$("#tableRefacciones tbody:last").append(data.html)
+				}		    	
+		    }
+
 			$(document).on('ready', function(){
 				var tipoFecha = $("#tipoFechaEntrada").val();
 				$("#totalPago").val("0");
@@ -13,6 +24,7 @@
 				$("#form-fecha").css("display", "none");
 				$("#form-pagos").css("display", "none");
 				//$("#form-refacciones").css("display", "none");
+
 
 				/**FECHAS**/
 				$.ajax({
@@ -166,8 +178,62 @@
 						}
 					});
 				});
+
+				/*jTPS*/
+				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'ALL'],scrollStep:1,scrollDelay:30,
+					clickCallback:function () {	
+						// target table selector
+						var table = '#tableRefacciones';
+						// store pagination + sort in cookie 
+						document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
+							'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
+							'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
+					}
+				});
+
+				// reinstate sort and pagination if cookie exists
+				var cookies = document.cookie.split(';');
+				for (var ci = 0, cie = cookies.length; ci < cie; ci++) {
+					var cookie = cookies[ci].split('=');
+					if (cookie[0] == 'jTPS') {
+						var commands = cookie[1].split(',');
+						for (var cm = 0, cme = commands.length; cm < cme; cm++) {
+							var command = commands[cm].split(':');
+							if (command[0] == 'sortasc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click();
+							} else if (command[0] == 'sortdesc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click().click();
+							} else if (command[0] == 'page' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .pageSelector:eq(' + parseInt(command[1]) + ')').click();
+							}
+						}
+					}
+				}
+
+				// bind mouseover for each tbody row and change cell (td) hover style
+				$('#tableRefacciones tbody tr:not(.stubCell)').bind('mouseover mouseout',
+					function (e) {
+						// hilight the row
+						e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
+					}
+				);
 			});
 		</g:javascript>
+		<style >
+			#tableRefacciones thead th {
+				white-space: nowrap;
+				overflow-x:hidden;
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+
+			#tableRefacciones tbody td {
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+		</style>
 	</head>
 	<body>
 		<a href="#edit-entrada" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -286,34 +352,39 @@
 						</ul>
 					</div>
 					<div id="form-pagos">
-						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
-							<label for="tipoPago">
-								<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
-						</div>
+						<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
+							<fieldset class="form">
+							
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
+									<label for="tipoPago">
+										<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
+								</div>
 
-						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
-							<label for="total">
-								<g:message code="pagoProveedor.total.label" default="Total" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
-						</div>
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
+									<label for="total">
+										<g:message code="pagoProveedor.total.label" default="Total" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+								</div>
 
-						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
-							<label for="fechaPago">
-								<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
-						</div>
-						<div class="fieldcontain">
-							<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-							<img id="save-slide-pagos" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="25px" width="25px"/>
-						</div>
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'fechaPago', 'error')} required">
+									<label for="fechaPago">
+										<g:message code="pagoProveedor.fechaPago.label" default="Fecha Pago" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
+								</div>
 
+								<fieldset class="buttons">
+									<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
+									<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+								</fieldset>
+							</g:fieldset>
+						</g:formRemote>
 					</div>
 
 <!--aqui empezamos con refacciones -->
@@ -337,12 +408,14 @@
 								<th>Cantidad</th>
 
 								<th>Total</th>
+
+								<th>Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
 
 							<g:each in="${entradaInstance?.refacciones?}" status="i" var="detalleEntradaInstance">
-								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<tr>
 								
 									<td><g:link controller="detalleEntrada" action="show" id="${detalleEntradaInstance.id}">${fieldValue(bean: detalleEntradaInstance, field: "refaccion")}</g:link></td>
 								
@@ -357,14 +430,24 @@
 								</tr>
 							</g:each>
 						</tbody>
+						<tfoot class="nav">
+							<tr>
+								<td colspan=7>
+									<div class="pagination"></div>
+									<div class="paginationTitle">Page</div>
+									<div class="selectPerPage"></div>
+									<div class="status"> </div>
+									<fieldset class="buttonsGrid">
+										<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
+										<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+									</fieldset>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
-					<br>
-					<div class="fieldcontain">
-						<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-						<img id="open-modal" href="#" src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="25px" width="25px"/>	
-					</div>
 				</div>
 
+				<br>
 
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
@@ -373,7 +456,7 @@
 			</g:form>
 
 			<div id="overlay">
-				<div id="overlayContainer">
+				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
 					<p>
 						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
@@ -405,15 +488,16 @@
 							</label>
 							<input id="totalRefaccion" disable />
 						</div>
+						<g:hiddenField id="idEntradaRefaccion" name="idEntradaRefaccion" value="${entradaInstance?.id}" />
 						<br>
 						<div class="fielcontain">
 							<fieldset class="buttons">
-								<input type="button" id="add-modal-refacciones" class="ready" value="Listo"/> 
-								<input type="button" id="close-modal" class="close" value="Cerrar"/>
+								<g:submitButton name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
 					</p>
-				</div>
+				</g:formRemote>
 			</div>
 		</div>
 	</body>

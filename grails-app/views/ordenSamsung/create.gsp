@@ -61,7 +61,7 @@
 			</g:form>
 
 			<div id="overlay">
-				<div id="overlayContainer">
+				<div>
 					<p>
 				  	<g:formRemote name="from_form" url="[controller:'cliente', action:'clienteOrden']" onSuccess="responseClienteOrden(data)">
 					  	<fieldset class="form">
@@ -192,9 +192,9 @@
 							</div>
 						</fieldset>
 						<fieldset class="buttons">
-						<g:submitButton name="create" class="ready" value="${message(code: 'default.button.ready.label', default: 'Listo')}" /> 
-						<input type="button" class="close" value="Cerrar" onclick="overlay()" />
-					</fieldset>
+							<g:submitButton name="create" class="saveIcon" value="${message(code: 'default.button.ready.label', default: 'Listo')}" />
+							<input type="button" class="closeIcon" value="Cerrar" onclick="overlay()" />
+						</fieldset>
 					</g:formRemote>
 					</p>
 				</div>
