@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 		<g:javascript src='jquery-1.9.1.min.js'/>
+		
 		<g:javascript>
 			$(document).ready(function() { 	
 				$('#pais').ready(function() {
@@ -62,6 +63,21 @@
 		</g:javascript>
 		<g:layoutHead/>
         <r:layoutResources />
+    	<style >
+			#tableGrid thead th {
+				white-space: nowrap;
+				overflow-x:hidden;
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+
+			#tableGrid tbody td {
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner"><a href="#"><img src="${resource(dir: 'images', file: 'dimove_logo.png')}" alt="Grails" height="120px" width="500px"/></a></div>

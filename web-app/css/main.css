@@ -7,7 +7,9 @@
 /* FONT STACK */
 body,
 input, select, textarea {
-	font-family: Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	/*font-family: Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+	font-family: Tahoma;
+	font-size: 10pt;
 }
 
 /* BASE LAYOUT */
@@ -55,6 +57,7 @@ body {
 	margin:0 auto;
 	vertical-align: middle;
 	text-align: left;
+	font-family: arial, Helvetica;
 }
 
 ul#navigation {
@@ -315,6 +318,8 @@ img {
 	-webkit-box-shadow: 0 0 3px 1px #aaaaaa;
 	        box-shadow: 0 0 3px 1px #aaaaaa;
 	zoom: 1;
+	font-family: Tahoma;
+	font-size: 10pt;
 }
 
 .nav ul {
