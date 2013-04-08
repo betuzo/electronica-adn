@@ -12,13 +12,24 @@
 		<g:javascript>
 
 			function addPago(data) {
-				console.log("lo que trae el data: ==> " + data);
+				console.log("=====> " + data +"  "+data.success);
 				if (!data.success){
 					alert("Se genero un problema, contacte el area de sistemas...");
+				}else{
+					$("#add-pago").append(data.html);
 				}
 
-				$("#add-pago").append(data.html);
 		    }
+
+		    function addRefaccion(data){
+				console.log("=====> refaccion " + data +"  "+data.success);
+				if (!data.success){
+					alert("Se genero un problema, contacte el area de sistemas...");
+				}else{
+					$("#tableRefacciones tbody:last").append(data.html)
+				}		    	
+		    }
+
 
 			$(document).on("ready", function(){
 				
@@ -367,7 +378,7 @@
 						</g:each>
 				</li>
 				<div id="form-pagos">
-					<g:form name="myForm" >
+					<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
 						<fieldset class="form">
 							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 								<label for="tipoPago">
@@ -396,10 +407,10 @@
 						</fieldset>
 						
 						<fieldset class="buttons">
-							<g:submitToRemote name="guardarPago" class="saveIcon" value="Guardar" onSuccess="addPago(data)" onFailure="addPago(data)" url="[controller: 'entrada', action: 'savePagoShow']"></g:submitToRemote>
+							<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
 							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
 						</fieldset>
-					</g:form>
+					</g:formRemote>
 
 				</div>
 			
@@ -468,7 +479,7 @@
 
 
 			<div id="overlay">
-				<div id="overlayContainer">
+				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
 					<p>
 						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
@@ -500,15 +511,16 @@
 							</label>
 							<input id="totalRefaccion" disable />
 						</div>
+						<g:hiddenField id="idEntradaRefaccion" name="idEntradaRefaccion" value="${entradaInstance?.id}" />
 						<br>
 						<div class="fielcontain">
 							<fieldset class="buttons">
-								<input type="button" id="add-modal-refacciones" class="ready" value="Listo"/> 
-								<input type="button" id="close-modal" class="close" value="Cerrar"/>
+								<g:submitButton name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
 					</p>
-				</div>
+				</g:formRemote>
 			</div>
 		</div>
 	</body>

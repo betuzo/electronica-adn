@@ -135,48 +135,11 @@
 							</label>
 							<g:datePicker name="fechaPago" precision="day"  value="${pagoProveedorInstance?.fechaPago}"  />
 						</div>
-
-						<div class="fieldcontain">
-							<img id="slide-pagos-close" href="#" src="${resource(dir: 'images', file: 'cerrar.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-						</div>
+						<fieldset class="buttons">
+							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+						</fieldset>
 					</div>
 
-					<!--div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'refacciones', 'error')} ">
-						<label for="refacciones">
-							<g:message code="entrada.refacciones.label" default="Refacciones" />
-						</label>
-						Agregar refacciones <img id="slide-refacciones-open" href="#"src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar refacciones" height="30px" width="30px"/> 
-						<div id= "form-refacciones">
-							<table>
-								<thead>
-									<tr>
-										<th>Refaccion</th>
-									
-										<th>Precio</th>
-										
-										<th>Cantidad</th>
-
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<g:each in="${refaccionInstance}" var="r">
-										<tr >
-											<td><span>${r?.encodeAsHTML()}</span></td>
-						 					<td><span>${r?.encodeAsHTML()}</span></td>
-											<td><span>${r?.encodeAsHTML()}</span></td>
-											<td><span>${r?.encodeAsHTML()}</span></td>
-										</tr>
-									</g:each>
-								</tbody>
-							</table>
-							<br>
-							<div class="fieldcontain">
-								<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-								<img id="open-modal" href="#"src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="30px" width="30px"/>
-							</div>
-						</div>
-					</div-->
 				</fieldset>
 				<br><br>
 				<fieldset class="buttons">

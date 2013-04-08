@@ -193,25 +193,26 @@ class EntradaController {
     def addRefaccion(){
         println ("params refaccion ==> " + params)
         def htmlRender=''
+        def success=true
         def user =springSecurityService.currentUser
         def detalleEntrada = new DetalleEntrada()
 
         def refaccionAlmacen = new RefaccionAlmacen()
         if (params) {
             println ("los params son diferentes de null")
-            def entradaInstance = Entrada.get(params.id)
-            def refaccionInstance = Refaccion.get(params.refaccion)
+            def entradaInstance = Entrada.get(params.idEntradaRefaccion)
+            def refaccionInstance = Refaccion.get(params.refaccion.id)
             detalleEntrada.entrada= entradaInstance
             detalleEntrada.refaccion= refaccionInstance
             detalleEntrada.cantidad= params.cantidad as int
-            detalleEntrada.precioUnitario = params.precio as double
+            detalleEntrada.precioUnitario = params.precioUnitario as double
             detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario 
             detalleEntrada.save()
 
             refaccionAlmacen.almacen = user?.sucursal?.almacen
             refaccionAlmacen.refaccion = refaccionInstance
             refaccionAlmacen.cantidad = params.cantidad as int
-            refaccionAlmacen.precio = params.precio as double
+            refaccionAlmacen.precio = params.precioUnitario as double
             refaccionAlmacen.entrada = detalleEntrada
             refaccionAlmacen.save()
 
@@ -219,7 +220,7 @@ class EntradaController {
         }
         htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
 
-        render ([html:htmlRender] as JSON) 
+        render ([html:htmlRender, success:success] as JSON) 
     }
 
     def saveFechaEntrada(){

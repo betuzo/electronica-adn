@@ -172,7 +172,7 @@ ul#navigation li a.last {
 #form-pagos{
 	margin: .5em auto;
 	border-radius: .3em;
-	border: .2em solid #DFDFDF;
+	border: .1em solid #808080;
 	/*padding: .5em;*/
 	width: 500px;
 }
@@ -181,14 +181,14 @@ ul#navigation li a.last {
 	margin: .5em auto;
 	border-radius: 1em;
 	border: .3em solid #007294;
-	padding: .5em;
+	/*padding: .5em;*/
 	width: 500px;
 }
 
 #form-refacciones{
 	margin: .2em auto;
 	border-radius: .1em;
-	border: .2em solid #DFDFDF;*/
+	border: .1em solid #808080;
 	/*padding: .5em;*/
 	width: auto; 
 }
@@ -857,23 +857,25 @@ a.skip {
 /* Modal Windows */
 
 #overlay {
-	background: #000;
+	background: #fff;
 	position: absolute;
 	left: 330px;
 	top: 500px;
 	visibility: hidden;
-	min-width: 50%;
-	text-align:left;
-	/*z-index: 1000;*/
-	border:0.2 solid #333;
-	opacity:.9;
-	-moz-border-radius:15px;
-    -webkit-border-radius:15px;
+	min-width: 40%;
+	/*text-align:left;
+	z-index: 1000;*/
+	border:.1em solid #808080;
+	/*opacity:.9;*/
+	margin: .5em auto;
+	border-radius: .3em;
+	-moz-border-radius:.3em;
+    -webkit-border-radius:.3em;
+    box-shadow: 0 0 50px #000;
 	-moz-box-shadow: 0 0 50px #000;
     -webkit-box-shadow: 0 0 50px #000;
-    
-    
 }
+
 
 #overlay div#overlayContainer {
 	background-color: #fff;
@@ -884,7 +886,6 @@ a.skip {
     -webkit-border-radius:15px;
 	-moz-box-shadow: 0 0 50px #000;
     -webkit-box-shadow: 0 0 50px #000;
-	
 }
 
 #modal-refacciones {
