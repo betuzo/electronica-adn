@@ -256,10 +256,6 @@
 						e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
 					}
 				);
-
-
-
-
 			});
 		</g:javascript>
 		<style >

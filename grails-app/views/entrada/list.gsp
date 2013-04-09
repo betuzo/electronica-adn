@@ -63,6 +63,10 @@
 							<div class="paginationTitle">Page</div>
 							<div class="selectPerPage"></div>
 							<div class="status"> </div>
+							<fieldset class="buttonsGrid">
+								<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
+								<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+							</fieldset>
 						</td>
 					</tr>
 				</tfoot>
