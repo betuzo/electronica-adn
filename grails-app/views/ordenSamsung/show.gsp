@@ -6,6 +6,8 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'ordenSamsung.label', default: 'OrdenSamsung')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<g:javascript src='jTPS.js'/>
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'jTPS.css')}" type="text/css">
 		<g:javascript>
 		function resultNextStep(data) {
 			if (!data.success)
@@ -17,6 +19,15 @@
 
 			$("#seccFechas").html(data.html);
 			$("#statusOrden").text(data.valStatus);
+	    }
+
+	    function addRefaccion(data){
+			console.log("=====> refaccion " + data +"  "+data.success);
+			if (!data.success){
+				alert("Se genero un problema, contacte el area de sistemas...");
+			}else{
+				$("#tableRefacciones tbody:last").append(data.html)
+			}		    	
 	    }
 
 	    $(document).on("ready", function(){
@@ -47,7 +58,7 @@
 
 			$("#refaccion").on('change', function(){
 				$("#cantidadRefaccion").val("");
-				$("#precio").val("");
+				$("#precioUnitario").val("");
 				$("#totalRefaccion").val("");
 				$.ajax({
 					url:"${request.contextPath}/refaccionAlmacen/lotesByRefaccion",
@@ -62,16 +73,16 @@
 				});
 			});
 
-			$("#precio").on('change', function(){
+			$("#precioUnitario").on('change', function(){
 				var cantidad = $("#cantidadRefaccion").val();
-				var precio = $("#precio").val();
+				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
 				$("#totalRefaccion").val(result);
 			});
 
 			$("#cantidadRefaccion").on("change", function(){
 				var cantidad = $("#cantidadRefaccion").val();
-				var precio = $("#precio").val();
+				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
 				$("#totalRefaccion").val(result);
 			});
@@ -94,8 +105,63 @@
 			});
 
 			$("#refaccion").change();
+
+
+			/*jTPS*/
+				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'ALL'],scrollStep:1,scrollDelay:30,
+					clickCallback:function () {	
+						// target table selector
+						var table = '#tableRefacciones';
+						// store pagination + sort in cookie 
+						document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
+							'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
+							'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
+					}
+				});
+
+				// reinstate sort and pagination if cookie exists
+				var cookies = document.cookie.split(';');
+				for (var ci = 0, cie = cookies.length; ci < cie; ci++) {
+					var cookie = cookies[ci].split('=');
+					if (cookie[0] == 'jTPS') {
+						var commands = cookie[1].split(',');
+						for (var cm = 0, cme = commands.length; cm < cme; cm++) {
+							var command = commands[cm].split(':');
+							if (command[0] == 'sortasc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click();
+							} else if (command[0] == 'sortdesc' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .sortableHeader:eq(' + parseInt(command[1]) + ')').click().click();
+							} else if (command[0] == 'page' && parseInt(command[1]) >= 0) {
+								$('#tableRefacciones .pageSelector:eq(' + parseInt(command[1]) + ')').click();
+							}
+						}
+					}
+				}
+
+				// bind mouseover for each tbody row and change cell (td) hover style
+				$('#tableRefacciones tbody tr:not(.stubCell)').bind('mouseover mouseout',
+					function (e) {
+						// hilight the row
+						e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
+					}
+				);
 		});
 		</g:javascript>
+		<style >
+			#tableRefacciones thead th {
+				white-space: nowrap;
+				overflow-x:hidden;
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+
+			#tableRefacciones tbody td {
+				padding: 2px;
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
+		</style>
 	</head>
 	<body>
 		<a href="#show-ordenSamsung" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -269,14 +335,16 @@
 								<th>Cantidad</th>
 
 								<th>Total</th>
+
+								<th>Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
 
 							<g:each in="${ordenSamsungInstance?.refacciones?}" status="i" var="detalleOrdenInstance">
-								<tr id="delete-detalleEntrada-${detalleOrdenInstance.id}" class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<tr id="delete-detalleEntrada-${detalleOrdenInstance.id}">
 								
-									<td><g:link controller="detalleEntrada" action="show" id="${detalleEntradaInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
+									<td><g:link controller="detalleEntrada" action="show" id="${detalleOrdenInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
 								
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "cantidad")}</td>
 								
@@ -289,12 +357,21 @@
 								</tr>
 							</g:each>
 						</tbody>
+						<tfoot class="nav">
+							<tr>
+								<td colspan=7>
+									<div class="pagination"></div>
+									<div class="paginationTitle">Page</div>
+									<div class="selectPerPage"></div>
+									<div class="status"> </div>
+									<fieldset class="buttonsGrid">
+										<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
+										<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+									</fieldset>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
-					<br>
-					<div class="fieldcontain">
-						<img id="slide-refacciones-close" href="#" src="${resource(dir: 'images', file: 'Xion.png')}" alt="Cerrar" height="30px" width="30px"/>
-						<img id="open-modal" href="#" src="${resource(dir: 'images', file: 'Search.png')}" alt="Buscar Refaccion" height="25px" width="25px"/>
-					</div>
 				</div>
 
 				<g:if test="${ordenSamsungInstance?.totalCobros}">
@@ -351,8 +428,9 @@
 					<g:link class="edit" action="generateReportByOrden" id="${ordenSamsungInstance?.id}"><g:message code="default.button.report.label" default="Nota de Venta" /></g:link>
 				</fieldset>
 			</g:form>
+
 			<div id="overlay">
-				<div id="overlayContainer">
+				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
 					<p>
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
@@ -376,12 +454,12 @@
 							</label>
 							<g:field type="number" id="cantidadRefaccion" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
 						</div>
-						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'precio', 'error')} required">
-							<label for="precio">
-								<g:message code="detalleOrden.precio.label" default="Precio Unitario" />
+						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'precioUnitario', 'error')} required">
+							<label for="precioUnitario">
+								<g:message code="detalleOrden.precioUnitario.label" default="Precio Unitario" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="precio" name="precio" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precio')}"/>
+							<g:field type="number" id="precioUnitario" name="precioUnitario" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precioUnitario')}"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'total', 'error')} required">
@@ -392,14 +470,15 @@
 							<input id="totalRefaccion" disable />
 						</div>
 						<br>
+
 						<div class="fielcontain">
 							<fieldset class="buttons">
-								<input type="button" id="add-modal-refacciones" class="ready" value="Listo"/> 
-								<input type="button" id="close-modal" class="close" value="Cerrar"/>
+								<g:submitButton name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
 					</p>
-				</div>
+				</g:formRemote>
 			</div>
 		</div>
 	</body>
