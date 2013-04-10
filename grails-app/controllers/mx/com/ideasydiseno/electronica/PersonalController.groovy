@@ -11,8 +11,7 @@ class PersonalController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [personalInstanceList: Personal.list(params), personalInstanceTotal: Personal.count()]
+        [personalInstanceList: Personal.list(params)]
     }
 
     def create() {

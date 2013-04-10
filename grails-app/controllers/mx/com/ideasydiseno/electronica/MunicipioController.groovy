@@ -11,8 +11,7 @@ class MunicipioController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [municipioInstanceList: Municipio.list(params), municipioInstanceTotal: Municipio.count()]
+        [municipioInstanceList: Municipio.list(params)]
     }
 
     def create() {

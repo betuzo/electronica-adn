@@ -11,8 +11,7 @@ class ContactoProveedorController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [contactoProveedorInstanceList: ContactoProveedor.list(params), contactoProveedorInstanceTotal: ContactoProveedor.count()]
+        [contactoProveedorInstanceList: ContactoProveedor.list(params)]
     }
 
     def create() {

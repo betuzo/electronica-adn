@@ -11,8 +11,7 @@ class RefaccionController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [refaccionInstanceList: Refaccion.list(params), refaccionInstanceTotal: Refaccion.count()]
+        [refaccionInstanceList: Refaccion.list(params)]
     }
 
     def create() {

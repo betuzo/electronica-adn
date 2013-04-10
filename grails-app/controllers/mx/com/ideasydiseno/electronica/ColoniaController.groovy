@@ -11,8 +11,7 @@ class ColoniaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [coloniaInstanceList: Colonia.list(params), coloniaInstanceTotal: Colonia.count()]
+        [coloniaInstanceList: Colonia.list(params)]
     }
 
     def create() {

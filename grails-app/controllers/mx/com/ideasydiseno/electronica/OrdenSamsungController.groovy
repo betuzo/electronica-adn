@@ -29,13 +29,12 @@ class OrdenSamsungController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
     
         def listOrdenSamsung = OrdenSamsung.list(params)?.sort{it.getProperty('maxFecha')?.getDate()}
 
         Collections.reverse(listOrdenSamsung)
 
-        [ordenSamsungInstanceList: listOrdenSamsung, ordenSamsungInstanceTotal: OrdenSamsung.count()]
+        [ordenSamsungInstanceList: listOrdenSamsung]
     }
 
     def create() {

@@ -13,8 +13,7 @@ class DetalleFechaEntradaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [detalleFechaEntradaInstanceList: DetalleFechaEntrada.list(params), detalleFechaEntradaInstanceTotal: DetalleFechaEntrada.count()]
+        [detalleFechaEntradaInstanceList: DetalleFechaEntrada.list(params)]
     }
 
     def create() {

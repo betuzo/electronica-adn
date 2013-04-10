@@ -16,8 +16,7 @@ class EntradaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [entradaInstanceList: Entrada.list(params), entradaInstanceTotal: Entrada.count()]
+        [entradaInstanceList: Entrada.list(params)]
     }
 
     def create() {

@@ -11,8 +11,7 @@ class DetalleOrdenController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [detalleOrdenInstanceList: DetalleOrden.list(params), detalleOrdenInstanceTotal: DetalleOrden.count()]
+        [detalleOrdenInstanceList: DetalleOrden.list(params)]
     }
 
     def create() {

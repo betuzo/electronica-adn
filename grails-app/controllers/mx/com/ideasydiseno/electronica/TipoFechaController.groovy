@@ -11,8 +11,7 @@ class TipoFechaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [tipoFechaInstanceList: TipoFecha.list(params), tipoFechaInstanceTotal: TipoFecha.count()]
+        [tipoFechaInstanceList: TipoFecha.list(params)]
     }
 
     def create() {

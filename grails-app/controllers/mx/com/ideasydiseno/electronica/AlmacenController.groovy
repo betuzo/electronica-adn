@@ -13,8 +13,7 @@ class AlmacenController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [almacenInstanceList: Almacen.list(params), almacenInstanceTotal: Almacen.count()]
+        [almacenInstanceList: Almacen.list(params)]
     }
 
     def create() {

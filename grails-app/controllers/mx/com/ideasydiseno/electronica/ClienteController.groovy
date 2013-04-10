@@ -13,8 +13,7 @@ class ClienteController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [clienteInstanceList: Cliente.list(params), clienteInstanceTotal: Cliente.count()]
+        [clienteInstanceList: Cliente.list(params)]
     }
 
     def clienteOrden() {

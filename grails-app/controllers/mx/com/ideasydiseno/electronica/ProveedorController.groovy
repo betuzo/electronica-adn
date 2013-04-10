@@ -12,8 +12,7 @@ class ProveedorController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [proveedorInstanceList: Proveedor.list(params), proveedorInstanceTotal: Proveedor.count()]
+        [proveedorInstanceList: Proveedor.list(params)]
     }
 
     def create() {
