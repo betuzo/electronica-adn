@@ -219,7 +219,7 @@
 				});
 
 				/*jTPS*/
-				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'ALL'],scrollStep:1,scrollDelay:30,
+				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'Todos'],scrollStep:1,scrollDelay:30,
 					clickCallback:function () {	
 						// target table selector
 						var table = '#tableRefacciones';
@@ -269,6 +269,11 @@
 
 		#tableRefacciones tbody td {
 			padding: 2px;
+			font-family: Tahoma;
+			font-size: 10pt;
+		}
+
+		#tableRefacciones tfoot td {
 			font-family: Tahoma;
 			font-size: 10pt;
 		}
@@ -439,11 +444,11 @@
 								</tr>
 							</g:each>
 						</tbody>
-						<tfoot class="nav">
+						<tfoot class="navGrid">
 							<tr>
 								<td colspan=7>
 									<div class="pagination"></div>
-									<div class="paginationTitle">Page</div>
+									<div class="paginationTitle">Pag </div>
 									<div class="selectPerPage"></div>
 									<div class="status"> </div>
 									<fieldset class="buttonsGrid">

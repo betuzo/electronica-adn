@@ -1,6 +1,6 @@
 $(document).on('ready', function(){
 	/*jTPS*/
-	$('#tableGrid').jTPS( {perPages:[5,12,15,50,'ALL'],scrollStep:1,scrollDelay:30,
+	$('#tableGrid').jTPS( {perPages:[5,10,20,50,'Todos'],scrollStep:1,scrollDelay:30,
 		clickCallback:function () {	
 			// target table selector
 			var table = '#tableGrid';

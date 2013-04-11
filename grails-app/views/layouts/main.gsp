@@ -78,6 +78,11 @@
 				font-family: Tahoma;
 				font-size: 10pt;
 			}
+
+			#tableGrid tfoot td {
+				font-family: Tahoma;
+				font-size: 10pt;
+			}
 		</style>
 	</head>
 	<body>

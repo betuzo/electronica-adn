@@ -103,17 +103,17 @@
 			);
 
 		// add perPage selection link + delim dom node
-		$('>.nav .selectPerPage', this).empty();
+		$('>.navGrid .selectPerPage', this).empty();
 		var pageSel = perPages.length;
 		while ( pageSel-- ) 
-			$('>.nav .selectPerPage', this).prepend( ( (pageSel > 0) ? $(this).data('tableSettings').perPageDelim : '' ) + 
+			$('>.navGrid .selectPerPage', this).prepend( ( (pageSel > 0) ? $(this).data('tableSettings').perPageDelim : '' ) + 
 				'<span class="perPageSelector">' + perPages[pageSel] + '</span>' );
 
 		// now draw the page selectors
 		drawPageSelectors( this, page || 1 );
 
 		// prepend the instructions and attach select hover and click events
-		$('>.nav .selectPerPage', this).prepend( $(this).data('tableSettings').perPageText ).find('.perPageSelector').each(
+		$('>.navGrid .selectPerPage', this).prepend( $(this).data('tableSettings').perPageText ).find('.perPageSelector').each(
 			function () {
 				if ( ( parseInt($(this).html()) || rowCount ) == perPage )
 					$(this).addClass('perPageSelected');
@@ -147,7 +147,7 @@
 						// update status bar
 						var cPos = $('>tbody>tr:not(.hideTR):first', pT).prevAll().length,
 							ePos = $('>tbody>tr:not(.hideTR):not(.stubCell)', pT).length;
-						$('>.nav .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
+						$('>.navGrid .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
 						clearSelection();
 						// callback function after pagination renderd
 						$(pT).data('tableSettings').clickCallback();
@@ -159,7 +159,7 @@
 		// show the correct paging status
 		var cPos = $('>tbody>tr:not(.hideTR):first', this).prevAll().length, 
 			ePos = $('>tbody>tr:not(.hideTR):not(.stubCell)', this).length;
-		$('>.nav .status', this).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount );
+		$('>.navGrid .status', this).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount );
 
 		// clear selected text function
 		function clearSelection () {
@@ -173,12 +173,12 @@
 		function drawPageSelectors ( target, page ) {
 
 			// add pagination links
-			$('>.nav .pagination', target).empty();
+			$('>.navGrid .pagination', target).empty();
 			var pages = ( perPage >= rowCount || perPage == 0 ) ? 0 : Math.ceil( rowCount / perPage ), totalPages = pages;
 			while ( pages-- )
-				$('>.nav .pagination', target).prepend( '<div class="pageSelector">' + ( pages + 1 ) + '</div>' );
-			var pageCount = $('>.nav:first .pageSelector', target).length;
-			$('>.nav', target).each(function () {
+				$('>.navGrid .pagination', target).prepend( '<div class="pageSelector">' + ( pages + 1 ) + '</div>' );
+			var pageCount = $('>.navGrid:first .pageSelector', target).length;
+			$('>.navGrid', target).each(function () {
 				$('.hidePageSelector', this).removeClass('hidePageSelector');
 				$('.hilightPageSelector', this).removeClass('hilightPageSelector');
 				$('.pageSelectorSeperator', this).remove();
@@ -191,12 +191,12 @@
 
 			// remove the pager title if no pages necessary
 			if ( perPage >= rowCount )
-				$('>.nav .paginationTitle', target).css('display','none');
+				$('>.navGrid .paginationTitle', target).css('display','none');
 			else
-				$('>.nav .paginationTitle', target).css('display','');
+				$('>.navGrid .paginationTitle', target).css('display','');
 			
 			// bind the pagination onclick
-			$('>.nav .pagination .pageSelector', target).each(
+			$('>.navGrid .pagination .pageSelector', target).each(
 				function () {
 					$(this).bind('click',
 						function () {
@@ -213,7 +213,7 @@
 									// update status bar
 									var cPos = $('>tbody>tr:not(.hideTR):first', pT).prevAll().length,
 										ePos = $('>tbody>tr:not(.hideTR):not(.stubCell)', pT).length;
-									$('>.nav .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
+									$('>.navGrid .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
 								}
 								clearSelection();
 								return false;
@@ -260,7 +260,7 @@
 										// update status bar
 										var cPos = $('>tbody>tr:not(.hideTR):first', pT).prevAll().length,
 											ePos = $('>tbody>tr:not(.hideTR):not(.stubCell)', pT).length;
-										$('>.nav .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
+										$('>.navGrid .status', pT).html( 'Mostrando ' + ( cPos + 1 ) + ' - ' + ( cPos + ePos ) + ' de ' + rowCount + '' );
 									}
 								);
 							}

@@ -27,7 +27,7 @@
 		background-color: #f7f7ff;
 		margin: 0px 0 14px 0;
 		color: #2e3741;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: bold;
 	}
 
@@ -45,7 +45,7 @@
 	}
 
 	#login .inner .cssform label {
-		font-weight: bold;
+		/*font-weight: bold;*/
 		float: left;
 		text-align: right;
 		margin-left: -105px;

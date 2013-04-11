@@ -53,11 +53,11 @@
 				</g:each>
 				</tbody>
 			</table>
-			<tfoot class="nav">
+			<tfoot class="navGrid">
 				<tr>
 					<td colspan=7>
 						<div class="pagination"></div>
-						<div class="paginationTitle">Page</div>
+						<div class="paginationTitle">Pag </div>
 						<div class="selectPerPage"></div>
 						<div class="status"> </div>
 					</td>
