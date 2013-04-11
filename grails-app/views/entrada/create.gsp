@@ -34,8 +34,6 @@
 					$("#tipoPago").val(" ");
 					$("#form-pagos").slideUp();
 				});
-
-
 			});
 		</g:javascript>
 
