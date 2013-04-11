@@ -11,8 +11,7 @@ class PagoProveedorController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [pagoProveedorInstanceList: PagoProveedor.list(params), pagoProveedorInstanceTotal: PagoProveedor.count()]
+        [pagoProveedorInstanceList: PagoProveedor.list(params)]
     }
 
     def create() {

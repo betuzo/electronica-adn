@@ -11,8 +11,7 @@ class EstadoController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [estadoInstanceList: Estado.list(params), estadoInstanceTotal: Estado.count()]
+        [estadoInstanceList: Estado.list(params)]
     }
 
     def create() {

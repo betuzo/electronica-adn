@@ -11,8 +11,7 @@ class TipoPersonalController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [tipoPersonalInstanceList: TipoPersonal.list(params), tipoPersonalInstanceTotal: TipoPersonal.count()]
+        [tipoPersonalInstanceList: TipoPersonal.list(params)]
     }
 
     def create() {

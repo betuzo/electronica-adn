@@ -11,8 +11,7 @@ class TelefonoInstitucionController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [telefonoInstitucionInstanceList: TelefonoInstitucion.list(params), telefonoInstitucionInstanceTotal: TelefonoInstitucion.count()]
+        [telefonoInstitucionInstanceList: TelefonoInstitucion.list(params)]
     }
 
     def create() {

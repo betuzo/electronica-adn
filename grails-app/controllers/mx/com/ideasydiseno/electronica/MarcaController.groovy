@@ -11,8 +11,7 @@ class MarcaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [marcaInstanceList: Marca.list(params), marcaInstanceTotal: Marca.count()]
+        [marcaInstanceList: Marca.list(params)]
     }
 
     def create() {

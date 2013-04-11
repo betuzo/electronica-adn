@@ -11,8 +11,7 @@ class TipoFallaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [tipoFallaInstanceList: TipoFalla.list(params), tipoFallaInstanceTotal: TipoFalla.count()]
+        [tipoFallaInstanceList: TipoFalla.list(params)]
     }
 
     def create() {

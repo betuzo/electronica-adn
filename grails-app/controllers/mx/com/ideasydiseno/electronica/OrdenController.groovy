@@ -11,8 +11,7 @@ class OrdenController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [ordenInstanceList: Orden.list(params), ordenInstanceTotal: Orden.count()]
+        [ordenInstanceList: Orden.list(params)]
     }
 
     def create() {

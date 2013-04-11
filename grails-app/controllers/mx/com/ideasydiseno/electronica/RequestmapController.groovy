@@ -11,8 +11,7 @@ class RequestmapController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [requestmapInstanceList: Requestmap.list(params), requestmapInstanceTotal: Requestmap.count()]
+        [requestmapInstanceList: Requestmap.list(params)]
     }
 
     def create() {

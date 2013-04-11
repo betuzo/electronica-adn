@@ -11,8 +11,7 @@ class DetalleCobroController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [detalleCobroInstanceList: DetalleCobro.list(params), detalleCobroInstanceTotal: DetalleCobro.count()]
+        [detalleCobroInstanceList: DetalleCobro.list(params)]
     }
 
     def create() {

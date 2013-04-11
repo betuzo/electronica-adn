@@ -11,8 +11,7 @@ class FallaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [fallaInstanceList: Falla.list(params), fallaInstanceTotal: Falla.count()]
+        [fallaInstanceList: Falla.list(params)]
     }
 
     def create() {

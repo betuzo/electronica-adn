@@ -13,8 +13,7 @@ class RoleController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [roleInstanceList: Role.list(params), roleInstanceTotal: Role.count()]
+        [roleInstanceList: Role.list(params)]
     }
 
     def create() {

@@ -11,8 +11,7 @@ class TelefonoPersonaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [telefonoPersonaInstanceList: TelefonoPersona.list(params), telefonoPersonaInstanceTotal: TelefonoPersona.count()]
+        [telefonoPersonaInstanceList: TelefonoPersona.list(params)]
     }
 
     def create() {

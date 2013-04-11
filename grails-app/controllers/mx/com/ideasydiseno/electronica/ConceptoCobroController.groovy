@@ -11,8 +11,7 @@ class ConceptoCobroController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [conceptoCobroInstanceList: ConceptoCobro.list(params), conceptoCobroInstanceTotal: ConceptoCobro.count()]
+        [conceptoCobroInstanceList: ConceptoCobro.list(params)]
     }
 
     def create() {

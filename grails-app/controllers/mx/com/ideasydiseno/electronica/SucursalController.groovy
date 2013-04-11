@@ -11,8 +11,7 @@ class SucursalController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [sucursalInstanceList: Sucursal.list(params), sucursalInstanceTotal: Sucursal.count()]
+        [sucursalInstanceList: Sucursal.list(params)]
     }
 
     def create() {

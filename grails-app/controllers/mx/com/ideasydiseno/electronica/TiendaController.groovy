@@ -11,8 +11,7 @@ class TiendaController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [tiendaInstanceList: Tienda.list(params), tiendaInstanceTotal: Tienda.count()]
+        [tiendaInstanceList: Tienda.list(params)]
     }
 
     def create() {

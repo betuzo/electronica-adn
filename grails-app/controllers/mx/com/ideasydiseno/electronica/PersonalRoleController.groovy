@@ -11,8 +11,7 @@ class PersonalRoleController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [personalRoleInstanceList: PersonalRole.list(params), personalRoleInstanceTotal: PersonalRole.count()]
+        [personalRoleInstanceList: PersonalRole.list(params)]
     }
 
     def create() {

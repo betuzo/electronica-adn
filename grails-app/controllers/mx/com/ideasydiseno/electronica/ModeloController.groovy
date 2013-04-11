@@ -11,8 +11,7 @@ class ModeloController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [modeloInstanceList: Modelo.list(params), modeloInstanceTotal: Modelo.count()]
+        [modeloInstanceList: Modelo.list(params)]
     }
 
     def create() {

@@ -11,8 +11,7 @@ class PaisController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [paisInstanceList: Pais.list(params), paisInstanceTotal: Pais.count()]
+        [paisInstanceList: Pais.list(params)]
     }
 
     def create() {
