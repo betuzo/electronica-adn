@@ -14,8 +14,28 @@
 					alert("Se genero un problema, contacte el area de sistemas...");
 				}else{
 					$("#tableRefacciones tbody:last").append(data.html)
+					var cantidadR = document.getElementById("cantidadRefaccion");
+					var preciouR = document.getElementById("precioUnitario");
+					var totalR = document.getElementById("totalRefaccion");
+					cantidadR.value="";
+					preciouR.value=""
+					totalR.value="";	
 				}		    	
 		    }
+
+		    function addPago(data) {
+				console.log("=====> " + data +"  "+data.success);
+				if (!data.success){
+					alert("Se genero un problema, contacte el area de sistemas...");
+				}else{
+					$("#pago-container ul").append(data.html);
+					var tipoP = document.getElementById("tipoPago");
+					var totalP = document.getElementById("totalPago");
+					tipoP.value="";
+					totalP.value="";
+				}
+		    }
+
 
 			$(document).on('ready', function(){
 				var tipoFecha = $("#tipoFechaEntrada").val();
@@ -356,9 +376,8 @@
 						</ul>
 					</div>
 					<div id="form-pagos">
-						<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
+						<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePago']" onSuccess="addPago(data)" onFailure="addPago(data)">
 							<fieldset class="form">
-							
 								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 									<label for="tipoPago">
 										<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
@@ -374,8 +393,9 @@
 									</label>
 									<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
 								</div>
+
+								<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
 							</fieldset>
-							<br>
 							<fieldset class="buttons">
 								<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
 								<div id="slide-pagos-close" class="closeIcon">Cerrar</div>

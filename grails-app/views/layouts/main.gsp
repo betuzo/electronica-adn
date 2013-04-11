@@ -86,7 +86,7 @@
 		</style>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="#"><img src="${resource(dir: 'images', file: 'dimove_logo.png')}" alt="Grails" height="120px" width="500px"/></a></div>
+		<div id="grailsLogo" role="banner"><a href="${createLink(uri: '/')}"><img src="${resource(dir: 'images', file: 'dimove_logo.png')}" alt="Grails" height="120px" width="500px"/></a></div>
 
 		<div id="header">
 			<div id="menu">

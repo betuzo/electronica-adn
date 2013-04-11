@@ -17,8 +17,11 @@
 					alert("Se genero un problema, contacte el area de sistemas...");
 				}else{
 					$("#add-pago").append(data.html);
+					var tipoP = document.getElementById("tipoPago");
+					var totalP = document.getElementById("totalPago");
+					tipoP.value="";
+					totalP.value="";
 				}
-
 		    }
 
 		    function addRefaccion(data){
@@ -27,12 +30,19 @@
 					alert("Se genero un problema, contacte el area de sistemas...");
 				}else{
 					$("#tableRefacciones tbody:last").append(data.html)
-				}		    	
+				}
+
+				var cantidadR = document.getElementById("cantidadRefaccion");
+				var preciouR = document.getElementById("precioUnitario");
+				var totalR = document.getElementById("totalRefaccion");
+				cantidadR.value="";
+				preciouR.value=""
+				totalR.value="";		    	
 		    }
 
 
 			$(document).on("ready", function(){
-				
+
 				$.ajax({
 					url:"${request.contextPath}/entrada/hasNext",
 					dataType: "json",
@@ -502,13 +512,13 @@
 								<g:message code="detalleEntrada.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<input id="totalRefaccion" disable />
+							<input id="totalRefaccion" disable="" />
 						</div>
 						<g:hiddenField id="idEntradaRefaccion" name="idEntradaRefaccion" value="${entradaInstance?.id}" />
 						<br>
 						<div class="fielcontain">
 							<fieldset class="buttons">
-								<g:submitButton name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>
+								<g:submitButton id="guardarRefaccion" name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>
 								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
