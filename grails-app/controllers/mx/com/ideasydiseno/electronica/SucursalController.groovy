@@ -19,13 +19,22 @@ class SucursalController {
     }
 
     def save() {
+        println "Sucursal ===> " + params
         def sucursalInstance = new Sucursal(params)
+
+        def almacenInstance = new Almacen()
+        almacenInstance.sucursal = sucursalInstance
+        almacenInstance.save(flus:true)
+        println " despues de guardar el almacen** " + almacenInstance
+
+        sucursalInstance.almacen = almacenInstance
+        println " el valor seteado para almacen   "  + sucursalInstance.almacen
         if (!sucursalInstance.save(flush: true)) {
             render(view: "create", model: [sucursalInstance: sucursalInstance])
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'sucursal.label', default: 'Sucursal'), sucursalInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'sucursal.label', default: 'Sucursal'), sucursalInstance.id])
         redirect(action: "show", id: sucursalInstance.id)
     }
 

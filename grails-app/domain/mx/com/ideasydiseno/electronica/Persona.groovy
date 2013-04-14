@@ -28,7 +28,7 @@ class Persona {
         codigoPostal blank:true
     	noExt blank:true
     	noInt blank:true
-    	rfc blank:true, size:10..13
+    	rfc blank:true
     	email email:true, blank:true
     }
 

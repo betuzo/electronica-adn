@@ -4,9 +4,9 @@ class Sucursal extends Institucion{
 
 	Almacen almacen
 
-	static hasMany = [personal: Personal,
-					  entradas: Entrada,
-					  ordenes: Orden]
+	static hasMany = [personal: Personal, 
+				entradas: Entrada,
+				ordenes: Orden]
 
     static constraints = {
     	almacen blank:true, nullable:true

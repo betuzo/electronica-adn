@@ -103,13 +103,13 @@
 	<g:field type="email" name="email" value="${sucursalInstance?.email}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'almacen', 'error')} ">
+<!--div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'almacen', 'error')} ">
 	<label for="almacen">
 		<g:message code="sucursal.almacen.label" default="Almacen" />
 		
 	</label>
 	<g:select id="almacen" name="almacen.id" from="${mx.com.ideasydiseno.electronica.Almacen.list()}" optionKey="id" value="${sucursalInstance?.almacen?.id}" class="many-to-one" noSelection="['null': '']"/>
-</div>
+</div-->
 
 <div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'entradas', 'error')} ">
 	<label for="entradas">
