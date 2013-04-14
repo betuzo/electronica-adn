@@ -215,7 +215,8 @@ class EntradaController {
             refaccionAlmacen.entrada = detalleEntrada
             refaccionAlmacen.save()
 
-            println ("refacciones: " + detalleEntrada)
+            println ("refacciones detalleEntrada: " + detalleEntrada)
+            println ("refacciones refaccionAlmacen: " + refaccionAlmacen)
         }
         htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
 
@@ -284,7 +285,7 @@ class EntradaController {
         def success = true
         def entradaInstance = Entrada.get(params.id)
         //def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
-        def totalPago = params.totalPago as int
+        def totalPago = params.totalPago as double
         
         def pagoProveedor = new PagoProveedor()
         pagoProveedor.realizo=user

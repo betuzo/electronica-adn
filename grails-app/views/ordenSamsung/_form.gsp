@@ -54,7 +54,7 @@
 		<g:message code="ordenSamsung.descripcion.label" default="Descripcion" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="descripcion" required="" value="${ordenSamsungInstance?.descripcion}"/>
+	<g:textField name="descripcion" autocomplete="off" required="" value="${ordenSamsungInstance?.descripcion}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'noSerie', 'error')} required">
@@ -70,7 +70,7 @@
 		<g:message code="ordenSamsung.total.label" default="Total" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="total" required="" value="${fieldValue(bean: ordenSamsungInstance, field: 'total')}"/>
+	<g:field type="number" name="total" required=""  autocomplete="off" value="${fieldValue(bean: ordenSamsungInstance, field: 'total')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'status', 'error')} required">
@@ -86,7 +86,7 @@
 		<g:message code="ordenSamsung.observaciones.label" default="Observaciones" />
 		
 	</label>
-	<g:textArea name="observaciones" value="${ordenSamsungInstance?.observaciones}" rows="3" cols="40"/>
+	<g:textArea name="observaciones" autocomplete="off" value="${ordenSamsungInstance?.observaciones}" rows="3" cols="40"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'solucion', 'error')} ">
@@ -111,7 +111,7 @@
 	<label for="telefonoPrincipal">
 		<g:message code="ordenSamsung.costoRevision.label" default="Costo Revision" />
 	</label>
-	<g:field type="number" name="costoRevision" value="0"/>
+	<g:field type="number" name="costoRevision"  autocomplete="off" value="0"/>
 </div>
 
 <div class="fieldcontain">

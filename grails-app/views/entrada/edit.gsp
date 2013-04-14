@@ -22,20 +22,15 @@
 					totalR.value="";	
 				}		    	
 		    }
-
-		    function addPago(data) {
-				console.log("=====> " + data +"  "+data.success);
-				if (!data.success){
-					alert("Se genero un problema, contacte el area de sistemas...");
-				}else{
-					$("#pago-container ul").append(data.html);
-					var tipoP = document.getElementById("tipoPago");
-					var totalP = document.getElementById("totalPago");
-					tipoP.value="";
-					totalP.value="";
+		    /**
+		    if (document.getElementsByTagName) {
+				var inputElements = document.getElementsByTagName("input");
+					for (i=0; inputElements[i]; i++) {
+					if (inputElements[i].className && (inputElements[i].className.indexOf("disableAutoComplete") != -1)) {
+					inputElements[i].setAttribute("autocomplete","off");
+					}
 				}
-		    }
-
+			} */
 
 			$(document).on('ready', function(){
 				var tipoFecha = $("#tipoFechaEntrada").val();
@@ -118,14 +113,20 @@
 					$("#form-pagos").slideUp();
 				});
 
+				$('#totalPago').keyup(function () {
+				  this.value = this.value.replace(/[^0-9]/g,''); 
+				});
+
 				$("#save-slide-pagos").on('click', function(){
+					var espacio    = /[a-z]/i;  //Expresión regular
+					var pago = $("#totalPago").val();  //Si usamos Jquery podemos obtener el valor con la siguiente línea.
 
 					if(isNaN($("#totalPago").val())){
+						console.log("isNaN ====> " + (isNaN($("#totalPago").val())));
+						console.log("hay espacios en blanco====>" + (espacio.test(pago)));
 						alert("El total del pago deve de ser numerico");
 						$("#totalPago").val("");
-					}
-
-					if($("#totalPago").val==null || $("#tipoPago").val()==null){
+					}else if($("#totalPago").val() =="" || $("#tipoPago").val() ==""){
 						alert("Los campos son requeridos");
 					}else{
 						console.log("Guardando pagos");
@@ -145,7 +146,6 @@
 							}
 						});
 					}
-
 				});
 
 				/**Refacciones**/
@@ -174,7 +174,7 @@
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val(""); 
 				})
-
+/**
 				$("#refaccion").on('change', function(){
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
@@ -193,6 +193,26 @@
 					var precio = $("#precioUnitario").val();
 					var result = parseFloat(cantidad) * parseFloat(precio);
 					$("#totalRefaccion").val(result);
+				}); ***/
+
+				$('#cantidadRefaccion').keyup(function () {
+					this.value = this.value.replace(/[^0-9]/g,''); 
+					var cantidad = $("#cantidadRefaccion").val();
+					var precio = $("#precioUnitario").val();
+					var result = parseFloat(cantidad) * parseFloat(precio);
+					$("#totalRefaccion").val(result);
+				});
+
+				$('#precioUnitario').keyup(function () {
+					this.value = this.value.replace(/[^0-9]/g,''); 
+					var cantidad = $("#cantidadRefaccion").val();
+					var precio = $("#precioUnitario").val();
+					var result = parseFloat(cantidad) * parseFloat(precio);
+					$("#totalRefaccion").val(result); 
+				});
+
+				$('#totalRefaccion').keyup(function () {
+				  this.value = this.value.replace(/[^0-9]/g,''); 
 				});
 
 
@@ -319,7 +339,7 @@
 							<g:message code="entrada.total.label" default="Total" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:field type="number" name="total" required="" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
+						<g:field type="number" name="total" required="" autocomplete="off" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'status', 'error')} required">
@@ -335,7 +355,7 @@
 							<g:message code="entrada.observaciones.label" default="Observaciones" />
 							
 						</label>
-						<g:textField name="observaciones" maxlength="50" value="${entradaInstance?.observaciones}"/>
+						<g:textField name="observaciones" maxlength="50" autocomplete="off" value="${entradaInstance?.observaciones}"/>
 					</div>
 
 <!--Aqui agregas una nueva fecha -->
@@ -350,27 +370,6 @@
 							    <li><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
 							</g:each>
 						</ul>
-					</div>
-
-					<div id="form-fecha">
-						<div class="fieldcontain ${hasErrors(bean: detalleFechaEntradaInstance, field: 'tipoFecha', 'error')} required">
-							<label for="tipoFecha">
-								<g:message code="detalleFechaEntrada.tipoFecha.label" default="Tipo Fecha" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:select id="tipoFechaEntrada" name="tipoFecha.id" from="${mx.com.ideasydiseno.electronica.TipoFecha.findAllByTipoUso(mx.com.ideasydiseno.electronica.EntradaController.FECHA_TIPO_ENTRADA)}" optionKey="id" value="${detalleFechaEntradaInstance?.tipoFecha?.id}" class="many-to-one"/>
-						</div>
-						<div class="fieldcontain ${hasErrors(bean: detalleFechaEntradaInstance, field: 'fecha', 'error')} required">
-							<label for="fecha">
-								<g:message code="detalleFechaEntrada.fecha.label" default="Fecha" />
-								<span class="required-indicator">*</span>
-							</label>
-							<g:datePicker id="fechaEntrada" name="fechaEntrada" precision="day"  value="${detalleFechaEntradaInstance?.fecha}"  />
-						</div>
-						<div>
-							<img id="slide-fecha-close" href="#" src="${resource (dir:'images', file:'cerrar.png')}" alt="Cerrar" heigth="30px" width="30px"/>
-							<img id="save-slide-fecha" href="#"src="${resource(dir: 'images', file: 'Floppy.png')}" alt="Guardar" height="25px" width="25px"/>
-						</div>
 					</div>
 
 <!--Aquí agregamos nuevos Agregar pagos-->
@@ -404,7 +403,7 @@
 										<g:message code="pagoProveedor.total.label" default="Total" />
 										<span class="required-indicator">*</span>
 									</label>
-									<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+									<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
 								</div>
 
 								<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
@@ -499,14 +498,14 @@
 								<g:message code="detalleEntrada.cantidad.label" default="Cantidad" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="cantidadRefaccion" name="cantidad" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'cantidad')}"/>
+							<g:field type="number" id="cantidadRefaccion" name="cantidad" required="" autocomplete="off" value="${fieldValue(bean: detalleEntradaInstance, field: 'cantidad')}"/>
 						</div>
 						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'precioUnitario', 'error')} required">
 							<label for="precioUnitario">
 								<g:message code="detalleEntrada.precioUnitario.label" default="Precio Unitario" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="precioUnitario" name="precioUnitario" required="" value="${fieldValue(bean: detalleEntradaInstance, field: 'precioUnitario')}"/>
+							<g:field type="number" id="precioUnitario" name="precioUnitario" required="" autocomplete="off" value="${fieldValue(bean: detalleEntradaInstance, field: 'precioUnitario')}"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'total', 'error')} required">
@@ -514,7 +513,7 @@
 								<g:message code="detalleEntrada.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<input id="totalRefaccion" disable />
+							<input id="totalRefaccion" disabled="true" autocomplete="off" />
 						</div>
 						<g:hiddenField id="idEntradaRefaccion" name="idEntradaRefaccion" value="${entradaInstance?.id}" />
 						<br>

@@ -34,6 +34,14 @@
 					$("#tipoPago").val(" ");
 					$("#form-pagos").slideUp();
 				});
+
+				$('#totalPago').keyup(function () {
+				  this.value = this.value.replace(/[^0-9]/g,''); 
+				});
+
+				$('#total').keyup(function () {
+				  this.value = this.value.replace(/[^0-9]/g,''); 
+				});
 			});
 		</g:javascript>
 
@@ -83,7 +91,7 @@
 							<g:message code="entrada.total.label" default="Total" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:field type="number" name="total" required="" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
+						<g:field type="number" id="total" name="total" required="" autocomplete="off" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'status', 'error')} required">
@@ -123,7 +131,7 @@
 								<g:message code="pagoProveedor.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" required="" name="totalPago" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+							<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
 						</div>
 						
 						<br>

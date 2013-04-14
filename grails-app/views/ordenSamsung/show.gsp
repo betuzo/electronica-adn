@@ -457,14 +457,14 @@
 								<g:message code="detalleOrden.cantidad.label" default="Cantidad" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="cantidadRefaccion" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
+							<g:field type="number" id="cantidadRefaccion" autocomplete="off" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
 						</div>
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'precioUnitario', 'error')} required">
 							<label for="precioUnitario">
 								<g:message code="detalleOrden.precioUnitario.label" default="Precio Unitario" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="precioUnitario" name="precioUnitario" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precioUnitario')}"/>
+							<g:field type="number" id="precioUnitario" autocomplete="off" name="precioUnitario" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precioUnitario')}"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'total', 'error')} required">
@@ -472,7 +472,7 @@
 								<g:message code="detalleOrden.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<input id="totalRefaccion" disable />
+							<input id="totalRefaccion" autocomplete="off" disabled="" />
 						</div>
 						<br>
 
