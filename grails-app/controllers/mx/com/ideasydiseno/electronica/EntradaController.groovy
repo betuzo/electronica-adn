@@ -281,6 +281,7 @@ class EntradaController {
         println ("**Pago** ==> " + params)
         def user =springSecurityService.currentUser
         def htmlRender = ''
+        def success = true
         def entradaInstance = Entrada.get(params.id)
         //def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
         def totalPago = params.totalPago as int
@@ -296,7 +297,7 @@ class EntradaController {
         println(pagoProveedor.id)
         htmlRender = "<li><a href=/electronica-adn/pagoProveedor/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</<spam></a></li>"
 
-        render ([html:htmlRender] as JSON)   
+        render ([html:htmlRender, success:success] as JSON)   
     }
 
     def savePagoShow(){

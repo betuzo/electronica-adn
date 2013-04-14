@@ -119,20 +119,33 @@
 				});
 
 				$("#save-slide-pagos").on('click', function(){
-					var fechaPago = $("#fechaPago_day").val() + "/" + $("#fechaPago_month").val() + "/" + $("#fechaPago_year").val();
-					$.ajax({
-						url:"${request.contextPath}/entrada/savePago",
-						dataType:"json",
-						type:"post",
-						data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val(), fechaPago: fechaPago},
-						cache:false,
-						success: function(data){
-							$("#pago-container ul").append(data.html);
-						},
-						error: function(data){
-							console.log("Error: " + data);
-						}
-					});
+
+					if(isNaN($("#totalPago").val())){
+						alert("El total del pago deve de ser numerico");
+						$("#totalPago").val("");
+					}
+
+					if($("#totalPago").val==null || $("#tipoPago").val()==null){
+						alert("Los campos son requeridos");
+					}else{
+						console.log("Guardando pagos");
+						$.ajax({
+							url:"${request.contextPath}/entrada/savePago",
+							dataType:"json",
+							type:"post",
+							data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val()},
+							cache:false,
+							success: function(data){
+								$("#pago-container ul").append(data.html);
+								$("#tipoPago").val("");
+								$("#totalPago").val("");
+							},
+							error: function(data){
+								console.log("Error: " + data);
+							}
+						});
+					}
+
 				});
 
 				/**Refacciones**/
@@ -375,8 +388,8 @@
 							</g:each>
 						</ul>
 					</div>
+
 					<div id="form-pagos">
-						<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePago']" onSuccess="addPago(data)" onFailure="addPago(data)">
 							<fieldset class="form">
 								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 									<label for="tipoPago">
@@ -397,10 +410,9 @@
 								<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
 							</fieldset>
 							<fieldset class="buttons">
-								<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="save-slide-pagos" class="saveIcon">Guardar</div>
 								<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
 							</fieldset>
-						</g:formRemote>
 					</div>
 
 <!--aqui empezamos con refacciones -->
