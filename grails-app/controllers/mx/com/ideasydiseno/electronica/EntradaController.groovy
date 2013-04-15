@@ -203,7 +203,8 @@ class EntradaController {
             def refaccionInstance = Refaccion.get(params.refaccion.id)
             detalleEntrada.entrada= entradaInstance
             detalleEntrada.refaccion= refaccionInstance
-            detalleEntrada.cantidad= params.cantidad as int
+            println " cantidad: " + params.cantidad.class
+            detalleEntrada.cantidad= params.cantidad  as int
             detalleEntrada.precioUnitario = params.precioUnitario as double
             detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario 
             detalleEntrada.save()

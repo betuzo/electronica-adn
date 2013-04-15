@@ -6,6 +6,24 @@
 		<g:set var="entityName" value="${message(code: 'ordenSamsung.label', default: 'OrdenSamsung')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
+	<g:javascript>
+		$(document).on('ready' , function(){
+
+			$('#total').keyup(function () {
+				/*this.value = this.value.replace(/[^0-9]/g,''); 
+				 this.value = this.value.replace(/\D/,''); */
+				 this.value = this.value.replace(/[^0-9\.]/g,'');
+			});
+
+			$("#costoRevision").keyup(function(){
+				this.value = this.value.replace(/[^0-9\.]/g,'');	
+			});
+
+			$("#anticipo").keyup(function(){
+				this.value = this.value.replace(/[^0-9\.]/g,'');	
+			});
+		});
+	</g:javascript>
 	<body>
 		<a href="#edit-ordenSamsung" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">

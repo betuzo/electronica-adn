@@ -73,19 +73,36 @@
 				});
 			});
 
-			$("#precioUnitario").on('change', function(){
+
+			$('#precioUnitario').keyup(function () {
+				this.value = this.value.replace(/[^0-9\.]/g,'');
 				var cantidad = $("#cantidadRefaccion").val();
 				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
-				$("#totalRefaccion").val(result);
+				if (!isNaN(result)){
+					$("#totalRefaccion").val(result);	
+				}else{
+					$("#totalRefaccion").val(0);
+				} 
 			});
 
-			$("#cantidadRefaccion").on("change", function(){
+			$('#cantidadRefaccion').keyup(function () {
+				this.value = this.value.replace(/[^0-9]/g,'');
 				var cantidad = $("#cantidadRefaccion").val();
 				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
-				$("#totalRefaccion").val(result);
+				if (!isNaN(result)){
+					$("#totalRefaccion").val(result);	
+				}else{
+					$("#totalRefaccion").val(0);
+				}
+				//console.log("lo del nan" + (isNaN(result)));
 			});
+
+			$("#totalPago").on('keyup', function(){
+				this.value = this.value.replace(/[^0-9\.]/g,'');
+			});
+
 
 
 			$("#add-modal-refacciones").on("click", function(){
@@ -105,8 +122,6 @@
 			});
 
 			$("#refaccion").change();
-
-
 			/*jTPS*/
 				$('#tableRefacciones').jTPS( {perPages:[5,10,20,50,'Todos'],scrollStep:1,scrollDelay:30,
 					clickCallback:function () {	
@@ -457,14 +472,14 @@
 								<g:message code="detalleOrden.cantidad.label" default="Cantidad" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="cantidadRefaccion" autocomplete="off" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
+							<g:field type="number" id="cantidadRefaccion" autocomplete="off"  maxlength="9" name="cantidad" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'cantidad')}"/>
 						</div>
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'precioUnitario', 'error')} required">
 							<label for="precioUnitario">
-								<g:message code="detalleOrden.precioUnitario.label" default="Precio Unitario" />
+								<g:message code="detalleOrden.precioUnitario.label"  default="Precio Unitario" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" id="precioUnitario" autocomplete="off" name="precioUnitario" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precioUnitario')}"/>
+							<g:field type="number" id="precioUnitario" autocomplete="off" maxlength="9"  name="precioUnitario" required="" value="${fieldValue(bean: detalleOrdenInstance, field: 'precioUnitario')}"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'total', 'error')} required">

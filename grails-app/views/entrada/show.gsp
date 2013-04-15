@@ -213,7 +213,7 @@
 
 
 				$('#precioUnitario').keyup(function () {
-					this.value = this.value.replace(/[^0-9]/g,'');
+					this.value = this.value.replace(/[^0-9\.]/g,'');
 					var cantidad = $("#cantidadRefaccion").val();
 					var precio = $("#precioUnitario").val();
 					var result = parseFloat(cantidad) * parseFloat(precio);
@@ -225,7 +225,7 @@
 				});
 
 				$('#cantidadRefaccion').keyup(function () {
-					this.value = this.value.replace(/[^0-9]/g,'');
+					this.value = this.value.replace(/[^0-9\.]/g,'');
 					var cantidad = $("#cantidadRefaccion").val();
 					var precio = $("#precioUnitario").val();
 					var result = parseFloat(cantidad) * parseFloat(precio);
@@ -238,7 +238,7 @@
 				});
 
 				$("#totalPago").on('keyup', function(){
-					this.value = this.value.replace(/[^0-9]/g,'');
+					this.value = this.value.replace(/[^0-9\.]/g,'');
 				});
 
 
