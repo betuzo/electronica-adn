@@ -47,14 +47,6 @@
 						<g:textField name="descripcion" required="" value="${proveedorInstance?.descripcion}"/>
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'fechaRegistro', 'error')} required">
-						<label for="fechaRegistro">
-							<g:message code="proveedor.fechaRegistro.label" default="Fecha Registro" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:datePicker name="fechaRegistro" precision="day"  value="${proveedorInstance?.fechaRegistro}"  />
-					</div>
-
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado.pais', 'error')} required">
 						<label for="pais">
 							<g:message code="proveedor.pais.label" default="Pais" />

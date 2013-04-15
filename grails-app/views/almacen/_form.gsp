@@ -24,6 +24,6 @@
 		<g:message code="almacen.sucursal.label" default="Sucursal" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="sucursal" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${almacenInstance?.sucursal?.id}" class="many-to-one"/>
+	<g:select id="sucursal"  disabled="" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${almacenInstance?.sucursal?.id}" class="many-to-one"/>
 </div>
 

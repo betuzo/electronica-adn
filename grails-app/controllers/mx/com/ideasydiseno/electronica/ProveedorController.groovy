@@ -22,6 +22,10 @@ class ProveedorController {
     def save() {
         println "param *********  " + params
         def user =springSecurityService.currentUser
+        params.fechaRegistro = new Date()
+
+        println " " +new Date() 
+
         def proveedorInstance = new Proveedor(params)
         if (!proveedorInstance.save(flush: true)) {
             render(view: "create", model: [proveedorInstance: proveedorInstance])

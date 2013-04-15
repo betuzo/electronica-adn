@@ -4,7 +4,7 @@ class Institucion {
 
 	String nombre
 	String descripcion
-	Date fechaRegistro = new Date()
+	Date fechaRegistro 
 	Colonia colonia
 	String calle
 	String codigoPostal

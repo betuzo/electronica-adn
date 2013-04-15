@@ -44,10 +44,10 @@
 				<tbody>
 				<g:each in="${proveedorInstanceList}" status="i" var="proveedorInstance">
 					<tr>
-						<td><g:link action="show" id="${proveedorInstance.id}">${fieldValue(bean: proveedorInstance, field: "nombre")}</g:link></td>
+						<td><g:link action="show" id="${proveedorInstance.id}"> ${fieldValue(bean: proveedorInstance, field: "nombre")}</g:link></td>
 						<td>${fieldValue(bean: proveedorInstance, field: "descripcion")}</td>
 					
-						<td><g:formatDate date="${proveedorInstance.fechaRegistro}" /></td>
+						<td><g:formatDate date="${proveedorInstance.fechaRegistro}"   formatName="customDateFormat"/></td>
 					
 						<td>${fieldValue(bean: proveedorInstance, field: "calle")}</td>
 					
