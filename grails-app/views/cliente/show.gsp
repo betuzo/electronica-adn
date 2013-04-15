@@ -63,7 +63,7 @@
 				<li class="fieldcontain">
 					<span id="fechaRegistro-label" class="property-label"><g:message code="cliente.fechaRegistro.label" default="Fecha Registro" /></span>
 					
-						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${clienteInstance?.fechaRegistro}" /></span>
+						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${clienteInstance?.fechaRegistro}" formatName="customDateFormat" /></span>
 					
 				</li>
 				</g:if>

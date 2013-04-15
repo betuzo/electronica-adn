@@ -132,7 +132,7 @@
 	<label for="anticipo">
 		<g:message code="ordenSamsung.anticipo.label" default="Anticipo" />
 	</label>
-	<g:field type="number" name="anticipo" value="0"/>
+	<g:field type="number" name="anticipo" autocomplete="off"  value="0"/>
 </div>
 
 </g:if>

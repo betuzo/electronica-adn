@@ -44,13 +44,6 @@
 	<g:select name="sexo" from="${clienteInstance.constraints.sexo.inList}" required="" value="${clienteInstance?.sexo}" valueMessagePrefix="cliente.sexo"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'fechaRegistro', 'error')} required">
-	<label for="fechaRegistro">
-		<g:message code="cliente.fechaRegistro.label" default="Fecha Registro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fechaRegistro" precision="day"  value="${clienteInstance?.fechaRegistro}"  />
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
 	<label for="calle">

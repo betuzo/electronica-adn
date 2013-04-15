@@ -23,8 +23,21 @@
 			overlay();
 		}
 
-		$(document).ready(function() {
-			
+		$(document).on('ready' , function(){
+
+			$('#total').keyup(function () {
+				/*this.value = this.value.replace(/[^0-9]/g,''); 
+				 this.value = this.value.replace(/\D/,''); */
+				 this.value = this.value.replace(/[^0-9\.]/g,'');
+			});
+
+			$("#costoRevision").keyup(function(){
+				this.value = this.value.replace(/[^0-9\.]/g,'');	
+			});
+
+			$("#anticipo").keyup(function(){
+				this.value = this.value.replace(/[^0-9\.]/g,'');	
+			});
 		});
 
 		</g:javascript>
@@ -156,7 +169,7 @@
 									<g:message code="cliente.codigoPostal.label" default="Codigo Postal" />
 									
 								</label>
-								<g:textField name="codigoPostal" value="${clienteInstance?.codigoPostal}"/>
+								<g:textField name="codigoPostal" value="${clienteInstance?.codigoPostal}" maxlength="50" />
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'noExt', 'error')} ">

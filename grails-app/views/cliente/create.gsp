@@ -5,6 +5,21 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'cliente.label', default: 'Cliente')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<g:javascript>
+
+			$(document).on('ready' , function(){
+				$('#codigoPostal').keyup(function () {
+					/* this.value = this.value.replace(/\D/,''); 
+					this.value = this.value.replace(/[^0-9\-]/g,''); */
+					this.value = this.value.replace(/[^0-9]/g,''); 
+				});
+
+				$("#telefono").keyup(function(){
+					this.value = this.value.replace(/[^0-9\-]/g,'');	
+				});
+			});
+		</g:javascript>
+
 	</head>
 	<body>
 		<a href="#create-cliente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -58,7 +73,7 @@
 							<g:message code="venta.telefono.label" default="Telefono" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:textField name="telefono" required="" value=""/>
+						<g:textField name="telefono" id="telefono" required="" value=""/>
 					</div>
 					</g:if>
 
@@ -70,13 +85,6 @@
 						<g:select name="sexo" from="${clienteInstance.constraints.sexo.inList}" required="" value="${clienteInstance?.sexo}" valueMessagePrefix="cliente.sexo"/>
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'fechaRegistro', 'error')} required">
-						<label for="fechaRegistro">
-							<g:message code="cliente.fechaRegistro.label" default="Fecha Registro" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:datePicker name="fechaRegistro" precision="day"  value="${clienteInstance?.fechaRegistro}"  />
-					</div>
 
 
 					<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'municipio.estado.pais', 'error')} required">
@@ -121,7 +129,7 @@
 							<g:message code="cliente.codigoPostal.label" default="Codigo Postal" />
 							
 						</label>
-						<g:textField name="codigoPostal" value="${clienteInstance?.codigoPostal}"/>
+						<g:textField name="codigoPostal"  id="codigoPostal" maxlength="5" value="${clienteInstance?.codigoPostal}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'noExt', 'error')} ">

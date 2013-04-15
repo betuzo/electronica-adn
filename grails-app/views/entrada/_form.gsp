@@ -23,7 +23,7 @@
 		<g:message code="entrada.total.label" default="Total" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="total" required="" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
+	<g:field type="number" name="total" id="total" required="" value="${fieldValue(bean: entradaInstance, field: 'total')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'status', 'error')} required">

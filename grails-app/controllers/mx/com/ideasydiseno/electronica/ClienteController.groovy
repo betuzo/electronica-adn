@@ -56,6 +56,7 @@ class ClienteController {
     }
 
     def save() {
+        params.fechaRegistro = new Date()
         def clienteInstance = new Cliente(params)
         if (!clienteInstance.save(flush: true)) {
             render(view: "create", model: [clienteInstance: clienteInstance])
