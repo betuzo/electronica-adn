@@ -6,6 +6,13 @@
 		<g:set var="entityName" value="${message(code: 'proveedor.label', default: 'Proveedor')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
+	<g:javascript>
+		$(document).on("ready", function(){
+			$("#codigoPostal").on('keyup', function(){
+				this.value = this.value.replace(/[^0-9]/g,'');
+			});
+		});
+	</g:javascript>
 	<body>
 		<a href="#edit-proveedor" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">

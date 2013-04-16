@@ -6,7 +6,15 @@
 		<g:set var="entityName" value="${message(code: 'proveedor.label', default: 'Proveedor')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 		<g:javascript>
-			
+		$(document).on('ready', function(){
+			$("#codigoPostal").on('keyup', function(){
+				this.value = this.value.replace(/[^0-9]/g,'');
+			});
+
+			$("#telefono").on('keyup', function(){
+				this.value = this.value.replace(/[^0-9\-]/g,'');
+			});
+		});
 		</g:javascript>
 	</head>
 	<body>
@@ -90,7 +98,7 @@
 							<g:message code="proveedor.codigoPostal.label" default="Codigo Postal" />
 							
 						</label>
-						<g:textField name="codigoPostal" value="${proveedorInstance?.codigoPostal}"/>
+						<g:textField name="codigoPostal"  id="codigoPostal" maxlength="5" value="${proveedorInstance?.codigoPostal}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'noExt', 'error')} ">
@@ -139,7 +147,7 @@
 							<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:textField name="telefono" required="" value="${telefonoInstitucionInstance?.telefono}"/>
+						<g:textField name="telefono" id="telefono" required="" maxlength="15" value="${telefonoInstitucionInstance?.telefono}"/>
 					</div>
 
 				</div>

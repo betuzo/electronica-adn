@@ -27,6 +27,10 @@
 				alert("Se genero un problema, contacte el area de sistemas...");
 			}else{
 				$("#tableRefacciones tbody:last").append(data.html)
+				$("#cantidadRefaccion").val("");
+				$("#precioUnitario").val("");
+				$("#totalRefaccion").val(0);
+
 			}		    	
 	    }
 
@@ -464,7 +468,7 @@
 							<label for="lotes">
 								<g:message code="detalleOrden.lotes.label" default="Lote" />
 							</label>
-							<g:select name="lotes" from="" optionKey="id" size="3" value="" class="many-to-many"/>
+							<g:select name="lotes" from="" optionKey="id" required="" size="3" value="" class="many-to-many"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'cantidad', 'error')} required">
