@@ -454,10 +454,12 @@ input, select, textarea {
 
 select {
 	padding: 0.2em 0.2em 0.2em 0;
+	width:210px;
 }
 
 select[multiple] {
 	vertical-align: top;
+	width:204px;
 }
 
 textarea {

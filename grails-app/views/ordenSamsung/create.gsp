@@ -119,26 +119,18 @@
 								<g:select name="sexo" from="${clienteInstance.constraints.sexo.inList}" required="" value="${clienteInstance?.sexo}" valueMessagePrefix="cliente.sexo"/>
 							</div>
 
-							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'fechaRegistro', 'error')} required">
-								<label for="fechaRegistro">
-									<g:message code="cliente.fechaRegistro.label" default="Fecha Registro" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:datePicker name="fechaRegistro" precision="day"  value="${clienteInstance?.fechaRegistro}"  />
-							</div>
-
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'municipio.estado.pais', 'error')} required">
 								<label for="pais">
 									<g:message code="usuario.pais.label" default="Pais" />
 								</label>
-								<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${clienteInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one"/>
+								<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${clienteInstance?.colonia?.municipio?.estado?.pais?.id}" class="many-to-one" style="width:204px"/>
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'municipio.estado', 'error')} required">
 								<label for="estado">
 									<g:message code="usuario.estado.label" default="Estado" />
 								</label>
-								<g:select id="estado" name="municipio.estado.id" from="${clienteInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${clienteInstance?.colonia?.municipio?.estado?.id}" class="many-to-one"/>
+								<g:select id="estado" name="municipio.estado.id" from="${clienteInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${clienteInstance?.colonia?.municipio?.estado?.id}" class="many-to-one" />
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'municipio', 'error')} required">
@@ -153,7 +145,7 @@
 									<g:message code="tienda.colonia.label" default="Colonia" />
 									
 								</label>
-								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" style="width:200px" noSelection="['null': '']"/>
+								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
