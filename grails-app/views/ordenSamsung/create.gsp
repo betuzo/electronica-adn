@@ -153,7 +153,7 @@
 									<g:message code="tienda.colonia.label" default="Colonia" />
 									
 								</label>
-								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" style="width:200px" noSelection="['null': '']"/>
 							</div>
 
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
