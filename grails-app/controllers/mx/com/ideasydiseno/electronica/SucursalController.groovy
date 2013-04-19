@@ -21,13 +21,14 @@ class SucursalController {
     def save() {
         println "Sucursal ===> " + params
         def sucursalInstance = new Sucursal(params)
-
+        //Guardamos el almacen de la sucursal
         def almacenInstance = new Almacen()
         almacenInstance.sucursal = sucursalInstance
         almacenInstance.save(flus:true)
         println " despues de guardar el almacen** " + almacenInstance
 
         sucursalInstance.almacen = almacenInstance
+        sucursalInstance.fechaRegistro = new Date()
         println " el valor seteado para almacen   "  + sucursalInstance.almacen
         if (!sucursalInstance.save(flush: true)) {
             render(view: "create", model: [sucursalInstance: sucursalInstance])

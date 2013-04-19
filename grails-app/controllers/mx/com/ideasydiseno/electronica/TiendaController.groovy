@@ -20,13 +20,14 @@ class TiendaController {
 
     def save() {
         def tiendaInstance = new Tienda(params)
+        tiendaInstance.fechaRegistro = new Date()
         if (!tiendaInstance.save(flush: true)) {
             render(view: "create", model: [tiendaInstance: tiendaInstance])
             return
         }
 
          def telefonoInstitucion = new TelefonoInstitucion()
-            telefonoInstitucion.tipoTelefono = params.tipoTelefono
+            telefonoInstitucion.tipoTelefono = "Principal"
             telefonoInstitucion.telefono = params.telefono
             telefonoInstitucion.institucion = tiendaInstance 
             telefonoInstitucion.save(flus:true)

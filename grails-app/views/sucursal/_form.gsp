@@ -18,21 +18,6 @@
 	<g:textField name="descripcion" required="" value="${sucursalInstance?.descripcion}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'fechaRegistro', 'error')} required">
-	<label for="fechaRegistro">
-		<g:message code="sucursal.fechaRegistro.label" default="Fecha Registro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fechaRegistro" precision="day"  value="${sucursalInstance?.fechaRegistro}"  />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'calle', 'error')} ">
-	<label for="calle">
-		<g:message code="sucursal.calle.label" default="Calle" />
-		
-	</label>
-	<g:textField name="calle" value="${sucursalInstance?.calle}"/>
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'municipio.estado.pais', 'error')} required">
 	<label for="pais">
@@ -61,6 +46,14 @@
 		
 	</label>
 	<g:select id="colonia" name="colonia.id" from="${sucursalInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${sucursalInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'calle', 'error')} ">
+	<label for="calle">
+		<g:message code="sucursal.calle.label" default="Calle" />
+		
+	</label>
+	<g:textField name="calle" value="${sucursalInstance?.calle}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: sucursalInstance, field: 'codigoPostal', 'error')} ">

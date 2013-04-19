@@ -5,6 +5,18 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'tienda.label', default: 'Tienda')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<g:javascript>
+			$(document).on('ready', function(){
+
+				$("#telefono").keyup(function(){
+					this.value = this.value.replace(/[^0-9\-]/g,'');
+				});
+
+				$("#codigoPostal").keyup(function(){
+					this.value = this.value.replace(/[^0-9]/g,'');
+				});
+			});
+		</g:javascript>
 	</head>
 	<body>
 		<a href="#create-tienda" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -42,14 +54,6 @@
 							<span class="required-indicator">*</span>
 						</label>
 						<g:textField name="descripcion" required="" value="${tiendaInstance?.descripcion}"/>
-					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'fechaRegistro', 'error')} required">
-						<label for="fechaRegistro">
-							<g:message code="tienda.fechaRegistro.label" default="Fecha Registro" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:datePicker name="fechaRegistro" precision="day"  value="${tiendaInstance?.fechaRegistro}"  />
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'calle', 'error')} ">
@@ -94,7 +98,7 @@
 							<g:message code="tienda.codigoPostal.label" default="Codigo Postal" />
 							
 						</label>
-						<g:textField name="codigoPostal" value="${tiendaInstance?.codigoPostal}"/>
+						<g:textField name="codigoPostal" id="codigoPostal" maxlength="5" value="${tiendaInstance?.codigoPostal}"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'noExt', 'error')} ">
@@ -129,20 +133,12 @@
 						<g:field type="email" name="email" value="${tiendaInstance?.email}"/>
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
-						<label for="tipoTelefono">
-							<g:message code="telefonoInstitucion.tipoTelefono.label" default="Tipo Telefono" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:textField name="tipoTelefono" required="" value="${telefonoInstitucionInstance?.tipoTelefono}"/>
-					</div>
-
 					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'telefono', 'error')} required">
 						<label for="telefono">
 							<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:textField name="telefono" required="" value="${telefonoInstitucionInstance?.telefono}"/>
+						<g:textField name="telefono" id="telefono" maxlength="20" required="" value="${telefonoInstitucionInstance?.telefono}"/>
 					</div>
 					
 				</fieldset>

@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="fechaRegistro-label" class="property-label"><g:message code="tienda.fechaRegistro.label" default="Fecha Registro" /></span>
 					
-						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${tiendaInstance?.fechaRegistro}" /></span>
+						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${tiendaInstance?.fechaRegistro}"  formatName="customDateFormat" /></span>
 					
 				</li>
 				</g:if>

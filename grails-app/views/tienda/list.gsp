@@ -49,7 +49,7 @@
 					
 						<td>${fieldValue(bean: tiendaInstance, field: "descripcion")}</td>
 					
-						<td><g:formatDate date="${tiendaInstance.fechaRegistro}" /></td>
+						<td><g:formatDate date="${tiendaInstance.fechaRegistro}"  formatName="customDateFormat"/></td>
 					
 						<td>${fieldValue(bean: tiendaInstance, field: "calle")}</td>
 					

@@ -18,14 +18,6 @@
 	<g:textField name="descripcion" required="" value="${tiendaInstance?.descripcion}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'fechaRegistro', 'error')} required">
-	<label for="fechaRegistro">
-		<g:message code="tienda.fechaRegistro.label" default="Fecha Registro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fechaRegistro" precision="day"  value="${tiendaInstance?.fechaRegistro}"  />
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'calle', 'error')} ">
 	<label for="calle">
 		<g:message code="tienda.calle.label" default="Calle" />
@@ -68,7 +60,7 @@
 		<g:message code="tienda.codigoPostal.label" default="Codigo Postal" />
 		
 	</label>
-	<g:textField name="codigoPostal" value="${tiendaInstance?.codigoPostal}"/>
+	<g:textField name="codigoPostal" id="codigoPostal" maxlength="5" value="${tiendaInstance?.codigoPostal}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tiendaInstance, field: 'noExt', 'error')} ">

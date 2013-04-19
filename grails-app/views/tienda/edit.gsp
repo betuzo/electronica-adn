@@ -5,6 +5,14 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'tienda.label', default: 'Tienda')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<g:javascript>
+			$(document).on('ready', function(){
+
+				$("#codigoPostal").keyup(function(){
+					this.value = this.value.replace(/[^0-9]/g,'');
+				});
+			});
+		</g:javascript>
 	</head>
 	<body>
 		<a href="#edit-tienda" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
