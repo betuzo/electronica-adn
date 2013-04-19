@@ -20,7 +20,7 @@ class PersonalController {
 
     def save() {
         println "====>>" + params
-        
+        params.fechaRegistro = new Date()
         def personalInstance = new Personal(params)
         personalInstance.enabled = true
         if (!personalInstance.save(flush: true)) {
@@ -29,7 +29,7 @@ class PersonalController {
         }
 
         def telefonoPersona = new TelefonoPersona()
-        telefonoPersona.tipoTelefono = params.tipoTelefono
+        telefonoPersona.tipoTelefono = 'Principal'
         telefonoPersona.telefono = params.telefono
         telefonoPersona.persona = personalInstance
         telefonoPersona.save(flus:true)

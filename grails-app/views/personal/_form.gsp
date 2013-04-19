@@ -34,22 +34,6 @@
 	<g:select name="sexo" from="${personalInstance.constraints.sexo.inList}" required="" value="${personalInstance?.sexo}" valueMessagePrefix="personal.sexo"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'fechaRegistro', 'error')} required">
-	<label for="fechaRegistro">
-		<g:message code="personal.fechaRegistro.label" default="Fecha Registro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fechaRegistro" precision="day"  value="${personalInstance?.fechaRegistro}"  />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'calle', 'error')} ">
-	<label for="calle">
-		<g:message code="personal.calle.label" default="Calle" />
-		
-	</label>
-	<g:textField name="calle" value="${personalInstance?.calle}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'municipio.estado.pais', 'error')} required">
 	<label for="pais">
 		<g:message code="personal.pais.label" default="Pais" />
@@ -77,6 +61,14 @@
 		
 	</label>
 	<g:select id="colonia" name="colonia.id" from="${personalInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${personalInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'calle', 'error')} ">
+	<label for="calle">
+		<g:message code="personal.calle.label" default="Calle" />
+		
+	</label>
+	<g:textField name="calle" value="${personalInstance?.calle}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'codigoPostal', 'error')} ">

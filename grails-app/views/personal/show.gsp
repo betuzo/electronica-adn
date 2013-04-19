@@ -63,7 +63,7 @@
 				<li class="fieldcontain">
 					<span id="fechaRegistro-label" class="property-label"><g:message code="personal.fechaRegistro.label" default="Fecha Registro" /></span>
 					
-						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${personalInstance?.fechaRegistro}" /></span>
+						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${personalInstance?.fechaRegistro}"  formatName="customDateFormat" /></span>
 					
 				</li>
 				</g:if>
@@ -140,14 +140,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${personalInstance?.password}">
-				<li class="fieldcontain">
-					<span id="password-label" class="property-label"><g:message code="personal.password.label" default="Password" /></span>
-					
-						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${personalInstance}" field="password"/></span>
-					
-				</li>
-				</g:if>
 			
 				<g:if test="${personalInstance?.tipoPersonal}">
 				<li class="fieldcontain">
