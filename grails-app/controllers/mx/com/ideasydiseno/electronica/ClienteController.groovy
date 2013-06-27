@@ -22,12 +22,15 @@ class ClienteController {
         response.exito = "1"
 
         def query = Cliente.where {
-            (nombre == params.nombre && apellidoPaterno == params.apellidoPaterno 
+            (nombre == params.nombre && apellidoPaterno == params.apellidoPaterno
                && sexo== params.sexo)
         }
 
         def results = query.list(sort:"apellidoPaterno")
-        
+        println "******* resultados de la busqueda " + results
+
+
+
         if (results.size() == 0)
         {
             params.fechaRegistro = new Date()
@@ -42,12 +45,14 @@ class ClienteController {
             response.cliente = results
         }
 
-        response.html = g.select(optionKey: 'id', 
-                        from: response.cliente, 
-                        id: 'cliente', 
-                        name: 'cliente.id', 
-                        class: 'many-to-one', 
-                        required: '', 
+        println "response cliente " + response
+
+        response.html = g.select(optionKey: 'id',
+                        from: response.cliente,
+                        id: 'cliente',
+                        name: 'cliente.id',
+                        class: 'many-to-one',
+                        required: '',
                         value: response.cliente.id)
         render response as JSON
     }
@@ -65,7 +70,7 @@ class ClienteController {
         }
 
         def telefonoPersonaInstance = new TelefonoPersona()
-        
+
         telefonoPersonaInstance.persona = clienteInstance
         telefonoPersonaInstance.tipoTelefono = 'Principal'
         telefonoPersonaInstance.telefono = params.telefono
