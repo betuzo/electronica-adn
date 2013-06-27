@@ -34,8 +34,9 @@ class ClienteController {
         if (results.size() == 0)
         {
             params.fechaRegistro = new Date()
+            params.noInt = " "
             def clienteInstance = new Cliente(params)
-            if (!clienteInstance.save(flush: true)) {
+            if (!clienteInstance.save(flush: true, failOnError:true)) {
                 response.exito = "0"
             }
             response.nuevo = "1"
