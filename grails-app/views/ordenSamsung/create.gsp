@@ -5,7 +5,7 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'ordenSamsung.label', default: 'OrdenSamsung')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
-		
+
 		<g:javascript>
 
 		function overlay() {
@@ -13,8 +13,8 @@
 				el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
 			}
 
-		
-		function responseClienteOrden(response) { 
+
+		function responseClienteOrden(response) {
 			if (response.exito == '1'){
 				$("#cliente").html(response.html);
 			}else{
@@ -26,17 +26,17 @@
 		$(document).on('ready' , function(){
 
 			$('#total').keyup(function () {
-				/*this.value = this.value.replace(/[^0-9]/g,''); 
+				/*this.value = this.value.replace(/[^0-9]/g,'');
 				 this.value = this.value.replace(/\D/,''); */
 				 this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 
 			$("#costoRevision").keyup(function(){
-				this.value = this.value.replace(/[^0-9\.]/g,'');	
+				this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 
 			$("#anticipo").keyup(function(){
-				this.value = this.value.replace(/[^0-9\.]/g,'');	
+				this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 		});
 
@@ -48,11 +48,11 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="list" action="list">Lista de Ordenes</g:link></li>
 			</ul>
 		</div>
 		<div id="create-ordenSamsung" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+			<h1>Levantar Orden</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -64,7 +64,7 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="save" >
-				<fieldset class="form">
+				<fieldset class="form" >
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
@@ -97,7 +97,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'apellidoMaterno', 'error')} ">
 								<label for="apellidoMaterno">
 									<g:message code="cliente.apellidoMaterno.label" default="Apellido Materno" />
-									
+
 								</label>
 								<g:textField name="apellidoMaterno" value="${clienteInstance?.apellidoMaterno}"/>
 							</div>
@@ -143,7 +143,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'colonia', 'error')} ">
 								<label for="colonia">
 									<g:message code="tienda.colonia.label" default="Colonia" />
-									
+
 								</label>
 								<g:select id="colonia" name="colonia.id" from="${clienteInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${clienteInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
 							</div>
@@ -151,7 +151,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'calle', 'error')} ">
 								<label for="calle">
 									<g:message code="cliente.calle.label" default="Calle" />
-									
+
 								</label>
 								<g:textField name="calle" value="${clienteInstance?.calle}"/>
 							</div>
@@ -159,7 +159,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'codigoPostal', 'error')} ">
 								<label for="codigoPostal">
 									<g:message code="cliente.codigoPostal.label" default="Codigo Postal" />
-									
+
 								</label>
 								<g:textField name="codigoPostal" value="${clienteInstance?.codigoPostal}" maxlength="50" />
 							</div>
@@ -167,7 +167,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'noExt', 'error')} ">
 								<label for="noExt">
 									<g:message code="cliente.noExt.label" default="No Ext" />
-									
+
 								</label>
 								<g:textField name="noExt" value="${clienteInstance?.noExt}"/>
 							</div>
@@ -175,7 +175,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'noInt', 'error')} ">
 								<label for="noInt">
 									<g:message code="cliente.noInt.label" default="No Int" />
-									
+
 								</label>
 								<g:textField name="noInt" value="${clienteInstance?.noInt}"/>
 							</div>
@@ -183,7 +183,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'rfc', 'error')} ">
 								<label for="rfc">
 									<g:message code="cliente.rfc.label" default="Rfc" />
-									
+
 								</label>
 								<g:textField name="rfc" maxlength="13" value="${clienteInstance?.rfc}"/>
 							</div>
@@ -191,7 +191,7 @@
 							<div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'email', 'error')} ">
 								<label for="email">
 									<g:message code="cliente.email.label" default="Email" />
-									
+
 								</label>
 								<g:field type="email" name="email" value="${clienteInstance?.email}"/>
 							</div>

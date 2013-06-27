@@ -34,10 +34,10 @@
 
 				var cantidadR = document.getElementById("cantidadRefaccion");
 				var preciouR = document.getElementById("precioUnitario");
-				var totalR = document.getElementById("totalRefaccion");
+				var totalR = document.getElementById("totalRef+accion");
 				cantidadR.value="";
 				preciouR.value=""
-				totalR.value="";		    	
+				totalR.value="";
 		    }
 
 
@@ -134,7 +134,7 @@
 					}
 				});
 				/**PAGOS**/
-				
+
 				$("#slide-pagos-open").on("click", function(){
 					$("#totalPago").val("");
 					$("#tipoPago").val("");
@@ -175,26 +175,26 @@
 				});
 
 				$("#open-modal").on("click", function(){
-					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
 					$("#overlay").css('visibility', show);
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
-					$("#totalRefaccion").val(""); 
+					$("#totalRefaccion").val("");
 
 				});
 
 				$("#close-modal").on("click", function(){
-					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
 					$("#overlay").css('visibility', show);
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
-					$("#totalRefaccion").val(""); 
+					$("#totalRefaccion").val("");
 				})
 
 				$("#refaccion").on('change', function(){
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
-					$("#totalRefaccion").val(""); 
+					$("#totalRefaccion").val("");
 				});
 				/**
 				$("#precioUnitario").on('change', function(){
@@ -218,10 +218,10 @@
 					var precio = $("#precioUnitario").val();
 					var result = parseFloat(cantidad) * parseFloat(precio);
 					if (!isNaN(result)){
-						$("#totalRefaccion").val(result);	
+						$("#totalRefaccion").val(result);
 					}else{
 						$("#totalRefaccion").val(0);
-					} 
+					}
 				});
 
 				$('#cantidadRefaccion').keyup(function () {
@@ -230,7 +230,7 @@
 					var precio = $("#precioUnitario").val();
 					var result = parseFloat(cantidad) * parseFloat(precio);
 					if (!isNaN(result)){
-						$("#totalRefaccion").val(result);	
+						$("#totalRefaccion").val(result);
 					}else{
 						$("#totalRefaccion").val(0);
 					}
@@ -260,10 +260,10 @@
 
 				/*jTPS*/
 				$('#tableRefacciones').jTPS( {perPages:[5,12,15,50,'Todos'],scrollStep:1,scrollDelay:30,
-					clickCallback:function () {	
+					clickCallback:function () {
 						// target table selector
 						var table = '#tableRefacciones';
-						// store pagination + sort in cookie 
+						// store pagination + sort in cookie
 						document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
 							'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
 							'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
@@ -336,44 +336,44 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list entrada">
-			
+
 				<g:if test="${entradaInstance?.proveedor}">
 				<li class="fieldcontain">
 					<span id="proveedor-label" class="property-label"><g:message code="entrada.proveedor.label" default="Proveedor" /></span>
 						<span class="property-value" aria-labelledby="proveedor-label"><g:link controller="proveedor" action="show" id="${entradaInstance?.proveedor?.id}">${entradaInstance?.proveedor?.encodeAsHTML()}</g:link></span>
 				</li>
 				</g:if>
-			
+
 				<g:if test="${entradaInstance?.sucursal}">
 				<li class="fieldcontain">
 					<span id="sucursal-label" class="property-label"><g:message code="entrada.sucursal.label" default="Sucursal" /></span>
-					
+
 						<span class="property-value" aria-labelledby="sucursal-label"><g:link controller="sucursal" action="show" id="${entradaInstance?.sucursal?.id}">${entradaInstance?.sucursal?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${entradaInstance?.total}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="entrada.total.label" default="Total" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:fieldValue bean="${entradaInstance}" field="total"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${entradaInstance?.status}">
 				<li class="fieldcontain">
 					<span id="status-label" class="property-label"><g:message code="entrada.status.label" default="Status" /></span>
 						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${entradaInstance}" field="status"/></span>
 				</li>
 				</g:if>
-			
+
 				<g:if test="${entradaInstance?.observaciones}">
 				<li class="fieldcontain">
 					<span id="observaciones-label" class="property-label"><g:message code="entrada.observaciones.label" default="Observaciones" /></span>
 						<span class="property-value" aria-labelledby="observaciones-label"><g:fieldValue bean="${entradaInstance}" field="observaciones"/></span>
-					
+
 				</li>
 				</g:if>
 <!-- agregar fechas-->
@@ -381,14 +381,14 @@
 				<li id="add-fechas" class="fieldcontain">
 					<span id="fechas-label" class="property-label"><g:message code="entrada.fechas.label" default="Fechas" /></span>
 						 &nbsp; &nbsp; &nbsp;Fecha entrada <img id="nextFecha" href="#" src="${resource(dir: 'images', file: 'next.png')}" alt="Agregar fecha" height="20px" width="20px"/>
-						
+
 						<g:each in="${entradaInstance.fechas}" var="f">
 						<span id="delete-detalleFechaEntrada-${f.id}" class="property-value" aria-labelledby="fechas-label"><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 
 
-<!--Agregar pagos-->			
+<!--Agregar pagos-->
 				<li id="add-pago" class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="entrada.pagos.label" default="Pagos" /></span>
 						&nbsp; &nbsp; &nbsp;Agregar Pagos <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
@@ -427,7 +427,7 @@
 					</g:formRemote>
 
 				</div>
-			
+
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="entrada.refacciones.label" default="Refacción" /></span>
 					<span class="property-value" aria-labelledby="refacciones-label"> Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> </span>
@@ -438,9 +438,9 @@
 						<thead>
 							<tr>
 								<th>Refaccion</th>
-							
+
 								<th>Precio</th>
-								
+
 								<th>Cantidad</th>
 
 								<th>Total</th>
@@ -451,17 +451,17 @@
 						<tbody>
 							<g:each in="${entradaInstance?.refacciones?}" status="i" var="detalleEntradaInstance">
 								<tr id="delete-detalleEntrada-${detalleEntradaInstance.id}" >
-								
+
 									<td><g:link controller="detalleEntrada" action="show" id="${detalleEntradaInstance.id}">${fieldValue(bean: detalleEntradaInstance, field: "refaccion")}</g:link></td>
-								
+
 									<td>${fieldValue(bean: detalleEntradaInstance, field: "cantidad")}</td>
-								
+
 									<td>${fieldValue(bean: detalleEntradaInstance, field: "precioUnitario")}</td>
-								
+
 									<td>${fieldValue(bean: detalleEntradaInstance, field: "total")}</td>
 
 									<td><img id="detalleEntrada-${detalleEntradaInstance.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="20px" width="20px"/></td>
-								
+
 								</tr>
 							</g:each>
 						</tbody>
@@ -481,7 +481,7 @@
 						</tfoot>
 					</table>
 				</div>
-			
+
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

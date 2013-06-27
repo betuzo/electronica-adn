@@ -13,15 +13,15 @@
 		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'dimove_icon.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'dimove_icon.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
-		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'buttons.css')}" type="text/css">
 		<g:javascript src='jquery-1.9.1.min.js'/>
-		
+
 		<g:javascript>
-			$(document).ready(function() { 	
+			$(document).ready(function() {
 				$('#pais').ready(function() {
 					$("#pais").change();
 				});
-				
+
 			    $("#pais").change(function() {
 			    	$.ajax({
 			        	url: "${request.contextPath}/address/paisSelected",
@@ -97,7 +97,7 @@
 							<ul>
 								<li><g:link controller='ordenSamsung'>Ordenes</g:link></li>
 								<li><g:link controller='cliente'>Cliente</g:link></li>
-							</ul>				
+							</ul>
 						</li>
 						<li><a href="#">Almacen &raquo;</a>
 							<ul>
@@ -108,7 +108,7 @@
 								<li><g:link controller='refaccion'>Refacciones</g:link></li>
 								<li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li>
 								<li><g:link controller='tienda'>Tienda</g:link></li>
-							</ul>				
+							</ul>
 						</li>
 						<li><a href="#">Admin General &raquo;</a>
 							<ul>
@@ -119,8 +119,8 @@
 								<li><g:link controller='conceptoCobro'>Concepto Cobro</g:link></li>
 								<li><g:link controller='marca'>Marca</g:link></li>
 								<li><g:link controller='modelo'>Modelo</g:link></li>
-								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>	
-							</ul>				
+								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>
+							</ul>
 						</li>
 						<li><a href="#">Administrador &raquo;</a>
 							<ul>
@@ -128,7 +128,7 @@
 								<li><g:link controller='role'>Rol</g:link></li>
 								<li><g:link controller='personalRole'>Asig Seguridad</g:link></li>
 								<li><g:link controller='requestmap'>Config Seguridad</g:link></li>
-							</ul>				
+							</ul>
 						</li>
 						<sec:ifLoggedIn>
 						<li><g:link class="last" controller='logout'>Salir | <img src="${resource(dir: 'images', file: 'usr.png')}" alt="Usuario" heigth="18px" width="18px"/> <sec:username /></g:link></li>
@@ -145,12 +145,13 @@
 			<div id="page">
 				<br>
 				<g:layoutBody/>
-				<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. contacto@electronicadimove.com</div>
+
 				<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 				<g:javascript library="application"/>
 		        <r:layoutResources />
-			</div>
-			
-		</div>	
+		</div>
+
+		</div>
+		<div class="footer" role="contentinfo"> Electronica Dimove, Poniente 9 No.112 Col. Magisterio, Pachuca Hidalgo, México. contacto@electronicadimove.com</div>
 	</body>
 </html>

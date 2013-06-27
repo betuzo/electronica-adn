@@ -10,12 +10,12 @@
 	<g:textField name="nombreCompleto" required="" value="${coloniaInstance?.nombreCompleto}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: coloniaInstance, field: 'instituciones', 'error')} ">
+%{-- <div class="fieldcontain ${hasErrors(bean: coloniaInstance, field: 'instituciones', 'error')} ">
 	<label for="instituciones">
 		<g:message code="colonia.instituciones.label" default="Instituciones" />
-		
+
 	</label>
-	
+
 <ul class="one-to-many">
 <g:each in="${coloniaInstance?.instituciones?}" var="i">
     <li><g:link controller="institucion" action="show" id="${i.id}">${i?.encodeAsHTML()}</g:link></li>
@@ -25,7 +25,7 @@
 </li>
 </ul>
 
-</div>
+</div> --}%
 
 <div class="fieldcontain ${hasErrors(bean: coloniaInstance, field: 'municipio', 'error')} required">
 	<label for="municipio">
