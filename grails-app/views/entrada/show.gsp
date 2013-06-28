@@ -175,8 +175,8 @@
 				});
 
 				$("#open-modal").on("click", function(){
-					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
-					$("#overlay").css('visibility', show);
+					var show = ($("#overlay-entrada-show").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
+					$("#overlay-entrada-show").css('visibility', show);
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val("");
@@ -184,8 +184,8 @@
 				});
 
 				$("#close-modal").on("click", function(){
-					var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
-					$("#overlay").css('visibility', show);
+					var show = ($("#overlay-entrada-show").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
+					$("#overlay-entrada-show").css('visibility', show);
 					$("#cantidadRefaccion").val("");
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val("");
@@ -400,32 +400,31 @@
 						</g:each>
 				</li>
 				<div id="form-pagos">
-					<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
-						<fieldset class="form">
-							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
-								<label for="tipoPago">
-									<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
-							</div>
+					<div class="container-form-overlay">
+						<g:formRemote name="formPagosAdd" url="[controller: 'entrada', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
+									<label for="tipoPago">
+										<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
+								</div>
 
-							<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
-								<label for="total">
-									<g:message code="pagoProveedor.total.label" default="Total" />
-									<span class="required-indicator">*</span>
-								</label>
-								<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
-							</div>
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
+									<label for="total">
+										<g:message code="pagoProveedor.total.label" default="Total" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+								</div>
 
-							<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
-						</fieldset>
-						<fieldset class="buttons">
-							<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
-							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
-						</fieldset>
-					</g:formRemote>
-
+								<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
+							<fieldset class="buttons">
+								<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
+								<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+							</fieldset>
+						</g:formRemote>
+					</div>
 				</div>
 
 				<li class="fieldcontain">
@@ -492,9 +491,9 @@
 			</g:form>
 
 
-			<div id="overlay">
+			<div id="overlay-entrada-show">
 				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
-					<p>
+					<div class="container-form-overlay" >
 						<div class="fieldcontain ${hasErrors(bean: detalleEntradaInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
 								<g:message code="detalleEntrada.refaccion.label" default="Refaccion" />
@@ -533,7 +532,7 @@
 								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
-					</p>
+					</div>
 				</g:formRemote>
 			</div>
 		</div>

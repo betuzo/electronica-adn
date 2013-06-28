@@ -36,11 +36,11 @@
 				});
 
 				$('#totalPago').keyup(function () {
-				  this.value = this.value.replace(/[^0-9\.]/g,''); 
+				  this.value = this.value.replace(/[^0-9\.]/g,'');
 				});
 
 				$('#total').keyup(function () {
-				  this.value = this.value.replace(/[^0-9\.]/g,''); 
+				  this.value = this.value.replace(/[^0-9\.]/g,'');
 				});
 			});
 		</g:javascript>
@@ -54,7 +54,7 @@
 				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		
+
 		<div id="create-entrada" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -105,18 +105,14 @@
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'observaciones', 'error')} ">
 						<label for="observaciones">
 							<g:message code="entrada.observaciones.label" default="Observaciones" />
-							
+
 						</label>
 						<g:textField name="observaciones" maxlength="50" value="${entradaInstance?.observaciones}"/>
 					</div>
 
 <!--Agregar pagos-->
-					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'pagos', 'error')} ">
-						<label for="pagos">
-							<g:message code="entrada.pagos.label" default="Pago" />	
-						</label>
-						Agregar pago <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
-					</div>
+
+					Agregar pago <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
 					<div id="form-pagos">
 						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 							<label for="tipoPago">
@@ -133,7 +129,7 @@
 							</label>
 							<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
 						</div>
-						
+
 						<br>
 						<fieldset class="buttons">
 							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>

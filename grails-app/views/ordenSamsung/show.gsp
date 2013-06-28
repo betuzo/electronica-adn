@@ -44,8 +44,8 @@
 			});
 
 			$("#open-modal").on("click", function(){
-				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
-				$("#overlay").css('visibility', show);
+				var show = ($("#overlay-orden-show").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
+				$("#overlay-orden-show").css('visibility', show);
 				$("#cantidadRefaccion").val("");
 				$("#precio").val("");
 				$("#totalRefaccion").val("");
@@ -53,8 +53,8 @@
 			});
 
 			$("#close-modal").on("click", function(){
-				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
-				$("#overlay").css('visibility', show);
+				var show = ($("#overlay-orden-show").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
+				$("#overlay-orden-show").css('visibility', show);
 				$("#cantidadRefaccion").val("");
 				$("#precioUnitario").val("");
 				$("#totalRefaccion").val("");
@@ -453,7 +453,7 @@
 				</fieldset>
 			</g:form>
 
-			<div id="overlay">
+			<div id="overlay-orden-show">
 				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
 					<div class="container-form-overlay">
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'refaccion', 'error')} required">

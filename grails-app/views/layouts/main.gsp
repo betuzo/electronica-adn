@@ -120,6 +120,8 @@
 								<li><g:link controller='marca'>Marca</g:link></li>
 								<li><g:link controller='modelo'>Modelo</g:link></li>
 								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>
+								<li><g:link controller='tipoPersonal'>Tipo Personal</g:link></li>
+								<li><g:link controller='sucursal'>Sucursal</g:link></li>
 							</ul>
 						</li>
 						<li><a href="#">Administrador &raquo;</a>

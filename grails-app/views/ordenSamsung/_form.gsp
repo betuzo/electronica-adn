@@ -67,6 +67,57 @@
 		</label>
 		<g:textArea name="observaciones" autocomplete="off" value="${ordenSamsungInstance?.observaciones}" rows="3" cols="40"/>
 	</div>
+	<g:if test="${ordenSamsungInstance?.id}">
+		<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'cobros', 'error')} ">
+			<label for="cobros">
+				<g:message code="ordenSamsung.cobros.label" default="Cobros" />
+
+			</label>
+
+		<ul class="one-to-many">
+		<g:each in="${ordenSamsungInstance?.cobros?}" var="c">
+		    <li><g:link controller="detalleCobro" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+		<g:link controller="detalleCobro" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro')])}</g:link>
+		</li>
+		</ul>
+
+		</div>
+
+		<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'pagos', 'error')} ">
+			<label for="pagos">
+				<g:message code="ordenSamsung.pagos.label" default="Pagos" />
+
+			</label>
+
+		<ul class="one-to-many">
+		<g:each in="${ordenSamsungInstance?.pagos?}" var="p">
+		    <li><g:link controller="pagoCliente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+		<g:link controller="pagoCliente" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'pagoCliente.label', default: 'PagoCliente')])}</g:link>
+		</li>
+		</ul>
+
+		</div>
+
+		<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'refacciones', 'error')} ">
+			<label for="refacciones">
+				<g:message code="ordenSamsung.refacciones.label" default="Refacciones" />
+
+			</label>
+
+		<ul class="one-to-many">
+		<g:each in="${ordenSamsungInstance?.refacciones?}" var="r">
+		    <li><g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+		<g:link controller="detalleOrden" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleOrden.label', default: 'DetalleOrden')])}</g:link>
+		</li>
+		</ul>
+		</div>
+	</g:if>
 </div>
 
 <div class="form-right">
@@ -129,112 +180,65 @@
 		<g:field type="number" name="total" required=""  autocomplete="off" value="${fieldValue(bean: ordenSamsungInstance, field: 'total')}"/>
 	</div>
 
-</div>
+	<g:if test="${ordenSamsungInstance?.id}">
 
+		<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fallas', 'error')} ">
+			<label for="fallas">
+				<g:message code="ordenSamsung.fallas.label" default="Fallas" />
 
+			</label>
 
+		<ul class="one-to-many">
+		<g:each in="${ordenSamsungInstance?.fallas?}" var="f">
+		    <li><g:link controller="falla" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+		<g:link controller="falla" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'falla.label', default: 'Falla')])}</g:link>
+		</li>
+		</ul>
 
+		</div>
 
+		<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fechas', 'error')} ">
+			<label for="fechas">
+				<g:message code="ordenSamsung.fechas.label" default="Fechas" />
 
+			</label>
 
+		<ul class="one-to-many">
+		<g:each in="${ordenSamsungInstance?.fechas?}" var="f">
+		    <li><g:link controller="detalleFechaOrden" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
+		</g:each>
+		<li class="add">
+		<g:link controller="detalleFechaOrden" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleFechaOrden.label', default: 'DetalleFechaOrden')])}</g:link>
+		</li>
+		</ul>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<g:if test="${ordenSamsungInstance?.id}">
-
-<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'cobros', 'error')} ">
-	<label for="cobros">
-		<g:message code="ordenSamsung.cobros.label" default="Cobros" />
-
-	</label>
-
-<ul class="one-to-many">
-<g:each in="${ordenSamsungInstance?.cobros?}" var="c">
-    <li><g:link controller="detalleCobro" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="detalleCobro" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro')])}</g:link>
-</li>
-</ul>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fallas', 'error')} ">
-	<label for="fallas">
-		<g:message code="ordenSamsung.fallas.label" default="Fallas" />
-
-	</label>
-
-<ul class="one-to-many">
-<g:each in="${ordenSamsungInstance?.fallas?}" var="f">
-    <li><g:link controller="falla" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="falla" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'falla.label', default: 'Falla')])}</g:link>
-</li>
-</ul>
+		</div>
+	</g:if>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fechas', 'error')} ">
-	<label for="fechas">
-		<g:message code="ordenSamsung.fechas.label" default="Fechas" />
 
-	</label>
 
-<ul class="one-to-many">
-<g:each in="${ordenSamsungInstance?.fechas?}" var="f">
-    <li><g:link controller="detalleFechaOrden" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="detalleFechaOrden" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleFechaOrden.label', default: 'DetalleFechaOrden')])}</g:link>
-</li>
-</ul>
 
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'pagos', 'error')} ">
-	<label for="pagos">
-		<g:message code="ordenSamsung.pagos.label" default="Pagos" />
 
-	</label>
 
-<ul class="one-to-many">
-<g:each in="${ordenSamsungInstance?.pagos?}" var="p">
-    <li><g:link controller="pagoCliente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="pagoCliente" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'pagoCliente.label', default: 'PagoCliente')])}</g:link>
-</li>
-</ul>
 
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'refacciones', 'error')} ">
-	<label for="refacciones">
-		<g:message code="ordenSamsung.refacciones.label" default="Refacciones" />
 
-	</label>
 
-<ul class="one-to-many">
-<g:each in="${ordenSamsungInstance?.refacciones?}" var="r">
-    <li><g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="detalleOrden" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleOrden.label', default: 'DetalleOrden')])}</g:link>
-</li>
-</ul>
-</g:if>
+
+
+
+
+
+
+
+
+
+
 
 </div>
 

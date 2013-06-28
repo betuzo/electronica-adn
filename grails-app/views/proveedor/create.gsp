@@ -59,36 +59,36 @@
 						<label for="pais">
 							<g:message code="proveedor.pais.label" default="Pais" />
 						</label>
-						<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.pais?.id}" style="width:204px" class="many-to-one"/>
+						<g:select id="pais" name="municipio.estado.pais.id" from="${mx.com.ideasydiseno.electronica.Pais.list()}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.pais?.id}"  class="many-to-one"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio.estado', 'error')} required">
 						<label for="estado">
 							<g:message code="proveedor.estado.label" default="Estado" />
 						</label>
-						<g:select id="estado" name="municipio.estado.id" from="${proveedorInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.id}" style="width:204px" class="many-to-one"/>
+						<g:select id="estado" name="municipio.estado.id" from="${proveedorInstance?.colonia?.municipio?.estado?.pais?.estados}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.estado?.id}"  class="many-to-one"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'municipio', 'error')} required">
 						<label for="municipio">
 							<g:message code="proveedor.municipio.label" default="Municipio" />
 						</label>
-						<g:select id="municipio" name="municipio.id" from="${proveedorInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.id}" style="width:204px" class="many-to-one"/>
+						<g:select id="municipio" name="municipio.id" from="${proveedorInstance?.colonia?.municipio?.estado?.municipios}" optionKey="id" required="" value="${proveedorInstance?.colonia?.municipio?.id}"  class="many-to-one"/>
 					</div>
 
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'colonia', 'error')} ">
 						<label for="colonia">
 							<g:message code="proveedor.colonia.label" default="Colonia" />
-							
+
 						</label>
-						<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${proveedorInstance?.colonia?.id}" style="width:204px" class="many-to-one" noSelection="['null': '']"/>
+						<g:select id="colonia" name="colonia.id" from="${mx.com.ideasydiseno.electronica.Colonia.list()}" optionKey="id" value="${proveedorInstance?.colonia?.id}"  class="many-to-one" noSelection="['null': '']"/>
 					</div>
 
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'calle', 'error')} ">
 						<label for="calle">
 							<g:message code="proveedor.calle.label" default="Calle" />
-							
+
 						</label>
 						<g:textField name="calle" value="${proveedorInstance?.calle}"/>
 					</div>
@@ -96,7 +96,7 @@
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'codigoPostal', 'error')} ">
 						<label for="codigoPostal">
 							<g:message code="proveedor.codigoPostal.label" default="Codigo Postal" />
-							
+
 						</label>
 						<g:textField name="codigoPostal"  id="codigoPostal" maxlength="5" value="${proveedorInstance?.codigoPostal}"/>
 					</div>
@@ -104,7 +104,7 @@
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'noExt', 'error')} ">
 						<label for="noExt">
 							<g:message code="proveedor.noExt.label" default="No Ext" />
-							
+
 						</label>
 						<g:textField name="noExt" value="${proveedorInstance?.noExt}"/>
 					</div>
@@ -112,7 +112,7 @@
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'noInt', 'error')} ">
 						<label for="noInt">
 							<g:message code="proveedor.noInt.label" default="No Int" />
-							
+
 						</label>
 						<g:textField name="noInt" value="${proveedorInstance?.noInt}"/>
 					</div>
@@ -120,7 +120,7 @@
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'referencias', 'error')} ">
 						<label for="referencias">
 							<g:message code="proveedor.referencias.label" default="Referencias" />
-							
+
 						</label>
 						<g:textField name="referencias" maxlength="50" value="${proveedorInstance?.referencias}"/>
 					</div>
@@ -128,7 +128,7 @@
 					<div class="fieldcontain ${hasErrors(bean: proveedorInstance, field: 'email', 'error')} ">
 						<label for="email">
 							<g:message code="proveedor.email.label" default="Email" />
-							
+
 						</label>
 						<g:field type="email" name="email" value="${proveedorInstance?.email}"/>
 					</div>

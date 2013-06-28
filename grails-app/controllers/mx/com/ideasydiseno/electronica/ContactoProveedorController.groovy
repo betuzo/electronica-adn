@@ -19,6 +19,7 @@ class ContactoProveedorController {
     }
 
     def save() {
+        params.fechaRegistro = new Date()
         def contactoProveedorInstance = new ContactoProveedor(params)
         if (!contactoProveedorInstance.save(flush: true)) {
             render(view: "create", model: [contactoProveedorInstance: contactoProveedorInstance])

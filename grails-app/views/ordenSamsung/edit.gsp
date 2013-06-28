@@ -10,17 +10,17 @@
 		$(document).on('ready' , function(){
 
 			$('#total').keyup(function () {
-				/*this.value = this.value.replace(/[^0-9]/g,''); 
+				/*this.value = this.value.replace(/[^0-9]/g,'');
 				 this.value = this.value.replace(/\D/,''); */
 				 this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 
 			$("#costoRevision").keyup(function(){
-				this.value = this.value.replace(/[^0-9\.]/g,'');	
+				this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 
 			$("#anticipo").keyup(function(){
-				this.value = this.value.replace(/[^0-9\.]/g,'');	
+				this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
 		});
 	</g:javascript>
@@ -48,7 +48,7 @@
 			<g:form method="post" >
 				<g:hiddenField name="id" value="${ordenSamsungInstance?.id}" />
 				<g:hiddenField name="version" value="${ordenSamsungInstance?.version}" />
-				<fieldset class="form">
+				<fieldset class="forms">
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
