@@ -637,10 +637,10 @@ a.skip {
 #overlay {
   background: #fff;
   position: absolute;
-  left: 330px;
-  top: 500px;
+  left: 650px;
+  top: 200px;
   visibility: hidden;
-  min-width: 40%;
+  width: 350px;
   border: 0.1em solid #808080;
   margin: 0.5em auto;
   border-radius: 0.3em;
@@ -793,6 +793,11 @@ select:focus {
   width: 95%;
   display: block;
   margin: 0 auto;
+}
+.container-form-overlay {
+  margin: 0 auto;
+  display: block;
+  padding: 1em;
 }
 .form-left {
   display: inline-block;

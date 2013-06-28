@@ -19,13 +19,14 @@ class DetalleCobroController {
     }
 
     def save() {
+        params.date = new Date()
         def detalleCobroInstance = new DetalleCobro(params)
         if (!detalleCobroInstance.save(flush: true)) {
             render(view: "create", model: [detalleCobroInstance: detalleCobroInstance])
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro'), detalleCobroInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'detalleCobro.label', default: 'DetalleCobro'), detalleCobroInstance.id])
         redirect(controller: "ordenSamsung", action: "show", id: detalleCobroInstance.orden.id)
     }
 

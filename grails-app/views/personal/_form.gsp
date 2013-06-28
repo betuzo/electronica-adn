@@ -21,7 +21,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'apellidoMaterno', 'error')} ">
 	<label for="apellidoMaterno">
 		<g:message code="personal.apellidoMaterno.label" default="Apellido Materno" />
-		
+
 	</label>
 	<g:textField name="apellidoMaterno" value="${personalInstance?.apellidoMaterno}"/>
 </div>
@@ -58,7 +58,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'colonia', 'error')} ">
 	<label for="colonia">
 		<g:message code="personal.colonia.label" default="Colonia" />
-		
+
 	</label>
 	<g:select id="colonia" name="colonia.id" from="${personalInstance?.colonia?.municipio?.colonias}" optionKey="id" value="${personalInstance?.colonia?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
@@ -66,7 +66,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'calle', 'error')} ">
 	<label for="calle">
 		<g:message code="personal.calle.label" default="Calle" />
-		
+
 	</label>
 	<g:textField name="calle" value="${personalInstance?.calle}"/>
 </div>
@@ -74,7 +74,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'codigoPostal', 'error')} ">
 	<label for="codigoPostal">
 		<g:message code="personal.codigoPostal.label" default="Codigo Postal" />
-		
+
 	</label>
 	<g:textField name="codigoPostal" value="${personalInstance?.codigoPostal}"/>
 </div>
@@ -82,7 +82,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'noExt', 'error')} ">
 	<label for="noExt">
 		<g:message code="personal.noExt.label" default="No Ext" />
-		
+
 	</label>
 	<g:textField name="noExt" value="${personalInstance?.noExt}"/>
 </div>
@@ -90,7 +90,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'noInt', 'error')} ">
 	<label for="noInt">
 		<g:message code="personal.noInt.label" default="No Int" />
-		
+
 	</label>
 	<g:textField name="noInt" value="${personalInstance?.noInt}"/>
 </div>
@@ -98,7 +98,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'rfc', 'error')} ">
 	<label for="rfc">
 		<g:message code="personal.rfc.label" default="Rfc" />
-		
+
 	</label>
 	<g:textField name="rfc" maxlength="13" value="${personalInstance?.rfc}"/>
 </div>
@@ -106,7 +106,7 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'email', 'error')} ">
 	<label for="email">
 		<g:message code="personal.email.label" default="Email" />
-		
+
 	</label>
 	<g:field type="email" name="email" value="${personalInstance?.email}"/>
 </div>
@@ -143,12 +143,48 @@
 	<g:select id="sucursal" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${personalInstance?.sucursal?.id}" class="many-to-one"/>
 </div>
 
+<g:if test="${personalInstance?.id > 0}">
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'passwordExpired', 'error')} ">
+	<label for="passwordExpired">
+		<g:message code="personal.passwordExpired.label" default="Password Expired" />
+
+	</label>
+	<g:checkBox name="passwordExpired" value="${personalInstance?.passwordExpired}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'enabled', 'error')} ">
+	<label for="enabled">
+		<g:message code="personal.enabled.label" default="Enabled" />
+
+	</label>
+	<g:checkBox name="enabled" value="${personalInstance?.enabled}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountExpired', 'error')} ">
+	<label for="accountExpired">
+		<g:message code="personal.accountExpired.label" default="Account Expired" />
+
+	</label>
+	<g:checkBox name="accountExpired" value="${personalInstance?.accountExpired}" />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountLocked', 'error')} ">
+	<label for="accountLocked">
+		<g:message code="personal.accountLocked.label" default="Account Locked" />
+
+	</label>
+	<g:checkBox name="accountLocked" value="${personalInstance?.accountLocked}" />
+</div>
+
+</g:if>
+
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'compras', 'error')} ">
 	<label for="compras">
 		<g:message code="personal.compras.label" default="Compras" />
-		
+
 	</label>
-	
+
 <ul class="one-to-many">
 <g:each in="${personalInstance?.compras?}" var="c">
     <li><g:link controller="detalleFechaEntrada" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
@@ -163,9 +199,9 @@
 <div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'telefonos', 'error')} ">
 	<label for="telefonos">
 		<g:message code="personal.telefonos.label" default="Telefonos" />
-		
+
 	</label>
-	
+
 <ul class="one-to-many">
 <g:each in="${personalInstance?.telefonos?}" var="t">
     <li><g:link controller="telefonoPersona" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
@@ -176,41 +212,3 @@
 </ul>
 
 </div>
-
-
-<g:if test="${personalInstance?.id > 0}">
-			
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'passwordExpired', 'error')} ">
-	<label for="passwordExpired">
-		<g:message code="personal.passwordExpired.label" default="Password Expired" />
-		
-	</label>
-	<g:checkBox name="passwordExpired" value="${personalInstance?.passwordExpired}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'enabled', 'error')} ">
-	<label for="enabled">
-		<g:message code="personal.enabled.label" default="Enabled" />
-		
-	</label>
-	<g:checkBox name="enabled" value="${personalInstance?.enabled}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountExpired', 'error')} ">
-	<label for="accountExpired">
-		<g:message code="personal.accountExpired.label" default="Account Expired" />
-		
-	</label>
-	<g:checkBox name="accountExpired" value="${personalInstance?.accountExpired}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: personalInstance, field: 'accountLocked', 'error')} ">
-	<label for="accountLocked">
-		<g:message code="personal.accountLocked.label" default="Account Locked" />
-		
-	</label>
-	<g:checkBox name="accountLocked" value="${personalInstance?.accountLocked}" />
-</div>
-
-</g:if>
-

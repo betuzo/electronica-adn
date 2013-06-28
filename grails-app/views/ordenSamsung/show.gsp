@@ -31,7 +31,7 @@
 				$("#precioUnitario").val("");
 				$("#totalRefaccion").val(0);
 
-			}		    	
+			}
 	    }
 
 	    $(document).on("ready", function(){
@@ -44,20 +44,20 @@
 			});
 
 			$("#open-modal").on("click", function(){
-				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
 				$("#overlay").css('visibility', show);
 				$("#cantidadRefaccion").val("");
 				$("#precio").val("");
-				$("#totalRefaccion").val(""); 
+				$("#totalRefaccion").val("");
 
 			});
 
 			$("#close-modal").on("click", function(){
-				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible'; 
+				var show = ($("#overlay").css('visibility') == 'visible' ) ? 'hidden' : 'visible';
 				$("#overlay").css('visibility', show);
 				$("#cantidadRefaccion").val("");
 				$("#precioUnitario").val("");
-				$("#totalRefaccion").val(""); 
+				$("#totalRefaccion").val("");
 			})
 
 			$("#refaccion").on('change', function(){
@@ -84,10 +84,10 @@
 				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
 				if (!isNaN(result)){
-					$("#totalRefaccion").val(result);	
+					$("#totalRefaccion").val(result);
 				}else{
 					$("#totalRefaccion").val(0);
-				} 
+				}
 			});
 
 			$('#cantidadRefaccion').keyup(function () {
@@ -96,7 +96,7 @@
 				var precio = $("#precioUnitario").val();
 				var result = parseFloat(cantidad) * parseFloat(precio);
 				if (!isNaN(result)){
-					$("#totalRefaccion").val(result);	
+					$("#totalRefaccion").val(result);
 				}else{
 					$("#totalRefaccion").val(0);
 				}
@@ -128,10 +128,10 @@
 			$("#refaccion").change();
 			/*jTPS*/
 				$('#tableRefacciones').jTPS( {perPages:[5,10,20,50,'Todos'],scrollStep:1,scrollDelay:30,
-					clickCallback:function () {	
+					clickCallback:function () {
 						// target table selector
 						var table = '#tableRefacciones';
-						// store pagination + sort in cookie 
+						// store pagination + sort in cookie
 						document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
 							'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
 							'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
@@ -202,107 +202,107 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list ordenSamsung">
-			
+
 				<g:if test="${ordenSamsungInstance?.maxFecha}">
 				<li class="fieldcontain">
 
 					<span id="statusOrden" class="${(fieldValue(bean: ordenSamsungInstance, field: 'status')) == 'Abierto' ? 'property-value-open' : 'property-value-close'}" aria-labelledby="maxFecha-label"><g:fieldValue bean="${ordenSamsungInstance}" field="maxDetalleFecha"/></span>
-					
+
 				</li>
 				</g:if>
 				<g:if test="${ordenSamsungInstance?.cliente}">
 				<li class="fieldcontain">
 					<span id="cliente-label" class="property-label"><g:message code="ordenSamsung.cliente.label" default="Cliente" /></span>
-					
+
 						<span class="property-value" aria-labelledby="cliente-label"><g:link controller="cliente" action="show" id="${ordenSamsungInstance?.cliente?.id}">${ordenSamsungInstance?.cliente?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.sucursal}">
 				<li class="fieldcontain">
 					<span id="sucursal-label" class="property-label"><g:message code="ordenSamsung.sucursal.label" default="Sucursal" /></span>
-					
+
 						<span class="property-value" aria-labelledby="sucursal-label"><g:link controller="sucursal" action="show" id="${ordenSamsungInstance?.sucursal?.id}">${ordenSamsungInstance?.sucursal?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
 
 				<g:if test="${ordenSamsungInstance?.tienda}">
 				<li class="fieldcontain">
 					<span id="tienda-label" class="property-label"><g:message code="ordenSamsung.tienda.label" default="Tienda" /></span>
-					
+
 						<span class="property-value" aria-labelledby="tienda-label"><g:link controller="tienda" action="show" id="${ordenSamsungInstance?.tienda?.id}">${ordenSamsungInstance?.tienda?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
 
-			
+
 				<g:if test="${ordenSamsungInstance?.marca}">
 				<li class="fieldcontain">
 					<span id="marca-label" class="property-label"><g:message code="ordenSamsung.marca.label" default="Marca" /></span>
-					
+
 						<span class="property-value" aria-labelledby="marca-label"><g:link controller="marca" action="show" id="${ordenSamsungInstance?.marca?.id}">${ordenSamsungInstance?.marca?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.modelo}">
 				<li class="fieldcontain">
 					<span id="modelo-label" class="property-label"><g:message code="ordenSamsung.modelo.label" default="Modelo" /></span>
-					
+
 						<span class="property-value" aria-labelledby="modelo-label"><g:link controller="modelo" action="show" id="${ordenSamsungInstance?.modelo?.id}">${ordenSamsungInstance?.modelo?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.descripcion}">
 				<li class="fieldcontain">
 					<span id="descripcion-label" class="property-label"><g:message code="ordenSamsung.descripcion.label" default="Descripcion" /></span>
-					
+
 						<span class="property-value" aria-labelledby="descripcion-label"><g:fieldValue bean="${ordenSamsungInstance}" field="descripcion"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.noSerie}">
 				<li class="fieldcontain">
 					<span id="noSerie-label" class="property-label"><g:message code="ordenSamsung.noSerie.label" default="No Serie" /></span>
-					
+
 						<span class="property-value" aria-labelledby="noSerie-label"><g:fieldValue bean="${ordenSamsungInstance}" field="noSerie"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.observaciones}">
 				<li class="fieldcontain">
 					<span id="observaciones-label" class="property-label"><g:message code="ordenSamsung.observaciones.label" default="Observaciones" /></span>
-					
+
 						<span class="property-value" aria-labelledby="observaciones-label"><g:fieldValue bean="${ordenSamsungInstance}" field="observaciones"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.noOrdenServicio}">
 				<li class="fieldcontain">
 					<span id="noOrdenServicio-label" class="property-label"><g:message code="ordenSamsung.noOrdenServicio.label" default="No Orden Servicio" /></span>
-					
+
 						<span class="property-value" aria-labelledby="noOrdenServicio-label"><g:fieldValue bean="${ordenSamsungInstance}" field="noOrdenServicio"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.fallas}">
 				<li class="fieldcontain">
 					<span id="fallas-label" class="property-label"><g:message code="ordenSamsung.fallas.label" default="Fallas" /></span>
-					
+
 						<g:each in="${ordenSamsungInstance.fallas}" var="f">
 						<span class="property-value" aria-labelledby="fallas-label"><g:link controller="falla" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.fechas}">
 				<li class="fieldcontain">
 					<span id="fechas-label" class="property-label"><g:message code="ordenSamsung.fechas.label" default="Fechas" /></span>
@@ -315,29 +315,29 @@
 
 				</li>
 				</g:if>
-			
+
 				<g:if test="${ordenSamsungInstance?.pagos}">
 				<li class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="ordenSamsung.pagos.label" default="Pagos" /></span>
-					
+
 						<g:each in="${ordenSamsungInstance.pagos}" var="p">
 						<span class="property-value" aria-labelledby="pagos-label"><g:link controller="pagoCliente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
+
 				</li>
 				</g:if>
 
 				<g:if test="${ordenSamsungInstance?.cobros}">
 				<li class="fieldcontain">
 					<span id="cobros-label" class="property-label"><g:message code="ordenSamsung.cobros.label" default="Cobros" /></span>
-					
+
 						<g:each in="${ordenSamsungInstance.cobros}" var="c">
 						<span class="property-value" aria-labelledby="cobros-label"><g:link controller="detalleCobro" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
+
 				</li>
 				</g:if>
-			
+
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="ordenSamsung.refacciones.label" default="Refacciones" /></span>
 					&nbsp; &nbsp; &nbsp;Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
@@ -353,9 +353,9 @@
 						<thead>
 							<tr>
 								<th>Refaccion</th>
-							
+
 								<th>Precio</th>
-								
+
 								<th>Cantidad</th>
 
 								<th>Total</th>
@@ -367,17 +367,17 @@
 
 							<g:each in="${ordenSamsungInstance?.refacciones?}" status="i" var="detalleOrdenInstance">
 								<tr id="delete-detalleEntrada-${detalleOrdenInstance.id}">
-								
+
 									<td><g:link controller="detalleEntrada" action="show" id="${detalleOrdenInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
-								
+
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "cantidad")}</td>
-								
+
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "precio")}</td>
-								
+
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "total")}</td>
 
 									<td><img id="detalleEntrada-${detalleOrdenInstance.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="20px" width="20px"/></td>
-								
+
 								</tr>
 							</g:each>
 						</tbody>
@@ -401,27 +401,27 @@
 				<g:if test="${ordenSamsungInstance?.totalCobros}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Cobros" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalCobros}" type="currency" currencyCode="MXN" /></span>
-					
+
 				</li>
 				</g:if>
 
 				<g:if test="${ordenSamsungInstance?.totalRefacciones}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Refacciones" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalRefacciones}" type="currency" currencyCode="MXN" /></span>
-					
+
 				</li>
 				</g:if>
 
 				<g:if test="${ordenSamsungInstance?.total}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.total}" type="currency" currencyCode="MXN" /></span>
-					
+
 				</li>
 				</g:if>
 
@@ -435,11 +435,11 @@
 				<g:if test="${ordenSamsungInstance?.totalAdeudo}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Adeudo" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalAdeudo}" type="currency" currencyCode="MXN" /></span>
 				</li>
 				</g:if>
-			
+
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
@@ -455,7 +455,7 @@
 
 			<div id="overlay">
 				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
-					<p>
+					<div class="container-form-overlay">
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
 								<g:message code="detalleOrden.refaccion.label" default="Refaccion" />
@@ -501,7 +501,7 @@
 								<div id="close-modal" class="closeIcon">Cerrar</div>
 							</fieldset>
 						</div>
-					</p>
+					</div>
 				</g:formRemote>
 			</div>
 		</div>

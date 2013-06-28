@@ -18,14 +18,6 @@
 	<g:field type="number" name="total" required="" value="${fieldValue(bean: detalleCobroInstance, field: 'total')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: detalleCobroInstance, field: 'date', 'error')} required">
-	<label for="date">
-		<g:message code="detalleCobro.date.label" default="Date" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="date" precision="day"  value="${detalleCobroInstance?.date}"  />
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: detalleCobroInstance, field: 'orden', 'error')} required">
 	<label for="orden">
 		<g:message code="detalleCobro.orden.label" default="Orden" />
