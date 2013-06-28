@@ -96,20 +96,22 @@
 						<li><a href="#">Admin Ventas &raquo;</a>
 							<ul>
 								<li><g:link controller='ordenSamsung'>Ordenes</g:link></li>
-								<li><g:link controller='cliente'>Cliente</g:link></li>
+								<li><g:link controller='cliente'>Clientes</g:link></li>
 							</ul>
 						</li>
+
 						<li><a href="#">Almacen &raquo;</a>
 							<ul>
-								<li><g:link controller='proveedor'>Proveedor</g:link></li>
-								<li><g:link controller='entrada'>Entrada proveedor</g:link></li>
+								<li><g:link controller='entrada'>Entrada Proveedor</g:link></li>
+								<li><g:link controller='proveedor'>Proveedores</g:link></li>
 								<li><g:link controller='contactoProveedor'>Contacto proveedor</g:link></li>
-								<li><g:link controller='almacen'>Almacen</g:link></li>
-								<li><g:link controller='refaccion'>Refacciones</g:link></li>
-								<li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li>
+								%{-- <li><g:link controller='almacen'>Almacen</g:link></li> --}%
+								<li><g:link controller="almacen" action='detalleAlmacen'>Refaciones En Almacen</g:link></li>
+								%{-- <li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li> --}%
 								<li><g:link controller='tienda'>Tienda</g:link></li>
 							</ul>
 						</li>
+
 						<li><a href="#">Admin General &raquo;</a>
 							<ul>
 								<li><g:link controller='pais'>Pais</g:link></li>
@@ -122,6 +124,7 @@
 								<li><g:link controller='tipoFalla'>Tipo Falla</g:link></li>
 								<li><g:link controller='tipoPersonal'>Tipo Personal</g:link></li>
 								<li><g:link controller='sucursal'>Sucursal</g:link></li>
+								<li><g:link controller='refaccion'>Refacciones</g:link></li>
 							</ul>
 						</li>
 						<li><a href="#">Administrador &raquo;</a>

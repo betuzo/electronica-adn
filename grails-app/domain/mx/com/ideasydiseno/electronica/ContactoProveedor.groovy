@@ -4,6 +4,7 @@ class ContactoProveedor extends Persona {
 
 	static belongsTo = [proveedor: Proveedor]
 
-    static constraints = {
-    }
+	static constraints = {
+
+	}
 }

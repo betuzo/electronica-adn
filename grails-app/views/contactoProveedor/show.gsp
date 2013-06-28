@@ -22,135 +22,127 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list contactoProveedor">
-			
+
 				<g:if test="${contactoProveedorInstance?.nombre}">
 				<li class="fieldcontain">
 					<span id="nombre-label" class="property-label"><g:message code="contactoProveedor.nombre.label" default="Nombre" /></span>
-					
+
 						<span class="property-value" aria-labelledby="nombre-label"><g:fieldValue bean="${contactoProveedorInstance}" field="nombre"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.apellidoPaterno}">
 				<li class="fieldcontain">
 					<span id="apellidoPaterno-label" class="property-label"><g:message code="contactoProveedor.apellidoPaterno.label" default="Apellido Paterno" /></span>
-					
+
 						<span class="property-value" aria-labelledby="apellidoPaterno-label"><g:fieldValue bean="${contactoProveedorInstance}" field="apellidoPaterno"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.apellidoMaterno}">
 				<li class="fieldcontain">
 					<span id="apellidoMaterno-label" class="property-label"><g:message code="contactoProveedor.apellidoMaterno.label" default="Apellido Materno" /></span>
-					
+
 						<span class="property-value" aria-labelledby="apellidoMaterno-label"><g:fieldValue bean="${contactoProveedorInstance}" field="apellidoMaterno"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.sexo}">
 				<li class="fieldcontain">
 					<span id="sexo-label" class="property-label"><g:message code="contactoProveedor.sexo.label" default="Sexo" /></span>
-					
+
 						<span class="property-value" aria-labelledby="sexo-label"><g:fieldValue bean="${contactoProveedorInstance}" field="sexo"/></span>
-					
+
 				</li>
 				</g:if>
-			
-				<g:if test="${contactoProveedorInstance?.fechaRegistro}">
-				<li class="fieldcontain">
-					<span id="fechaRegistro-label" class="property-label"><g:message code="contactoProveedor.fechaRegistro.label" default="Fecha Registro" /></span>
-					
-						<span class="property-value" aria-labelledby="fechaRegistro-label"><g:formatDate date="${contactoProveedorInstance?.fechaRegistro}" /></span>
-					
-				</li>
-				</g:if>
-			
+
+
 				<g:if test="${contactoProveedorInstance?.calle}">
 				<li class="fieldcontain">
 					<span id="calle-label" class="property-label"><g:message code="contactoProveedor.calle.label" default="Calle" /></span>
-					
+
 						<span class="property-value" aria-labelledby="calle-label"><g:fieldValue bean="${contactoProveedorInstance}" field="calle"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.colonia}">
 				<li class="fieldcontain">
 					<span id="colonia-label" class="property-label"><g:message code="contactoProveedor.colonia.label" default="Colonia" /></span>
-					
+
 						<span class="property-value" aria-labelledby="colonia-label"><g:link controller="colonia" action="show" id="${contactoProveedorInstance?.colonia?.id}">${contactoProveedorInstance?.colonia?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.codigoPostal}">
 				<li class="fieldcontain">
 					<span id="codigoPostal-label" class="property-label"><g:message code="contactoProveedor.codigoPostal.label" default="Codigo Postal" /></span>
-					
+
 						<span class="property-value" aria-labelledby="codigoPostal-label"><g:fieldValue bean="${contactoProveedorInstance}" field="codigoPostal"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.noExt}">
 				<li class="fieldcontain">
 					<span id="noExt-label" class="property-label"><g:message code="contactoProveedor.noExt.label" default="No Ext" /></span>
-					
+
 						<span class="property-value" aria-labelledby="noExt-label"><g:fieldValue bean="${contactoProveedorInstance}" field="noExt"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.noInt}">
 				<li class="fieldcontain">
 					<span id="noInt-label" class="property-label"><g:message code="contactoProveedor.noInt.label" default="No Int" /></span>
-					
+
 						<span class="property-value" aria-labelledby="noInt-label"><g:fieldValue bean="${contactoProveedorInstance}" field="noInt"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.rfc}">
 				<li class="fieldcontain">
 					<span id="rfc-label" class="property-label"><g:message code="contactoProveedor.rfc.label" default="Rfc" /></span>
-					
+
 						<span class="property-value" aria-labelledby="rfc-label"><g:fieldValue bean="${contactoProveedorInstance}" field="rfc"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.email}">
 				<li class="fieldcontain">
 					<span id="email-label" class="property-label"><g:message code="contactoProveedor.email.label" default="Email" /></span>
-					
+
 						<span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${contactoProveedorInstance}" field="email"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.proveedor}">
 				<li class="fieldcontain">
 					<span id="proveedor-label" class="property-label"><g:message code="contactoProveedor.proveedor.label" default="Proveedor" /></span>
-					
+
 						<span class="property-value" aria-labelledby="proveedor-label"><g:link controller="proveedor" action="show" id="${contactoProveedorInstance?.proveedor?.id}">${contactoProveedorInstance?.proveedor?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${contactoProveedorInstance?.telefonos}">
 				<li class="fieldcontain">
 					<span id="telefonos-label" class="property-label"><g:message code="contactoProveedor.telefonos.label" default="Telefonos" /></span>
-					
+
 						<g:each in="${contactoProveedorInstance.telefonos}" var="t">
 						<span class="property-value" aria-labelledby="telefonos-label"><g:link controller="telefonoPersona" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
+
 				</li>
 				</g:if>
-			
+
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

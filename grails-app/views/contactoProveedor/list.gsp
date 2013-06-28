@@ -26,37 +26,37 @@
 			<table id="tableGrid">
 				<thead>
 					<tr>
-					
+
 						<g:sortableColumn property="nombre" title="${message(code: 'contactoProveedor.nombre.label', default: 'Nombre')}" />
-					
+
 						<g:sortableColumn property="apellidoPaterno" title="${message(code: 'contactoProveedor.apellidoPaterno.label', default: 'Apellido Paterno')}" />
-					
+
 						<g:sortableColumn property="apellidoMaterno" title="${message(code: 'contactoProveedor.apellidoMaterno.label', default: 'Apellido Materno')}" />
-					
+
 						<g:sortableColumn property="sexo" title="${message(code: 'contactoProveedor.sexo.label', default: 'Sexo')}" />
-					
+
 						<g:sortableColumn property="fechaRegistro" title="${message(code: 'contactoProveedor.fechaRegistro.label', default: 'Fecha Registro')}" />
-					
+
 						<g:sortableColumn property="calle" title="${message(code: 'contactoProveedor.calle.label', default: 'Calle')}" />
-					
+
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${contactoProveedorInstanceList}" status="i" var="contactoProveedorInstance">
 					<tr>
-					
+
 						<td><g:link action="show" id="${contactoProveedorInstance.id}">${fieldValue(bean: contactoProveedorInstance, field: "nombre")}</g:link></td>
-					
+
 						<td>${fieldValue(bean: contactoProveedorInstance, field: "apellidoPaterno")}</td>
-					
+
 						<td>${fieldValue(bean: contactoProveedorInstance, field: "apellidoMaterno")}</td>
-					
+
 						<td>${fieldValue(bean: contactoProveedorInstance, field: "sexo")}</td>
-					
-						<td><g:formatDate date="${contactoProveedorInstance.fechaRegistro}" /></td>
-					
+
+						<td><g:formatDate date="${contactoProveedorInstance.fechaRegistro}" formatName="customDateFormat"  /></td>
+
 						<td>${fieldValue(bean: contactoProveedorInstance, field: "calle")}</td>
-					
+
 					</tr>
 				</g:each>
 				</tbody>

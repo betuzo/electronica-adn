@@ -19,6 +19,7 @@ class ContactoProveedorController {
     }
 
     def save() {
+        println "***************************"+params
         params.fechaRegistro = new Date()
         def contactoProveedorInstance = new ContactoProveedor(params)
         if (!contactoProveedorInstance.save(flush: true)) {
@@ -26,7 +27,16 @@ class ContactoProveedorController {
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'contactoProveedor.label', default: 'ContactoProveedor'), contactoProveedorInstance.id])
+         //guardando telefonoContactoProveedor
+         println "telefono: " + params.telefono
+        def telefonoProveedor = new TelefonoPersona()
+        telefonoProveedor.tipoTelefono = "Principal"
+        telefonoProveedor.telefono = params.telefono
+        telefonoProveedor.persona = contactoProveedorInstance
+        telefonoProveedor.save(flus:true)
+
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'contactoProveedor.label', default: 'ContactoProveedor'), contactoProveedorInstance.id])
         redirect(action: "show", id: contactoProveedorInstance.id)
     }
 

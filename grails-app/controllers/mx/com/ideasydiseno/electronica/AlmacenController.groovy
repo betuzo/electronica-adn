@@ -103,13 +103,14 @@ class AlmacenController {
     }
 
     def detalleAlmacen(){
-        
+        println "render a vista almacen"
     }
 
     def jsonAlmacen(){
         def almacenList = Almacen.findAll()
         def listAlmacen = []
         def mapAlmacen = [:]
+
         almacenList.each{ it ->
             println "==> Nombre Sucursal: $it.sucursal"
             println "==> Refaccion: $it.refacciones.refaccion"
@@ -128,7 +129,7 @@ class AlmacenController {
             }
         }
         listAlmacen.each{ it ->
-            println "**** lista del mapa "+ it
+            println "**** lista del mapa "+ it +"\n"
         }
         render ([html:listAlmacen] as JSON)
     }
