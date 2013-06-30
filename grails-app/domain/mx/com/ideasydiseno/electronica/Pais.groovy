@@ -5,7 +5,7 @@ class Pais {
 	String nombre
 	String nombreCompleto
 
-	static hasMany = [estados: Estado] 
+	static hasMany = [estados: Estado]
 
     static constraints = {
     	nombre blank:false
