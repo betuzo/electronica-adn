@@ -52,8 +52,8 @@ class EntradaController {
                         pagoProverdorInstance.fechaPago= new Date()
                         pagoProverdorInstance.entrada=entradaInstance
                         pagoProverdorInstance.realizo=user
-                        pagoProverdorInstance.save()   
-                    }   
+                        pagoProverdorInstance.save()
+                    }
                 }
             }
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
@@ -115,9 +115,9 @@ class EntradaController {
                     detalleFechaEntrada.tipoFecha= fechaInstance
                     detalleFechaEntrada.entrada = entradaInstance
                     detalleFechaEntrada.save()
-                 } 
+                 }
                 }
-                
+
                  //Guardando pagos
                 if (params.tipoPago != "" && params.totalPago != "0") {
                     def pagoProverdorInstance = new PagoProveedor()
@@ -126,7 +126,7 @@ class EntradaController {
                     pagoProverdorInstance.fechaPago=params.fechaPago
                     pagoProverdorInstance.entrada=entradaInstance
                     pagoProverdorInstance.realizo=user
-                    pagoProverdorInstance.save()   
+                    pagoProverdorInstance.save()
                 }
                 //Guardando Herramientas
 
@@ -136,7 +136,7 @@ class EntradaController {
             }
         }
         entradaInstance.properties = params
-        println "entradaInstance.properties" + entradaInstance.properties 
+        println "entradaInstance.properties" + entradaInstance.properties
 
         if (!entradaInstance.save(flush: true)) {
             render(view: "edit", model: [entradaInstance: entradaInstance])
@@ -168,7 +168,7 @@ class EntradaController {
             redirect(action: "show", id: params.id)
         }
     }
-    
+
     def refaccionInstance = new DetalleEntrada()
 
     def refaccionTable(){
@@ -183,45 +183,45 @@ class EntradaController {
             refaccionInstance.precioUnitario=params.precioUnitario
             refaccionInstance.total = params.total
         }
-        
+
         htmlRender = "<td>hola</td>"
         render ([html:htmlRender] as JSON)
     }
 
-
+    //Agregando refaccion enEntrada Show
     def addRefaccion(){
         println ("params refaccion ==> " + params)
         def htmlRender=''
         def success=true
         def user =springSecurityService.currentUser
         def detalleEntrada = new DetalleEntrada()
+        // def refaccionAlmacen = new RefaccionAlmacen()
 
-        def refaccionAlmacen = new RefaccionAlmacen()
         if (params) {
-            println ("los params son diferentes de null")
             def entradaInstance = Entrada.get(params.idEntradaRefaccion)
+
             def refaccionInstance = Refaccion.get(params.refaccion.id)
             detalleEntrada.entrada= entradaInstance
             detalleEntrada.refaccion= refaccionInstance
             println " cantidad: " + params.cantidad.class
             detalleEntrada.cantidad= params.cantidad  as int
             detalleEntrada.precioUnitario = params.precioUnitario as double
-            detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario 
+            detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario
             detalleEntrada.save()
 
-            refaccionAlmacen.almacen = user?.sucursal?.almacen
-            refaccionAlmacen.refaccion = refaccionInstance
-            refaccionAlmacen.cantidad = params.cantidad as int
-            refaccionAlmacen.precio = params.precioUnitario as double
-            refaccionAlmacen.entrada = detalleEntrada
-            refaccionAlmacen.save()
+            // refaccionAlmacen.almacen = user?.sucursal?.almacen
+            // refaccionAlmacen.refaccion = refaccionInstance
+            // refaccionAlmacen.cantidad = params.cantidad as int
+            // refaccionAlmacen.precio = params.precioUnitario as double
+            // refaccionAlmacen.entrada = detalleEntrada
+            // refaccionAlmacen.save()
 
             println ("refacciones detalleEntrada: " + detalleEntrada)
-            println ("refacciones refaccionAlmacen: " + refaccionAlmacen)
+            // println ("refacciones refaccionAlmacen: " + refaccionAlmacen)
         }
-        htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
+        htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
 
-        render ([html:htmlRender, success:success] as JSON) 
+        render ([html:htmlRender, success:success] as JSON)
     }
 
     def saveFechaEntrada(){
@@ -234,7 +234,7 @@ class EntradaController {
         def entradaInstance = Entrada.get(params.id)
         println("entradaInstance: " + entradaInstance)
         println("User persona: " + user)
-        def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada) 
+        def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada)
         println("fecha en date: " + fecha)
 
         def detalleFechaEntrada = new DetalleFechaEntrada()
@@ -263,7 +263,7 @@ class EntradaController {
         def entradaInstance = Entrada.get(params.id)
         println("entradaInstance: " + entradaInstance)
         println("User persona: " + user)
-        def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada) 
+        def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada)
         println("fecha en date: " + fecha)
 
         def detalleFechaEntrada = new DetalleFechaEntrada()
@@ -285,9 +285,9 @@ class EntradaController {
         def htmlRender = ''
         def success = true
         def entradaInstance = Entrada.get(params.id)
-        //def fecha = new Date().parse("d/M/yyyy", params.fechaPago) 
+        //def fecha = new Date().parse("d/M/yyyy", params.fechaPago)
         def totalPago = params.totalPago as double
-        
+
         def pagoProveedor = new PagoProveedor()
         pagoProveedor.realizo=user
         pagoProveedor.entrada=entradaInstance
@@ -299,17 +299,17 @@ class EntradaController {
         println(pagoProveedor.id)
         htmlRender = "<li><a href=/electronica-adn/pagoProveedor/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</<spam></a></li>"
 
-        render ([html:htmlRender, success:success] as JSON)   
+        render ([html:htmlRender, success:success] as JSON)
     }
 
     def savePagoShow(){
         println ("**Pago** ==> " + params)
         def user =springSecurityService.currentUser
         def htmlRender = ''
-        def entradaInstance = Entrada.get(params.idEntradaPago) 
+        def entradaInstance = Entrada.get(params.idEntradaPago)
         def totalPago = params.totalPago as double
         def success = true
-        
+
         def pagoProveedor = new PagoProveedor()
         pagoProveedor.realizo=user
         pagoProveedor.entrada=entradaInstance
@@ -321,7 +321,7 @@ class EntradaController {
         }
 
         htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
-        render ([html:htmlRender, success:success] as JSON)   
+        render ([html:htmlRender, success:success] as JSON)
     }
 
     def nextFechaShow(){
@@ -340,16 +340,16 @@ class EntradaController {
         println ("Total de fechas" + totalFechas)
         def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
         println("tamaño de la fecha" + tipoFechaInstance)
-                
+
         if (tipoFechaInstance != null) {
             println("tamaño de la fecha" + tipoFechaInstance)
             println ("*******")
-            
+
             detalleFechaEntrada.fecha = new Date()
             detalleFechaEntrada.personal= user
             detalleFechaEntrada.tipoFecha= tipoFechaInstance
             detalleFechaEntrada.entrada = entradaInstance
-            detalleFechaEntrada.save()    
+            detalleFechaEntrada.save()
         }
 
 
@@ -366,6 +366,9 @@ class EntradaController {
         def entradaInstance = Entrada.get(params.id)
         def totalFechas = entradaInstance.fechas.size()
         def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+
+        println "total de fechas de la entrada" + totalFechas +  "  lista de fechas entrada " + listFechaEntrada
+
         if((totalFechas + 1) == listFechaEntrada){
             imgState = 'none'
         }
@@ -373,16 +376,16 @@ class EntradaController {
         println ("Total de fechas" + totalFechas)
         def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
         println("tamaño de la fecha" + tipoFechaInstance)
-                
+
         if (tipoFechaInstance != null) {
             println("tamaño de la fecha" + tipoFechaInstance)
             println ("*******")
-            
+
             detalleFechaEntrada.fecha = new Date()
             detalleFechaEntrada.personal= user
             detalleFechaEntrada.tipoFecha= tipoFechaInstance
             detalleFechaEntrada.entrada = entradaInstance
-            detalleFechaEntrada.save()    
+            detalleFechaEntrada.save()
         }
 
 
@@ -391,14 +394,19 @@ class EntradaController {
     }
 
     def hasNext(){
+
         def htmlRender='visible'
         def entradaInstance = Entrada.get(params.id)
         def totalFechas = entradaInstance.fechas.size()
+
         def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+
+
         if(totalFechas >= listFechaEntrada){
             htmlRender = 'none'
         }
+
         println ("Lista de fecha entrada: " + listFechaEntrada + "  total de fechas: " + totalFechas + "     " + (totalFechas >= listFechaEntrada))
-        render ([html:htmlRender] as JSON)    
+        render ([html:htmlRender] as JSON)
     }
 }

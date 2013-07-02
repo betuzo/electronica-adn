@@ -103,10 +103,10 @@
 						<li><a href="#">Almacen &raquo;</a>
 							<ul>
 								<li><g:link controller='entrada'>Entrada Proveedor</g:link></li>
-								<li><g:link controller='proveedor'>Proveedores</g:link></li>
+								<li><g:link controller='proveedor'>Proveedor</g:link></li>
 								<li><g:link controller='contactoProveedor'>Contacto proveedor</g:link></li>
 								%{-- <li><g:link controller='almacen'>Almacen</g:link></li> --}%
-								<li><g:link controller="almacen" action='detalleAlmacen'>Refaciones En Almacen</g:link></li>
+								<li><g:link controller="almacen" action='detalleAlmacen'>Refaccion Almacen</g:link></li>
 								%{-- <li><g:link controller='refaccionAlmacen'>Refaccion - Almacen</g:link></li> --}%
 								<li><g:link controller='tienda'>Tienda</g:link></li>
 							</ul>

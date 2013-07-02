@@ -29,12 +29,19 @@
 				if (!data.success){
 					alert("Se genero un problema, contacte el area de sistemas...");
 				}else{
-					$("#tableRefacciones tbody:last").append(data.html)
+					if ($('#tableRefacciones >tbody >tr').length == 0){
+						$("#tableRefacciones tbody").append(data.html)
+
+					}else{
+						// $("#tableRefacciones tbody").append(data.html)
+						$("#tableRefacciones tbody> tr:first").before(data.html);
+						// $("#tableRefacciones tbody> tr:last").after(data.html);
+					}
 				}
 
 				var cantidadR = document.getElementById("cantidadRefaccion");
 				var preciouR = document.getElementById("precioUnitario");
-				var totalR = document.getElementById("totalRef+accion");
+				var totalR = document.getElementById("totalRefaccion");
 				cantidadR.value="";
 				preciouR.value=""
 				totalR.value="";
@@ -522,7 +529,7 @@
 								<g:message code="detalleEntrada.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<input id="totalRefaccion" disabled="" autocomplete="off"/>
+							<input type="number" id="totalRefaccion" disabled="" autocomplete="off"/>
 						</div>
 						<g:hiddenField id="idEntradaRefaccion" name="idEntradaRefaccion" value="${entradaInstance?.id}" />
 						<br>
