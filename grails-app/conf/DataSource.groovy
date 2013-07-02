@@ -16,6 +16,16 @@ environments {
           dbCreate = "update"
           driverClassName = "org.postgresql.Driver"
           dialect = org.hibernate.dialect.PostgreSQLDialect
+<<<<<<< HEAD
+=======
+      
+          //uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
+          uri = new URI(System.env.DATABASE_URL?:"postgres://postgres:123456@localhost/electronica")
+
+          // dbCreate = "update"
+          // driverClassName = "org.postgresql.Driver"
+          // dialect = org.hibernate.dialect.PostgreSQLDialect
+>>>>>>> 784262c4ac3103c2e2c64a6df97d024870bfe6f5
 
           //uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
           uri = new URI(System.env.DATABASE_URL?:"postgres://adnlos:postgres@localhost/electronica")
