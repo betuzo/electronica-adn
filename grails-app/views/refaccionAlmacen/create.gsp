@@ -28,7 +28,7 @@
 			</g:hasErrors>
 			<g:form action="save" >
 				<fieldset class="form">
-					
+
 					<div class="fieldcontain ${hasErrors(bean: refaccionAlmacenInstance, field: 'refaccion', 'error')} required">
 						<label for="refaccion">
 							<g:message code="refaccionAlmacen.refaccion.label" default="Refaccion" />
@@ -68,23 +68,6 @@
 						</label>
 						<g:select id="entrada" name="entrada.id" from="${mx.com.ideasydiseno.electronica.DetalleEntrada.list()}" optionKey="id" required="" value="${refaccionAlmacenInstance?.entrada?.id}" class="many-to-one"/>
 					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'tipoTelefono', 'error')} required">
-						<label for="tipoTelefono">
-							<g:message code="telefonoInstitucion.tipoTelefono.label" default="Tipo Telefono" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:textField name="tipoTelefono" required="" value="${telefonoInstitucionInstance?.tipoTelefono}"/>
-					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: telefonoInstitucionInstance, field: 'telefono', 'error')} required">
-						<label for="telefono">
-							<g:message code="telefonoInstitucion.telefono.label" default="Telefono" />
-							<span class="required-indicator">*</span>
-						</label>
-						<g:textField name="telefono" required="" value="${telefonoInstitucionInstance?.telefono}"/>
-					</div>
-
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

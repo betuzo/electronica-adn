@@ -24,7 +24,6 @@ class EntradaController {
     }
 
     def save() {
-        println ("params " + params)
         def user =springSecurityService.currentUser
         def entradaInstance = new Entrada(params)
         if (!entradaInstance.save(flush: true)) {
@@ -87,7 +86,6 @@ class EntradaController {
 
     def update() {
         def user =springSecurityService.currentUser
-        println "******" + params
         def entradaInstance = Entrada.get(params.id)
         if (!entradaInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'entrada.label', default: 'Entrada'), params.id])
@@ -136,7 +134,6 @@ class EntradaController {
             }
         }
         entradaInstance.properties = params
-        println "entradaInstance.properties" + entradaInstance.properties
 
         if (!entradaInstance.save(flush: true)) {
             render(view: "edit", model: [entradaInstance: entradaInstance])
@@ -174,10 +171,8 @@ class EntradaController {
     def refaccionTable(){
         def htmlRender = ''
         def success = true
-        println params
 
         if (!params) {
-            println "parametros diferentes de null"
             refaccionInstance.refaccion = params.refaccion
             refaccionInstance.cantidad = params.cantidad
             refaccionInstance.precioUnitario=params.precioUnitario
@@ -190,12 +185,10 @@ class EntradaController {
 
     //Agregando refaccion enEntrada Show
     def addRefaccion(){
-        println ("params refaccion ==> " + params)
         def htmlRender=''
         def success=true
         def user =springSecurityService.currentUser
         def detalleEntrada = new DetalleEntrada()
-        // def refaccionAlmacen = new RefaccionAlmacen()
 
         if (params) {
             def entradaInstance = Entrada.get(params.idEntradaRefaccion)
@@ -203,21 +196,10 @@ class EntradaController {
             def refaccionInstance = Refaccion.get(params.refaccion.id)
             detalleEntrada.entrada= entradaInstance
             detalleEntrada.refaccion= refaccionInstance
-            println " cantidad: " + params.cantidad.class
             detalleEntrada.cantidad= params.cantidad  as int
             detalleEntrada.precioUnitario = params.precioUnitario as double
             detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario
             detalleEntrada.save()
-
-            // refaccionAlmacen.almacen = user?.sucursal?.almacen
-            // refaccionAlmacen.refaccion = refaccionInstance
-            // refaccionAlmacen.cantidad = params.cantidad as int
-            // refaccionAlmacen.precio = params.precioUnitario as double
-            // refaccionAlmacen.entrada = detalleEntrada
-            // refaccionAlmacen.save()
-
-            println ("refacciones detalleEntrada: " + detalleEntrada)
-            // println ("refacciones refaccionAlmacen: " + refaccionAlmacen)
         }
         htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
 
@@ -227,15 +209,10 @@ class EntradaController {
     def saveFechaEntrada(){
         def user =springSecurityService.currentUser
 		def htmlRender
-        println ("***" + params)
 
         def fechaInstance = TipoFecha.get(params.tipoFechaEntrada)
-        println("fechaInstance: " + fechaInstance )
         def entradaInstance = Entrada.get(params.id)
-        println("entradaInstance: " + entradaInstance)
-        println("User persona: " + user)
         def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada)
-        println("fecha en date: " + fecha)
 
         def detalleFechaEntrada = new DetalleFechaEntrada()
             detalleFechaEntrada.fecha = fecha
@@ -245,26 +222,18 @@ class EntradaController {
             detalleFechaEntrada.save()
 
 
-        println (detalleFechaEntrada.id)
         htmlRender = "<li><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</<spam></a></li>"
         htmlRender = detalleEntrada
         render ([html:htmlRender] as JSON)
     }
 
     def saveFechaEntradaShow(){
-        println("Entra a guardar fecha show")
-
         def user =springSecurityService.currentUser
         def htmlRender =''
-        println ("***" + params)
 
         def fechaInstance = TipoFecha.get(params.tipoFechaEntrada)
-        println("fechaInstance: " + fechaInstance )
         def entradaInstance = Entrada.get(params.id)
-        println("entradaInstance: " + entradaInstance)
-        println("User persona: " + user)
         def fecha = new Date().parse("d/M/yyyy", params.fechaEntrada)
-        println("fecha en date: " + fecha)
 
         def detalleFechaEntrada = new DetalleFechaEntrada()
             detalleFechaEntrada.fecha = fecha
@@ -273,14 +242,12 @@ class EntradaController {
             detalleFechaEntrada.entrada = entradaInstance
             detalleFechaEntrada.save()
 
-        println (detalleFechaEntrada.id)
         htmlRender = "<spam id='delete-detalleFechaEntrada-"+detalleFechaEntrada.id+"' class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+detalleFechaEntrada.id+"><spam>"+detalleFechaEntrada+"</spam></a>  <img id='detalleFechaEntrada-"+detalleFechaEntrada.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
         //htmlRender = 'ola ke ace'
         render ([html:htmlRender] as JSON)
     }
 
     def savePago(){
-        println ("**Pago** ==> " + params)
         def user =springSecurityService.currentUser
         def htmlRender = ''
         def success = true
@@ -296,14 +263,12 @@ class EntradaController {
         pagoProveedor.fechaPago= new Date()
         pagoProveedor.save()
 
-        println(pagoProveedor.id)
         htmlRender = "<li><a href=/electronica-adn/pagoProveedor/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</<spam></a></li>"
 
         render ([html:htmlRender, success:success] as JSON)
     }
 
     def savePagoShow(){
-        println ("**Pago** ==> " + params)
         def user =springSecurityService.currentUser
         def htmlRender = ''
         def entradaInstance = Entrada.get(params.idEntradaPago)
@@ -329,22 +294,27 @@ class EntradaController {
         def imgState='visible'
         def user =springSecurityService.currentUser
         def detalleFechaEntrada = new DetalleFechaEntrada()
-        println ("**NEXT FECHA** ==> " + params)
         def entradaInstance = Entrada.get(params.id)
         def totalFechas = entradaInstance.fechas.size()
         def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
+
         if((totalFechas + 1) == listFechaEntrada){
+            def refEntrada = entradaInstance?.refacciones
+
+            refEntrada.each{ refDE ->
+                def refaccionAlmacen = new RefaccionAlmacen()
+                refaccionAlmacen.almacen = user?.sucursal?.almacen
+                refaccionAlmacen.refaccion = refDE?.refaccion
+                refaccionAlmacen.cantidad = refDE?.cantidad as int
+                refaccionAlmacen.precio = refDE?.precioUnitario as double
+                refaccionAlmacen.entrada = DetalleEntrada.get(refDE.id)
+                refaccionAlmacen.save(failOnError: true)
+            }
             imgState = 'none'
         }
 
-        println ("Total de fechas" + totalFechas)
         def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
-        println("tamaño de la fecha" + tipoFechaInstance)
-
         if (tipoFechaInstance != null) {
-            println("tamaño de la fecha" + tipoFechaInstance)
-            println ("*******")
-
             detalleFechaEntrada.fecha = new Date()
             detalleFechaEntrada.personal= user
             detalleFechaEntrada.tipoFecha= tipoFechaInstance
@@ -362,24 +332,18 @@ class EntradaController {
         def imgState='visible'
         def user =springSecurityService.currentUser
         def detalleFechaEntrada = new DetalleFechaEntrada()
-        println ("**NEXT FECHA** ==> " + params)
         def entradaInstance = Entrada.get(params.id)
         def totalFechas = entradaInstance.fechas.size()
         def listFechaEntrada = TipoFecha.findAllByTipoUso(FECHA_TIPO_ENTRADA).size()
 
-        println "total de fechas de la entrada" + totalFechas +  "  lista de fechas entrada " + listFechaEntrada
 
         if((totalFechas + 1) == listFechaEntrada){
             imgState = 'none'
         }
 
-        println ("Total de fechas" + totalFechas)
         def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1,FECHA_TIPO_ENTRADA)
-        println("tamaño de la fecha" + tipoFechaInstance)
 
         if (tipoFechaInstance != null) {
-            println("tamaño de la fecha" + tipoFechaInstance)
-            println ("*******")
 
             detalleFechaEntrada.fecha = new Date()
             detalleFechaEntrada.personal= user
@@ -406,7 +370,6 @@ class EntradaController {
             htmlRender = 'none'
         }
 
-        println ("Lista de fecha entrada: " + listFechaEntrada + "  total de fechas: " + totalFechas + "     " + (totalFechas >= listFechaEntrada))
         render ([html:htmlRender] as JSON)
     }
 }
