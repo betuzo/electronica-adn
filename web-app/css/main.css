@@ -712,6 +712,10 @@ a.skip {
   -moz-box-shadow: 0 0 50px #000;
   -webkit-box-shadow: 0 0 50px #000;
 }
+#imgPagos {
+  display: inline-block;
+  vertical-align: top;
+}
 .vform {
   width: 100%;
   max-width: 360px;
@@ -777,7 +781,7 @@ select {
   display: block;
   background: #fff;
   border: 1px solid #ccc;
-  padding: 4px 1px;
+  padding: 2px 1px;
   vertical-align: middle;
   outline: none;
   border-radius: 4px;
