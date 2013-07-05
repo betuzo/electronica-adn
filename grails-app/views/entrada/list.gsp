@@ -25,34 +25,34 @@
 			</g:if>
 			<table id="tableGrid">
 				<thead>
-					<tr>
-					
+					<tr >
+
 						<th><g:message code="entrada.proveedor.label" default="Proveedor" /></th>
-					
+
 						<th><g:message code="entrada.sucursal.label" default="Sucursal" /></th>
-					
+
 						<g:sortableColumn property="total" title="${message(code: 'entrada.total.label', default: 'Total')}" />
-					
+
 						<g:sortableColumn property="status" title="${message(code: 'entrada.status.label', default: 'Status')}" />
-					
+
 						<g:sortableColumn property="observaciones" title="${message(code: 'entrada.observaciones.label', default: 'Observaciones')}" />
-					
+
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${entradaInstanceList}" status="i" var="entradaInstance">
-					<tr>
-					
+					<tr class="${(fieldValue(bean: entradaInstance, field: 'status')) == 'Abierto' ? 'ordenOpen' : 'ordenClose'}">
+
 						<td><g:link action="show" id="${entradaInstance.id}">${fieldValue(bean: entradaInstance, field: "proveedor")}</g:link></td>
-					
+
 						<td>${fieldValue(bean: entradaInstance, field: "sucursal")}</td>
-					
-						<td>${fieldValue(bean: entradaInstance, field: "total")}</td>
-					
+
+						<td>${fieldValue(bean: entradaInstance, field: "totalAdeudo")}</td>
+
 						<td>${fieldValue(bean: entradaInstance, field: "status")}</td>
-					
+
 						<td>${fieldValue(bean: entradaInstance, field: "observaciones")}</td>
-					
+
 					</tr>
 				</g:each>
 				</tbody>

@@ -25,6 +25,8 @@ class EntradaController {
 
     def save() {
         def user =springSecurityService.currentUser
+        params.total ="0"
+        params.status = "Abierto"
         def entradaInstance = new Entrada(params)
         if (!entradaInstance.save(flush: true)) {
             render(view: "create", model: [entradaInstance: entradaInstance])
@@ -41,18 +43,16 @@ class EntradaController {
                     detalleFechaEntrada.entrada = entradaInstance
                     detalleFechaEntrada.save()
 
-
-
-                    //Guardando pago
-                    if (params.tipoPago != "" && params.totalPago != "0") {
-                        def pagoProverdorInstance = new PagoProveedor()
-                        pagoProverdorInstance.tipoPago=params.tipoPago
-                        pagoProverdorInstance.total=params.totalPago.toLong()
-                        pagoProverdorInstance.fechaPago= new Date()
-                        pagoProverdorInstance.entrada=entradaInstance
-                        pagoProverdorInstance.realizo=user
-                        pagoProverdorInstance.save()
-                    }
+                    // //Guardando pago
+                    // if (params.tipoPago != "" && params.totalPago != "0") {
+                    //     def pagoProverdorInstance = new PagoProveedor()
+                    //     pagoProverdorInstance.tipoPago=params.tipoPago
+                    //     pagoProverdorInstance.total=params.totalPago.toLong()
+                    //     pagoProverdorInstance.fechaPago= new Date()
+                    //     pagoProverdorInstance.entrada=entradaInstance
+                    //     pagoProverdorInstance.realizo=user
+                    //     pagoProverdorInstance.save()
+                    // }
                 }
             }
             flash.message = message(code: 'default.created.message', args: [message(code: 'entrada.label', default: 'Entrada'), entradaInstance.id])
@@ -310,6 +310,9 @@ class EntradaController {
                 refaccionAlmacen.entrada = DetalleEntrada.get(refDE.id)
                 refaccionAlmacen.save(failOnError: true)
             }
+            //cambiamos estado de la entrada a cerrado
+            entradaInstance.status = "Cerrado"
+            entradaInstance.save(failOnError:true)
             imgState = 'none'
         }
 

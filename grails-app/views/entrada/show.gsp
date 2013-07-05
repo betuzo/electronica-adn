@@ -49,7 +49,6 @@
 
 
 			$(document).on("ready", function(){
-
 				$.ajax({
 					url:"${request.contextPath}/entrada/hasNext",
 					dataType: "json",
@@ -57,13 +56,17 @@
 					data:{id: $('#id').val()},
 					cache:false,
 					success: function(data){
+						// si ya es la ultima fecha del proveedor deshabilitar agregar refaccion
+						console.log("******************" + data.html);
 						$("#nextFecha").css('display', " " +data.html+" ");
+						$(".imgDelete").css('display', " " +data.html+" ");
+						$("#open-modal").css('display', " " +data.html+" ");
+						$("#imgPagos").css('display', " " +data.html+" ");
 					},
 					error: function(data){
 						console.log(" Error: " + data);
 					}
 				});
-
 
 				var tipoFecha = $("#tipoFechaEntrada").val();
 				$("#totalPago").val("0");
@@ -83,6 +86,10 @@
 						success: function(data){
 							$("#add-fechas").append(data.html);
 							$("#nextFecha").css('display', " " +data.img+" ");
+							$(".imgDelete").css('display', " " +data.img+" ");
+							$("#open-modal").css('display', " " +data.img+" ");
+							$("#imgPagos").css('display', " " +data.img+" ");
+
 						},
 						error: function(data){
 							console.log("Error: " + data);
@@ -115,8 +122,6 @@
 					});
 				});
 
-
-
 				$(".imgDelete").on("click", function(){
 					var objDelete = $(this).attr('id');
 					var arrayDelete = objDelete.split('-');
@@ -140,8 +145,8 @@
 						});
 					}
 				});
-				/**PAGOS**/
 
+				/**PAGOS**/
 				$("#slide-pagos-open").on("click", function(){
 					$("#totalPago").val("");
 					$("#tipoPago").val("");
@@ -171,8 +176,8 @@
 					});
 				});
 
-				/**Refacciones**/
 
+				/**Refacciones**/
 				$("#slide-refacciones-open").on("click", function(){
 					$("#form-refacciones").slideDown();
 				});
@@ -203,21 +208,6 @@
 					$("#precioUnitario").val("");
 					$("#totalRefaccion").val("");
 				});
-				/**
-				$("#precioUnitario").on('change', function(){
-					var cantidad = $("#cantidadRefaccion").val();
-					var precio = $("#precioUnitario").val();
-					var result = parseFloat(cantidad) * parseFloat(precio);
-					$("#totalRefaccion").val(result);
-				});
-
-				$("#cantidadRefaccion").on("change", function(){
-					var cantidad = $("#cantidadRefaccion").val();
-					var precio = $("#precioUnitario").val();
-					var result = parseFloat(cantidad) * parseFloat(precio);
-					$("#totalRefaccion").val(result);
-				}); */
-
 
 				$('#precioUnitario').keyup(function () {
 					this.value = this.value.replace(/[^0-9\.]/g,'');
@@ -360,15 +350,6 @@
 				</li>
 				</g:if>
 
-				<g:if test="${entradaInstance?.total}">
-				<li class="fieldcontain">
-					<span id="total-label" class="property-label"><g:message code="entrada.total.label" default="Total" /></span>
-
-						<span class="property-value" aria-labelledby="total-label"><g:fieldValue bean="${entradaInstance}" field="total"/></span>
-
-				</li>
-				</g:if>
-
 				<g:if test="${entradaInstance?.status}">
 				<li class="fieldcontain">
 					<span id="status-label" class="property-label"><g:message code="entrada.status.label" default="Status" /></span>
@@ -398,7 +379,7 @@
 <!--Agregar pagos-->
 				<li id="add-pago" class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="entrada.pagos.label" default="Pagos" /></span>
-						&nbsp; &nbsp; &nbsp;Agregar Pagos <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
+						&nbsp; &nbsp; &nbsp;Agregar Pagos <div id="imgPagos"><img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/></div>
 						<g:each in="${entradaInstance.pagos}" var="p">
 						<span id="delete-pagoProveedor-${p.id}" class="property-value" aria-labelledby="pagos-label">
 							<g:link controller="pagoProveedor" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link>
@@ -488,8 +469,39 @@
 					</table>
 				</div>
 
+				<g:if test="${entradaInstance?.total}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="entrada.total.label" default="Total" /></span>
+						<span class="property-value" aria-labelledby="total-label"><g:fieldValue bean="${entradaInstance}" field="total"/></span>
 
+				</li>
+				</g:if>
 
+				<g:if test="${entradaInstance?.totalRefacciones}">
+					<li class="fieldcontain">
+						<span id="totalRefacciones-label" class="property-label"><g:message code="entrada.totalRefacciones.label" default="Total Refacciones" /></span>
+
+							<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${entradaInstance.totalRefacciones}" type="currency" currencyCode="MXN" /></span>
+					</li>
+				</g:if>
+
+				<g:if test="${entradaInstance?.totalPagos}">
+					<li class="fieldcontain">
+						<span id="totalPagos-label" class="property-label"><g:message code="entrada.totalPagos.label" default="Total Pagos" /></span>
+
+							<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${entradaInstance.totalPagos}" type="currency" currencyCode="MXN" /></span>
+
+					</li>
+				</g:if>
+
+				<g:if test="${entradaInstance?.totalAdeudo}">
+					<li class="fieldcontain">
+						<span id="totalAdeudo-label" class="property-label"><g:message code="entrada.totalAdeudo.label" default="Total Adeudo" /></span>
+
+							%{-- <span class="property-value" aria-labelledby="total-label">$ <g:fieldValue bean="${entradaInstance}" field="totalAdeudo"/></span> --}%
+							<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${entradaInstance.totalAdeudo}" type="currency" currencyCode="MXN" /></span>
+					</li>
+				</g:if>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

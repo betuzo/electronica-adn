@@ -5,7 +5,7 @@
 		<label for="cliente">
 			<g:message code="ordenSamsung.cliente.label" default="Cliente" />
 			<span class="required-indicator">*</span>
-			<input type="button" class="search" value="Buscar Cliente" onclick="overlayClient()" />
+			%{-- <input type="button" class="search" value="Buscar Cliente" onclick="overlayClient()" /> --}%
 		</label>
 		<g:select id="cliente" name="cliente.id" from="${mx.com.ideasydiseno.electronica.Cliente.list()}" optionKey="id" required="" value="${ordenSamsungInstance?.cliente?.id}" class="many-to-one"/>
 	</div>

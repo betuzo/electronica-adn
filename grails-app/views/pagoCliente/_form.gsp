@@ -18,13 +18,13 @@
 	<g:field type="number" name="total" required="" value="${fieldValue(bean: pagoClienteInstance, field: 'total')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: pagoClienteInstance, field: 'fechaPago', 'error')} required">
+%{-- <div class="fieldcontain ${hasErrors(bean: pagoClienteInstance, field: 'fechaPago', 'error')} required">
 	<label for="fechaPago">
 		<g:message code="pagoCliente.fechaPago.label" default="Fecha Pago" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:datePicker name="fechaPago" precision="day"  value="${pagoClienteInstance?.fechaPago}"  />
-</div>
+</div> --}%
 
 <div class="fieldcontain ${hasErrors(bean: pagoClienteInstance, field: 'recibio', 'error')} required">
 	<label for="recibio">

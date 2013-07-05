@@ -86,7 +86,7 @@
 						<g:select id="sucursal" name="sucursal.id" from="${mx.com.ideasydiseno.electronica.Sucursal.list()}" optionKey="id" required="" value="${entradaInstance?.sucursal?.id}" class="many-to-one"/>
 					</div>
 
-					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'total', 'error')} required">
+					%{-- <div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'total', 'error')} required">
 						<label for="total">
 							<g:message code="entrada.total.label" default="Total" />
 							<span class="required-indicator">*</span>
@@ -100,19 +100,19 @@
 							<span class="required-indicator">*</span>
 						</label>
 						<g:select name="status" from="${entradaInstance.constraints.status.inList}" required="" value="${entradaInstance?.status}" valueMessagePrefix="entrada.status"/>
-					</div>
+					</div> --}%
 
 					<div class="fieldcontain ${hasErrors(bean: entradaInstance, field: 'observaciones', 'error')} ">
 						<label for="observaciones">
 							<g:message code="entrada.observaciones.label" default="Observaciones" />
 
 						</label>
-						<g:textField name="observaciones" maxlength="50" value="${entradaInstance?.observaciones}"/>
+						<g:textArea name="observaciones" maxlength="50" value="${entradaInstance?.observaciones}"/>
 					</div>
 
 <!--Agregar pagos-->
 
-					Agregar pago <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
+					%{-- Agregar pago <img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar Pagos" height="30px" width="30px"/>
 					<div id="form-pagos">
 						<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
 							<label for="tipoPago">
@@ -134,7 +134,7 @@
 						<fieldset class="buttons">
 							<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
 						</fieldset>
-					</div>
+					</div> --}%
 
 				</fieldset>
 				<br><br>

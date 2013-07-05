@@ -19,6 +19,7 @@ class PagoClienteController {
     }
 
     def save() {
+        params.fechaPago = new Date()
         def pagoClienteInstance = new PagoCliente(params)
         if (!pagoClienteInstance.save(flush: true)) {
             render(view: "create", model: [pagoClienteInstance: pagoClienteInstance])
