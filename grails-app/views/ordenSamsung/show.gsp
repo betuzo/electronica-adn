@@ -55,6 +55,11 @@
 	    }
 
 	    $(document).on("ready", function(){
+
+	    	$('#slide-pagos-open').tooltip('toggle');
+	    	$('#nextFechaOrden').tooltip('toggle');
+
+
 	    	$("#form-pagos").css("display", "none");
 
 	    	$("#slide-pagos-open").on("click", function(){
@@ -432,7 +437,7 @@
 
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="ordenSamsung.refacciones.label" default="Refacciones" /></span>
-					&nbsp; &nbsp; &nbsp; Agregar refacciones <span id="slide-refacciones-open" class="icon-electronicapencil"></span>
+					&nbsp; &nbsp; &nbsp; Agregar refacciones <span id="slide-refacciones-open" class="icon-electronicapencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top"></span>
 					%{-- <img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> --}%
 				</li>
 				<div id="form-refacciones">

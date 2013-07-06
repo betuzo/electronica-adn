@@ -14,7 +14,9 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'dimove_icon.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'buttons.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.min.css')}" type="text/css">
 		<g:javascript src='jquery-1.9.1.min.js'/>
+		<g:javascript src='bootstrap.min.js'/>
 
 		<g:javascript>
 			$(document).ready(function() {
