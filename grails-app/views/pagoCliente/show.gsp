@@ -22,52 +22,52 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list pagoCliente">
-			
+
 				<g:if test="${pagoClienteInstance?.tipoPago}">
 				<li class="fieldcontain">
 					<span id="tipoPago-label" class="property-label"><g:message code="pagoCliente.tipoPago.label" default="Tipo Pago" /></span>
-					
+
 						<span class="property-value" aria-labelledby="tipoPago-label"><g:fieldValue bean="${pagoClienteInstance}" field="tipoPago"/></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${pagoClienteInstance?.total}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="pagoCliente.total.label" default="Total" /></span>
-					
+
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${pagoClienteInstance.total}" type="currency" currencyCode="MXN" /></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${pagoClienteInstance?.fechaPago}">
 				<li class="fieldcontain">
 					<span id="fechaPago-label" class="property-label"><g:message code="pagoCliente.fechaPago.label" default="Fecha Pago" /></span>
-					
-						<span class="property-value" aria-labelledby="fechaPago-label"><g:formatDate date="${pagoClienteInstance?.fechaPago}" /></span>
-					
+
+						<span class="property-value" aria-labelledby="fechaPago-label"><g:formatDate date="${pagoClienteInstance?.fechaPago}"  formatName="customDateFormat"/></span>
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${pagoClienteInstance?.recibio}">
 				<li class="fieldcontain">
 					<span id="recibio-label" class="property-label"><g:message code="pagoCliente.recibio.label" default="Recibio" /></span>
-					
+
 						<span class="property-value" aria-labelledby="recibio-label"><g:link controller="personal" action="show" id="${pagoClienteInstance?.recibio?.id}">${pagoClienteInstance?.recibio?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 				<g:if test="${pagoClienteInstance?.orden}">
 				<li class="fieldcontain">
 					<span id="orden-label" class="property-label"><g:message code="pagoCliente.orden.label" default="Orden" /></span>
-					
+
 						<span class="property-value" aria-labelledby="orden-label"><g:link controller="orden" action="show" id="${pagoClienteInstance?.orden?.id}">${pagoClienteInstance?.orden?.encodeAsHTML()}</g:link></span>
-					
+
 				</li>
 				</g:if>
-			
+
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

@@ -9,12 +9,26 @@
 		<g:javascript src='jTPS.js'/>
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'jTPS.css')}" type="text/css">
 		<g:javascript>
+
+		function addPago(data) {
+			console.log("=====> " + data +"  "+data.success);
+			if (!data.success){
+				alert("Se genero un problema, contacte el area de sistemas...");
+			}else{
+				$("#add-pago").append(data.html);
+				var tipoP = document.getElementById("tipoPago");
+				var totalP = document.getElementById("totalPago");
+				tipoP.value="";
+				totalP.value="";
+			}
+		}
+
 		function resultNextStep(data) {
 			if (!data.success)
 				alert("Se genero un problema, contacte el area de sistemas...");
 			else{
 				if (!data.next)
-					$('#nextStep').hide();
+					$('#nextFechaOrden').hide();
 			}
 
 			$("#seccFechas").html(data.html);
@@ -57,35 +71,16 @@
 
 		$("#nextFechaOrden").on("click", function(){
 			$.ajax({
-				url:"${request.contextPath}/entrada/nextFechaShow",
+				url:"${request.contextPath}/ordenSamsung/nextStep",
 				dataType: "json",
 				type:'post',
-				data:{id: $('#id').val(), tipoFechaEntrada: $("#tipoFechaEntrada").val()},
+				data:{id: $('#id').val()},
 				cache:false,
 				success: function(data){
-					$("#add-fechas").append(data.html);
-					$("#nextFecha").css('display', " " +data.img+" ");
-					$(".imgDelete").css('display', " " +data.img+" ");
-					$("#open-modal").css('display', " " +data.img+" ");
-					$("#imgPagos").css('display', " " +data.img+" ");
+					console.log("success data: " + data);
+					resultNextStep(data);
+					console.log("despues del nextstep");
 
-				},
-				error: function(data){
-					console.log("Error: " + data);
-				}
-			});
-		});
-
-		$("#save-slide-pagos").on('click', function(){
-			var fechaPago = $("#fechaPago_day").val() + "/" + $("#fechaPago_month").val() + "/" + $("#fechaPago_year").val();
-			$.ajax({
-				url:"${request.contextPath}/entrada/savePagoShow",
-				dataType:"json",
-				type:"post",
-				data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val(), fechaPago: fechaPago},
-				cache:false,
-				success: function(data){
-					$("#add-pago").append(data.html);
 				},
 				error: function(data){
 					console.log("Error: " + data);
@@ -379,17 +374,19 @@
 				</g:if>
 
 				%{-- <g:if test="${ordenSamsungInstance?.pagos}"> --}%
-				<li class="fieldcontain">
+				<li id="add-pago" class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="ordenSamsung.pagos.label" default="Pagos" /></span>
-					&nbsp; &nbsp; &nbsp;Agregar Pagos <span id="slide-pagos-open" class="icon-electronicaarrow-down-4"></span>
-
+					&nbsp; &nbsp; &nbsp;Agregar Pagos
+						<g:if test="${next}">
+							<span id="slide-pagos-open" class="icon-electronicaarrow-down-4"></span>
+						</g:if>
 						<g:each in="${ordenSamsungInstance.pagos}" var="p">
 						<span class="property-value" aria-labelledby="pagos-label"><g:link controller="pagoCliente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
 						</g:each>
 
 				</li>
 				<!--Formulario agregar pagos-->
-				<div id="form-pagos">
+				<div id="form-pagos" >
 					<div class="container-form-overlay">
 						<g:formRemote name="formPagosAdd" url="[controller: 'ordenSamsung', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
 								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
@@ -449,24 +446,20 @@
 								<th>Cantidad</th>
 
 								<th>Total</th>
-
-								<th>Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
 
 							<g:each in="${ordenSamsungInstance?.refacciones?}" status="i" var="detalleOrdenInstance">
-								<tr id="delete-detalleEntrada-${detalleOrdenInstance.id}">
+								<tr id="delete-detalleOrden-${detalleOrdenInstance.id}">
 
-									<td><g:link controller="detalleEntrada" action="show" id="${detalleOrdenInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
+									<td><g:link controller="detalleOrden" action="show" id="${detalleOrdenInstance.id}">${fieldValue(bean: detalleOrdenInstance, field: "refaccion")}</g:link></td>
 
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "cantidad")}</td>
 
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "precio")}</td>
 
 									<td>${fieldValue(bean: detalleOrdenInstance, field: "total")}</td>
-
-									<td><img id="detalleEntrada-${detalleOrdenInstance.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="20px" width="20px"/></td>
 
 								</tr>
 							</g:each>
@@ -481,7 +474,9 @@
 									<fieldset class="buttonsGrid">
 										<div id="slide-refacciones-close">
 											<span class="icon-electronicacross"></span> Cerar</div>
-										<div id="open-modal"><span class="icon-electronicasearch"></span> Agregar Refacciones</div>
+											<g:if test="${next}">
+												<div id="open-modal"><span class="icon-electronicasearch"></span> Agregar Refacciones</div>
+											</g:if>
 									</fieldset>
 								</td>
 							</tr>
@@ -534,7 +529,7 @@
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
-					<g:hiddenField name="id" value="${ordenSamsungInstance?.id}" />
+					<g:hiddenField name="id" id="id"value="${ordenSamsungInstance?.id}" />
 					<g:link class="edit" action="edit" id="${ordenSamsungInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 					%{-- <g:if test="${next}">

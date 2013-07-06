@@ -225,6 +225,7 @@ class OrdenSamsungController {
     // }
 
     def nextStep() {
+        println "nextStep params: ${params}"
         def success = true
         def next = true
         def htmlRender = ''
@@ -239,6 +240,12 @@ class OrdenSamsungController {
             def totalFechas = ordenSamsungInstance.fechas.size()
             def tipoFechaInstance = TipoFecha.findByOrdenCronologicoAndTipoUso(totalFechas + 1, FECHA_TIPO_ORDEN)
             next = hasNext(tipoFechaInstance.ordenCronologico)
+            if (!next) {
+                println "el next es false " + next
+                ordenSamsungInstance.status = 'Cerrado'
+                ordenSamsungInstance.save(failOnError:true)
+            }
+
             if (!tipoFechaInstance)
             {
                 success = false
@@ -310,29 +317,32 @@ class OrdenSamsungController {
         }else{
             success = false
         }
-        htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
+        htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
         println "regresa el html al grid *****************${htmlRender}"
         render ([html:htmlRender, success:success] as JSON)
     }
 
     def savePagoShow(){
+        println "params "  + params
         def user =springSecurityService.currentUser
         def htmlRender = ''
-        def entradaInstance = Entrada.get(params.idEntradaPago)
+        def ordenInstance = Orden.get(params.idOrdenSamsungPagos)
         def totalPago = params.totalPago as double
         def success = true
 
-        def pagoProveedor = new PagoProveedor()
-        pagoProveedor.realizo=user
-        pagoProveedor.entrada=entradaInstance
-        pagoProveedor.tipoPago=params.tipoPago
-        pagoProveedor.total=totalPago
-        pagoProveedor.fechaPago= new Date()
-        if(!pagoProveedor.save(flush:true)){
+        def pagoClienteInstance = new PagoCliente()
+        pagoClienteInstance.orden = ordenInstance
+        pagoClienteInstance.recibio = user
+        pagoClienteInstance.tipoPago = params.tipoPago
+        pagoClienteInstance.total = totalPago
+        pagoClienteInstance.fechaPago = new Date()
+
+        if(!pagoClienteInstance.save(failOnError:true,flush:true)){
             success=false
         }
 
-        htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
+        htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/pagoCliente/show/"+pagoClienteInstance.id+"><spam>"+pagoClienteInstance+"</spam></a>  </spam>"
+        println htmlRender
         render ([html:htmlRender, success:success] as JSON)
     }
 
