@@ -368,7 +368,9 @@
 
 				<li id="add-fechas" class="fieldcontain">
 					<span id="fechas-label" class="property-label"><g:message code="entrada.fechas.label" default="Fechas" /></span>
-						 &nbsp; &nbsp; &nbsp;Fecha entrada <img id="nextFecha" href="#" src="${resource(dir: 'images', file: 'next.png')}" alt="Agregar fecha" height="20px" width="20px"/>
+						 &nbsp; &nbsp; &nbsp;Fecha entrada <span id="nextFecha" class="icon-electronicaarrow-right-3"></span>
+
+						 %{-- <img id="nextFecha" href="#" src="${resource(dir: 'images', file: 'next.png')}" alt="Agregar fecha" height="20px" width="20px"/> --}%
 
 						<g:each in="${entradaInstance.fechas}" var="f">
 						<span id="delete-detalleFechaEntrada-${f.id}" class="property-value" aria-labelledby="fechas-label"><g:link controller="detalleFechaEntrada" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></span>
@@ -379,11 +381,12 @@
 <!--Agregar pagos-->
 				<li id="add-pago" class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="entrada.pagos.label" default="Pagos" /></span>
-						&nbsp; &nbsp; &nbsp;Agregar Pagos <div id="imgPagos"><img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/></div>
+						&nbsp; &nbsp; &nbsp;Agregar Pagos <div id="imgPagos"> <span id="slide-pagos-open" class="icon-electronicaarrow-down-4"></span></div>
+						%{-- <div id="imgPagos"><img id="slide-pagos-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/></div> --}%
 						<g:each in="${entradaInstance.pagos}" var="p">
 						<span id="delete-pagoProveedor-${p.id}" class="property-value" aria-labelledby="pagos-label">
 							<g:link controller="pagoProveedor" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link>
-							<img id="pagoProveedor-${p.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Pago" height="20px" width="20px"/>
+							%{-- <img id="pagoProveedor-${p.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Pago" height="20px" width="20px"/> --}%
 						</span>
 						</g:each>
 				</li>
@@ -408,8 +411,12 @@
 
 								<g:hiddenField id="idEntradaPago" name="idEntradaPago" value="${entradaInstance?.id}" />
 							<fieldset class="buttons">
-								<g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton>
-								<div id="slide-pagos-close" class="closeIcon">Cerrar</div>
+								<div>
+									<span class="icon-electronicadisk"></span>
+									<g:submitButton name="guardarPago" value="Guardar"></g:submitButton>
+									%{-- <g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton> --}%
+								</div>
+								<div id="slide-pagos-close"><span class="icon-electronicaarrow-up-2"></span> Cerrar</div>
 							</fieldset>
 						</g:formRemote>
 					</div>
@@ -417,7 +424,10 @@
 
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="entrada.refacciones.label" default="Refacción" /></span>
-					<span class="property-value" aria-labelledby="refacciones-label"> Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> </span>
+					<span class="property-value" aria-labelledby="refacciones-label">
+						Agregar refacciones <span id="slide-refacciones-open" class="icon-electronicapencil"></span>
+
+						%{-- <img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar refacciones" height="30px" width="30px"/> </span> --}%
 				</li>
 
 				<div id="form-refacciones">
@@ -447,6 +457,7 @@
 
 									<td>${fieldValue(bean: detalleEntradaInstance, field: "total")}</td>
 
+									%{-- <td><span id="detalleEntrada-${detalleEntradaInstance.id}" class="icon-electronicatrash"></span> </td> --}%
 									<td><img id="detalleEntrada-${detalleEntradaInstance.id}" class="imgDelete" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar refacciones" height="20px" width="20px"/></td>
 
 								</tr>
@@ -460,8 +471,8 @@
 									<div class="selectPerPage"></div>
 									<div class="status"> </div>
 									<fieldset class="buttonsGrid">
-										<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
-										<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+										<div id="slide-refacciones-close"><span class="icon-electronicacross"></span> Cerar</div>
+										<div id="open-modal"><span class="icon-electronicasearch"></span> Agregar Refacciones</div>
 									</fieldset>
 								</td>
 							</tr>

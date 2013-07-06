@@ -26,7 +26,13 @@
 			if (!data.success){
 				alert("Se genero un problema, contacte el area de sistemas...");
 			}else{
-				$("#tableRefacciones tbody:last").append(data.html)
+				if ($('#tableRefacciones >tbody >tr').length == 0){
+					$("#tableRefacciones tbody").append(data.html)
+
+				}else{
+					$("#tableRefacciones tbody> tr:first").before(data.html);
+				}
+
 				$("#cantidadRefaccion").val("");
 				$("#precioUnitario").val("");
 				$("#totalRefaccion").val(0);
@@ -35,6 +41,59 @@
 	    }
 
 	    $(document).on("ready", function(){
+	    	$("#form-pagos").css("display", "none");
+
+	    	$("#slide-pagos-open").on("click", function(){
+			$("#totalPago").val("");
+			$("#tipoPago").val("");
+			$("#form-pagos").slideDown();
+		});
+
+		$("#slide-pagos-close").on("click", function(){
+			$("#totalPago").val("0");
+			$("#tipoPago").val(" ");
+			$("#form-pagos").slideUp();
+		});
+
+		$("#nextFechaOrden").on("click", function(){
+			$.ajax({
+				url:"${request.contextPath}/entrada/nextFechaShow",
+				dataType: "json",
+				type:'post',
+				data:{id: $('#id').val(), tipoFechaEntrada: $("#tipoFechaEntrada").val()},
+				cache:false,
+				success: function(data){
+					$("#add-fechas").append(data.html);
+					$("#nextFecha").css('display', " " +data.img+" ");
+					$(".imgDelete").css('display', " " +data.img+" ");
+					$("#open-modal").css('display', " " +data.img+" ");
+					$("#imgPagos").css('display', " " +data.img+" ");
+
+				},
+				error: function(data){
+					console.log("Error: " + data);
+				}
+			});
+		});
+
+		$("#save-slide-pagos").on('click', function(){
+			var fechaPago = $("#fechaPago_day").val() + "/" + $("#fechaPago_month").val() + "/" + $("#fechaPago_year").val();
+			$.ajax({
+				url:"${request.contextPath}/entrada/savePagoShow",
+				dataType:"json",
+				type:"post",
+				data:{id: $('#id').val(), tipoPago:$("#tipoPago").val(), totalPago:$("#totalPago").val(), fechaPago: fechaPago},
+				cache:false,
+				success: function(data){
+					$("#add-pago").append(data.html);
+				},
+				error: function(data){
+					console.log("Error: " + data);
+				}
+			});
+		});
+
+
 	    	$("#slide-refacciones-open").on("click", function(){
 				$("#form-refacciones").slideDown();
 			});
@@ -306,7 +365,10 @@
 				<g:if test="${ordenSamsungInstance?.fechas}">
 				<li class="fieldcontain">
 					<span id="fechas-label" class="property-label"><g:message code="ordenSamsung.fechas.label" default="Fechas" /></span>
-
+						&nbsp; &nbsp; &nbsp;Fecha Orden
+						<g:if test="${next}">
+							<span id="nextFechaOrden" class="icon-electronicaarrow-right-3"></span>
+						</g:if>
 						<div id="seccFechas">
 						<g:each in="${ordenSamsungInstance.fechas}" var="f">
 						<span class="property-value" aria-labelledby="fechas-label"><g:link controller="detalleFechaOrden" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></span>
@@ -316,16 +378,49 @@
 				</li>
 				</g:if>
 
-				<g:if test="${ordenSamsungInstance?.pagos}">
+				%{-- <g:if test="${ordenSamsungInstance?.pagos}"> --}%
 				<li class="fieldcontain">
 					<span id="pagos-label" class="property-label"><g:message code="ordenSamsung.pagos.label" default="Pagos" /></span>
+					&nbsp; &nbsp; &nbsp;Agregar Pagos <span id="slide-pagos-open" class="icon-electronicaarrow-down-4"></span>
 
 						<g:each in="${ordenSamsungInstance.pagos}" var="p">
 						<span class="property-value" aria-labelledby="pagos-label"><g:link controller="pagoCliente" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
 						</g:each>
 
 				</li>
-				</g:if>
+				<!--Formulario agregar pagos-->
+				<div id="form-pagos">
+					<div class="container-form-overlay">
+						<g:formRemote name="formPagosAdd" url="[controller: 'ordenSamsung', action: 'savePagoShow']" onSuccess="addPago(data)" onFailure="addPago(data)">
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'tipoPago', 'error')} required">
+									<label for="tipoPago">
+										<g:message code="pagoProveedor.tipoPago.label" default="Tipo Pago" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:textField id="tipoPago" required="" name="tipoPago" value="${pagoProveedorInstance?.tipoPago}"/>
+								</div>
+
+								<div class="fieldcontain ${hasErrors(bean: pagoProveedorInstance, field: 'total', 'error')} required">
+									<label for="total">
+										<g:message code="pagoProveedor.total.label" default="Total" />
+										<span class="required-indicator">*</span>
+									</label>
+									<g:field type="number" required="" name="totalPago" autocomplete="off" value="${fieldValue(bean: pagoProveedorInstance, field: 'total')}"/>
+								</div>
+
+								<g:hiddenField id="idOrdenSamsungPagos" name="idOrdenSamsungPagos" value="${ordenSamsungInstance?.id}" />
+							<fieldset class="buttons">
+								<div>
+									<span class="icon-electronicadisk"></span>
+									<g:submitButton name="guardarPago" value="Guardar"></g:submitButton>
+									%{-- <g:submitButton name="guardarPago" class="saveIcon" value="Guardar"></g:submitButton> --}%
+								</div>
+								<div id="slide-pagos-close"><span class="icon-electronicaarrow-up-2"></span> Cerrar</div>
+							</fieldset>
+						</g:formRemote>
+					</div>
+				</div>
+				%{-- </g:if> --}%
 
 				<g:if test="${ordenSamsungInstance?.cobros}">
 				<li class="fieldcontain">
@@ -340,13 +435,8 @@
 
 				<li class="fieldcontain">
 					<span id="refacciones-label" class="property-label"><g:message code="ordenSamsung.refacciones.label" default="Refacciones" /></span>
-					&nbsp; &nbsp; &nbsp;Agregar refacciones<img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/>
-						<g:each in="${ordenSamsungInstance.refacciones}" var="r">
-						<span class="property-value" aria-labelledby="refacciones-label">
-							<g:link controller="detalleOrden" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link>
-							<img id="delete-refacciones" href="#"src="${resource(dir: 'images', file: 'Recycle-Closed.png')}" alt="Eliminar Refacción" height="20px" width="20px"/>
-						</span>
-						</g:each>
+					&nbsp; &nbsp; &nbsp; Agregar refacciones <span id="slide-refacciones-open" class="icon-electronicapencil"></span>
+					%{-- <img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> --}%
 				</li>
 				<div id="form-refacciones">
 					<table id="tableRefacciones">
@@ -389,8 +479,9 @@
 									<div class="selectPerPage"></div>
 									<div class="status"> </div>
 									<fieldset class="buttonsGrid">
-										<div id="slide-refacciones-close" class="closeIcon">Cerar</div>
-										<div id="open-modal" class="searchIcon">Agregar Refacciones</div>
+										<div id="slide-refacciones-close">
+											<span class="icon-electronicacross"></span> Cerar</div>
+										<div id="open-modal"><span class="icon-electronicasearch"></span> Agregar Refacciones</div>
 									</fieldset>
 								</td>
 							</tr>
@@ -398,20 +489,20 @@
 					</table>
 				</div>
 
-				<g:if test="${ordenSamsungInstance?.totalCobros}">
-				<li class="fieldcontain">
-					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Cobros" /></span>
-
-						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalCobros}" type="currency" currencyCode="MXN" /></span>
-
-				</li>
-				</g:if>
-
 				<g:if test="${ordenSamsungInstance?.totalRefacciones}">
 				<li class="fieldcontain">
 					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Refacciones" /></span>
 
 						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalRefacciones}" type="currency" currencyCode="MXN" /></span>
+
+				</li>
+				</g:if>
+
+				<g:if test="${ordenSamsungInstance?.totalCobros}">
+				<li class="fieldcontain">
+					<span id="total-label" class="property-label"><g:message code="ordenSamsung.total.label" default="Total Cobros" /></span>
+
+						<span class="property-value" aria-labelledby="total-label"><g:formatNumber number="${ordenSamsungInstance.totalCobros}" type="currency" currencyCode="MXN" /></span>
 
 				</li>
 				</g:if>
@@ -446,15 +537,16 @@
 					<g:hiddenField name="id" value="${ordenSamsungInstance?.id}" />
 					<g:link class="edit" action="edit" id="${ordenSamsungInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-					<g:if test="${next}">
+					%{-- <g:if test="${next}">
 						<g:submitToRemote id="nextStep" class="edit" url="[controller: 'ordenSamsung', action: 'nextStep']" value="Siguiente" onSuccess="resultNextStep(data)" onFailure="resultNextStep(data)"/>
-					</g:if>
+					</g:if> --}%
 					<g:link class="edit" action="generateReportByOrden" id="${ordenSamsungInstance?.id}"><g:message code="default.button.report.label" default="Nota de Venta" /></g:link>
 				</fieldset>
 			</g:form>
 
 			<div id="overlay-orden-show">
-				<g:formRemote name="formRefaccionesAdd" url="[controller: 'entrada', action: 'addRefaccion']" onSuccess="addRefaccion(data)" addRefaccion="addRefaccion(data)">
+				 %{-- addRefaccion="addRefaccion(data)" --}%
+				<g:formRemote name="formRefaccionesAdd" url="[controller: 'ordenSamsung', action: 'addRefaccion']" onSuccess="addRefaccion(data)">
 					<div class="container-form-overlay">
 						<div class="fieldcontain ${hasErrors(bean: detalleOrdenInstance, field: 'refaccion', 'error')} required">
 							<label for="refaccion">
@@ -491,10 +583,10 @@
 								<g:message code="detalleOrden.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<input id="totalRefaccion" autocomplete="off" disabled="" />
+							<input type="number" id="totalRefaccion" autocomplete="off" disabled="" />
 						</div>
+						<g:hiddenField id="idOrdenSamsung" name="idOrdenSamsung" value="${ordenSamsungInstance?.id}" />
 						<br>
-
 						<div class="fielcontain">
 							<fieldset class="buttons">
 								<g:submitButton name="guardarRefaccion" class="saveIcon" value="Guardar"></g:submitButton>

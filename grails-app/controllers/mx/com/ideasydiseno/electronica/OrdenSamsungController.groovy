@@ -29,7 +29,7 @@ class OrdenSamsungController {
     }
 
     def list() {
-    
+
         def listOrdenSamsung = OrdenSamsung.list(params)?.sort{it.getProperty('maxFecha')?.getDate()}
 
         Collections.reverse(listOrdenSamsung)
@@ -52,17 +52,17 @@ class OrdenSamsungController {
             def conceptoCobroInstance = ConceptoCobro.findByConcepto(ORDEN_CONCEPTO_COBRO_REVISION)
             if (conceptoCobroInstance){
                 def detalleCobroInstance = new DetalleCobro()
-                detalleCobroInstance.orden = ordenSamsungInstance 
+                detalleCobroInstance.orden = ordenSamsungInstance
                 detalleCobroInstance.concepto = conceptoCobroInstance
                 detalleCobroInstance.total = params.costoRevision.toDouble()
                 detalleCobroInstance.date = new Date()
 
                 if (!detalleCobroInstance.save(flush: true)) {
-                    
-                    
+
+
                 }
 
-            }    
+            }
         }
 
         def tipoFallaInstance = TipoFalla.get(params.tipoFalla.id)
@@ -73,11 +73,11 @@ class OrdenSamsungController {
             fallaInstance.descripcion = params.descFalla
 
             if (!fallaInstance.save(flush: true)) {
-                    
-                    
+
+
             }
         }
-        
+
         def user = springSecurityService?.currentUser
         if (user) {
             def tipoFechaInstance = TipoFecha.findByTipoFecha(ORDEN_TIPO_FECHA_REGISTRO)
@@ -89,7 +89,7 @@ class OrdenSamsungController {
                 detalleFechaOrdenInstance.personal = user
 
                 if (!detalleFechaOrdenInstance.save(flush: true)) {
-                      
+
                 }
             }
 
@@ -98,11 +98,11 @@ class OrdenSamsungController {
                 pagoClienteInstance.orden = ordenSamsungInstance
                 pagoClienteInstance.recibio = user
                 pagoClienteInstance.tipoPago = ORDEN_PAGO_CLIENTE_ANTICIPO
-                pagoClienteInstance.total = params.anticipo.toDouble() 
-                pagoClienteInstance.fechaPago = new Date()    
+                pagoClienteInstance.total = params.anticipo.toDouble()
+                pagoClienteInstance.fechaPago = new Date()
 
                 if (!pagoClienteInstance.save(flush: true)) {
-                      
+
                 }
             }
         }
@@ -118,7 +118,7 @@ class OrdenSamsungController {
             redirect(action: "list")
             return
         }
-        def next 
+        def next
         println "maxFecha: " + ordenSamsungInstance.maxFecha
         if(ordenSamsungInstance.maxFecha != null){
             next = hasNext(ordenSamsungInstance.fechas?.tipoFecha?.ordenCronologico?.max())
@@ -201,6 +201,29 @@ class OrdenSamsungController {
             return true
     }
 
+    //Agregando refaccion enEntrada Show
+    // def addRefaccion={
+    //     def htmlRender=''
+    //     def success=true
+    //     def user =springSecurityService.currentUser
+    //     def detalleEntrada = new DetalleOrden()
+
+    //     if (params) {
+    //         def entradaInstance = Entrada.get(params.idEntradaRefaccion)
+
+    //         def refaccionInstance = Refaccion.get(params.refaccion.id)
+    //         detalleEntrada.entrada= entradaInstance
+    //         detalleEntrada.refaccion= refaccionInstance
+    //         detalleEntrada.cantidad= params.cantidad  as int
+    //         detalleEntrada.precioUnitario = params.precioUnitario as double
+    //         detalleEntrada.total = detalleEntrada.cantidad * detalleEntrada.precioUnitario
+    //         detalleEntrada.save()
+    //     }
+    //     htmlRender = "<tr><td><a href=/electronica-adn/detalleEntrada/show/"+detalleEntrada.id+"><spam>"+detalleEntrada+"</<spam></a></td> <td><spam>"+detalleEntrada.precioUnitario+"</spam></td> <td><spam>"+detalleEntrada.cantidad+"</spam></td> <td><spam>"+detalleEntrada.total+"</spam></td></tr>"
+
+    //     render ([html:htmlRender, success:success] as JSON)
+    // }
+
     def nextStep() {
         def success = true
         def next = true
@@ -219,7 +242,7 @@ class OrdenSamsungController {
             if (!tipoFechaInstance)
             {
                 success = false
-                htmlRender = "<div class='property-value'>No existe la Orden</div>"  
+                htmlRender = "<div class='property-value'>No existe la Orden</div>"
             }
             def detalleFechaOrdenInstance = new DetalleFechaOrden()
             detalleFechaOrdenInstance.tipoFecha = tipoFechaInstance
@@ -262,26 +285,57 @@ class OrdenSamsungController {
     }
 
     def addRefaccion() {
-        println params.lote[0]
+        println "agregando refaccion en orden samsung "
+        println params
+        println params.lotes
         def htmlRender=''
+        def success = true
         def detalleOrden = new DetalleOrden()
         if (params) {
-            def ordenInstance = Orden.get(params.id)
-            def refaccionInstance = Refaccion.get(params.refaccion)
-            def refaccionAlmacenInstance = RefaccionAlmacen.get(params.lote)
+            def ordenInstance = Orden.get(params.idOrdenSamsung)
+            println "ordenInstance: ${ordenInstance}"
+            def refaccionInstance = Refaccion.get(params.refaccion.id)
+            def refaccionAlmacenInstance = RefaccionAlmacen.get(params.lotes)
+            println "refaccion almacen instance " +refaccionAlmacenInstance
             detalleOrden.orden = ordenInstance
             detalleOrden.refaccion = refaccionInstance
             detalleOrden.lote = refaccionAlmacenInstance
             detalleOrden.cantidad = params.cantidad as int
-            detalleOrden.precio = params.precio as double
-            detalleOrden.total = detalleOrden.cantidad * detalleOrden.precio 
-            detalleOrden.save()
+            detalleOrden.precio = params.precioUnitario as double
+            detalleOrden.total = detalleOrden.cantidad * detalleOrden.precio
+            detalleOrden.save(failOnError:true)
 
-            refaccionAlmacenInstance.cantidad = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad 
-            refaccionAlmacenInstance.save()
+            // refaccionAlmacenInstance.cantidad = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad
+            // refaccionAlmacenInstance.save()
+        }else{
+            success = false
         }
         htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden.refaccion.descripcion+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
-
-        render ([html:htmlRender] as JSON) 
+        println "regresa el html al grid *****************${htmlRender}"
+        render ([html:htmlRender, success:success] as JSON)
     }
+
+    def savePagoShow(){
+        def user =springSecurityService.currentUser
+        def htmlRender = ''
+        def entradaInstance = Entrada.get(params.idEntradaPago)
+        def totalPago = params.totalPago as double
+        def success = true
+
+        def pagoProveedor = new PagoProveedor()
+        pagoProveedor.realizo=user
+        pagoProveedor.entrada=entradaInstance
+        pagoProveedor.tipoPago=params.tipoPago
+        pagoProveedor.total=totalPago
+        pagoProveedor.fechaPago= new Date()
+        if(!pagoProveedor.save(flush:true)){
+            success=false
+        }
+
+        htmlRender = "<spam class='property-value' aria-labelledby='fechas-label'><a href=/electronica-adn/detalleFechaEntrada/show/"+pagoProveedor.id+"><spam>"+pagoProveedor+"</spam></a>  <img id='detalleFechaEntrada-"+pagoProveedor.id+"' href='#' class='imgDelete' src='/electronica-adn/static/images/Recycle-Closed.png' alt='Eliminar Fecha' height='20px' width='20px'/> </spam>"
+        render ([html:htmlRender, success:success] as JSON)
+    }
+
+
+
 }
