@@ -56,8 +56,8 @@
 
 	    $(document).on("ready", function(){
 
-	    	$('#slide-pagos-open').tooltip('toggle');
-	    	$('#nextFechaOrden').tooltip('toggle');
+	    	$('#slide-pagos-open').tooltip({content: 'hola'});
+	    	$('#nextFechaOrden').tooltip();
 
 
 	    	$("#form-pagos").css("display", "none");
