@@ -244,6 +244,7 @@ class OrdenSamsungController {
                 println "el next es false " + next
                 ordenSamsungInstance.status = 'Cerrado'
                 ordenSamsungInstance.save(failOnError:true)
+
             }
 
             if (!tipoFechaInstance)
@@ -297,6 +298,7 @@ class OrdenSamsungController {
         println params.lotes
         def htmlRender=''
         def success = true
+        def mgs=''
         def detalleOrden = new DetalleOrden()
         if (params) {
             def ordenInstance = Orden.get(params.idOrdenSamsung)
@@ -310,16 +312,24 @@ class OrdenSamsungController {
             detalleOrden.cantidad = params.cantidad as int
             detalleOrden.precio = params.precioUnitario as double
             detalleOrden.total = detalleOrden.cantidad * detalleOrden.precio
-            detalleOrden.save(failOnError:true)
+            def refCant = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad
+            println "*******************" + refCant
+            if (refCant < 0) {
+                println "no hay refacciones suficientes"
+                mgs ="No hay refacciones suficientes"
+                htmlRender = ''
+            }else{
+                detalleOrden.save(failOnError:true)
+                htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
+            }
 
-            // refaccionAlmacenInstance.cantidad = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad
+
             // refaccionAlmacenInstance.save()
         }else{
             success = false
         }
-        htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
-        println "regresa el html al grid *****************${htmlRender}"
-        render ([html:htmlRender, success:success] as JSON)
+        println "regresa el html al grid *****************${htmlRender} ******* ${mgs}"
+        render ([html:htmlRender, success:success , mgs:mgs] as JSON)
     }
 
     def savePagoShow(){

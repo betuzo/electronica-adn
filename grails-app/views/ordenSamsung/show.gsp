@@ -36,7 +36,10 @@
 	    }
 
 	    function addRefaccion(data){
-			console.log("=====> refaccion " + data +"  "+data.success);
+			console.log("=====> refaccion " + data +"  "+data.success + data.mgs);
+			if (!data.mgs) {
+				$("#mgsRefaccion").html(data.mgs);
+			}
 			if (!data.success){
 				alert("Se genero un problema, contacte el area de sistemas...");
 			}else{
@@ -585,6 +588,8 @@
 							</label>
 							<input type="number" id="totalRefaccion" autocomplete="off" disabled="" />
 						</div>
+						<div id="mgsRefaccion">mgs</div>
+
 						<g:hiddenField id="idOrdenSamsung" name="idOrdenSamsung" value="${ordenSamsungInstance?.id}" />
 						<br>
 						<div class="fielcontain">

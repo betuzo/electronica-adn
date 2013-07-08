@@ -14,13 +14,14 @@ class OrdenSamsung extends Orden{
 
   	Double getTotalPagos() { pagos?.total?.sum() }
 
-  	Double getTotalAdeudo() { 
+  	Double getTotalAdeudo() {
   		double tCobros = totalCobros!=null ? totalCobros.doubleValue() : 0;
   		double tRefacciones = totalRefacciones!=null ? totalRefacciones.doubleValue() : 0;
   		double tPagos = totalPagos!=null ? totalPagos.doubleValue() : 0;
-  		tCobros  + tRefacciones - tPagos
+  		// tCobros  + tRefacciones - tPagos
+            total - tPagos
   	}
-    
+
     static transients = ['maxFecha', 'maxDetalleFecha', 'totalCobros', 'totalRefacciones', 'totalPagos', 'totalAdeudo']
 
     static constraints = {
