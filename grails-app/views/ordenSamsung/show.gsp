@@ -37,19 +37,24 @@
 
 	    function addRefaccion(data){
 			console.log("=====> refaccion " + data +"  "+data.success + data.mgs);
-			if (!data.mgs) {
-				$("#mgsRefaccion").html(data.mgs);
+			if (data.mgs) {
+				console.log("entra a data mgs");
+				$("#mgsRefaccion").html(data.mgs).fadeIn(.9);
+			}else{
+				console.log("viene null");
+				$("#mgsRefaccion").fadeOut();
 			}
 			if (!data.success){
 				alert("Se genero un problema, contacte el area de sistemas...");
 			}else{
 				if ($('#tableRefacciones >tbody >tr').length == 0){
 					$("#tableRefacciones tbody").append(data.html)
+					// $("#mgsRefaccion").fadeOut();
 
 				}else{
 					$("#tableRefacciones tbody> tr:first").before(data.html);
+					// $("#mgsRefaccion").fadeOut();
 				}
-
 				$("#cantidadRefaccion").val("");
 				$("#precioUnitario").val("");
 				$("#totalRefaccion").val(0);
@@ -111,6 +116,7 @@
 				$("#cantidadRefaccion").val("");
 				$("#precio").val("");
 				$("#totalRefaccion").val("");
+				$("#mgsRefaccion").html("");
 
 			});
 
@@ -443,6 +449,8 @@
 					&nbsp; &nbsp; &nbsp; Agregar refacciones <span id="slide-refacciones-open" class="icon-electronicapencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top"></span>
 					%{-- <img id="slide-refacciones-open" href="#" src="${resource(dir: 'images', file: 'Writing.png')}" alt="Agregar fecha" height="30px" width="30px"/> --}%
 				</li>
+
+
 				<div id="form-refacciones">
 					<table id="tableRefacciones">
 						<thead>
@@ -588,7 +596,8 @@
 							</label>
 							<input type="number" id="totalRefaccion" autocomplete="off" disabled="" />
 						</div>
-						<div id="mgsRefaccion">mgs</div>
+
+						<p id="mgsRefaccion"></p>
 
 						<g:hiddenField id="idOrdenSamsung" name="idOrdenSamsung" value="${ordenSamsungInstance?.id}" />
 						<br>

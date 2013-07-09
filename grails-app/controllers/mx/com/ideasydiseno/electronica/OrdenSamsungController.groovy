@@ -322,13 +322,10 @@ class OrdenSamsungController {
                 detalleOrden.save(failOnError:true)
                 htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
             }
-
-
             // refaccionAlmacenInstance.save()
         }else{
             success = false
         }
-        println "regresa el html al grid *****************${htmlRender} ******* ${mgs}"
         render ([html:htmlRender, success:success , mgs:mgs] as JSON)
     }
 
