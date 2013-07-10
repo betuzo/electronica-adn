@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaOrden" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="00e284d1-e1fe-461f-bcf6-ee7112135dfb">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="230"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -305,10 +305,13 @@ group by od.id, pr.nombre,
 	</background>
 	<title>
 		<band height="90" splitType="Stretch">
-			<image>
-				<reportElement uuid="b3724b90-b365-41dc-b117-1564e9e92f12" x="34" y="0" width="503" height="79"/>
-				<imageExpression><![CDATA["/Users/adan/devGrails/electronica-adn/web-app/images/dimove_report.png"]]></imageExpression>
-			</image>
+			<staticText>
+				<reportElement uuid="69704a1e-51d1-4811-b5f6-b452368c62de" x="120" y="18" width="292" height="43" forecolor="#003399"/>
+				<textElement>
+					<font size="30"/>
+				</textElement>
+				<text><![CDATA[Electrónica DIMOVE]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

@@ -65,7 +65,7 @@ class OrdenSamsungController {
             }
         }
 
-        def tipoFallaInstance = TipoFalla.get(params.tipoFalla.id)
+        def tipoFallaInstance = TipoFalla.get(params.tipoFalla?.id)
         if (tipoFallaInstance) {
             def fallaInstance = new Falla()
             fallaInstance.orden = ordenSamsungInstance
