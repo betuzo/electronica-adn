@@ -284,11 +284,12 @@ class OrdenSamsungController {
         def reportDef = new JasperReportDef(name:'notaOrden.jasper',fileFormat:JasperExportFormat.PDF_FORMAT, parameters:parametros)
         println reportDef.getFilePath()
         def data = jasperService.generateReport(reportDef)
-
+        println "data: jasper: " + data
         response.setHeader("Content-disposition", "attachment; filename=notaVenta.pdf");
         response.contentType = "application/pdf"
         response.characterEncoding = "UTF-8"
         response.outputStream << data
+        println "fin de descargar la nota"
     }
 
     def addRefaccion() {
