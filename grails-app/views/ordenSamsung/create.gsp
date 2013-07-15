@@ -114,8 +114,9 @@
 						<div class="fieldcontain">
 							<label for="tipoFalla">
 								<g:message code="ordenSamsung.tipoFalla.label" default="Tipo Falla" />
+								<span class="required-indicator">*</span>
 							</label>
-							<g:select id="tipoFalla" name="tipoFalla.id" from="${mx.com.ideasydiseno.electronica.TipoFalla.list()}" optionKey="id" value="" class="many-to-one"/>
+							<g:select id="tipoFalla" name="tipoFalla.id" required="" from="${mx.com.ideasydiseno.electronica.TipoFalla.list()}" optionKey="id" value="" class="many-to-one"/>
 						</div>
 
 						<div class="fieldcontain">
@@ -183,15 +184,17 @@
 						<div class="fieldcontain">
 							<label for="costoRevision">
 								<g:message code="ordenSamsung.costoRevision.label" default="Costo Revision" />
+								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" name="costoRevision"  autocomplete="off" value="0"/>
+							<g:field required="" type="text" name="costoRevision"  autocomplete="off"/>
 						</div>
 
 						<div class="fieldcontain">
 							<label for="anticipo">
 								<g:message code="ordenSamsung.anticipo.label" default="Anticipo" />
+								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" name="anticipo" autocomplete="off"  value="0"/>
+							<g:field required="" type="text" name="anticipo" autocomplete="off"/>
 						</div>
 
 						<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'total', 'error')} required">
@@ -199,44 +202,11 @@
 								<g:message code="ordenSamsung.total.label" default="Total" />
 								<span class="required-indicator">*</span>
 							</label>
-							<g:field type="number" name="total" required=""  autocomplete="off" value="${fieldValue(bean: ordenSamsungInstance, field: 'total')}"/>
+							<g:field type="text" name="total" required=""  autocomplete="off"/>
 						</div>
 
 						<g:if test="${ordenSamsungInstance?.id}">
 
-							<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fallas', 'error')} ">
-								<label for="fallas">
-									<g:message code="ordenSamsung.fallas.label" default="Fallas" />
-
-								</label>
-
-							<ul class="one-to-many">
-							<g:each in="${ordenSamsungInstance?.fallas?}" var="f">
-							    <li><g:link controller="falla" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
-							</g:each>
-							<li class="add">
-							<g:link controller="falla" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'falla.label', default: 'Falla')])}</g:link>
-							</li>
-							</ul>
-
-							</div>
-
-							<div class="fieldcontain ${hasErrors(bean: ordenSamsungInstance, field: 'fechas', 'error')} ">
-								<label for="fechas">
-									<g:message code="ordenSamsung.fechas.label" default="Fechas" />
-
-								</label>
-
-							<ul class="one-to-many">
-							<g:each in="${ordenSamsungInstance?.fechas?}" var="f">
-							    <li><g:link controller="detalleFechaOrden" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
-							</g:each>
-							<li class="add">
-							<g:link controller="detalleFechaOrden" action="create" params="['ordenSamsung.id': ordenSamsungInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'detalleFechaOrden.label', default: 'DetalleFechaOrden')])}</g:link>
-							</li>
-							</ul>
-
-							</div>
 						</g:if>
 
 					</div>
@@ -364,16 +334,6 @@
 									</label>
 									<g:textField name="noExt" value="${clienteInstance?.noExt}"/>
 								</div>
-
-								%{-- <div class="fieldcontain ${hasErrors(bean: clienteInstance, field: 'noInt', 'error')} ">
-									<label for="noInt">
-										<g:message code="cliente.noInt.label" default="No Int" />
-
-									</label>
-									<g:textField name="noInt" value="${clienteInstance?.noInt}"/>
-								</div> --}%
-
-
 					  		</div>
 						</fieldset>
 						<fieldset class="buttons">

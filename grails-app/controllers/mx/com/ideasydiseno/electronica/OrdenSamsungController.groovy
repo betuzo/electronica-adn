@@ -42,6 +42,7 @@ class OrdenSamsungController {
     }
 
     def save() {
+        println "*********************" + params
         def ordenSamsungInstance = new OrdenSamsung(params)
         if (!ordenSamsungInstance.save(flush: true)) {
             render(view: "create", model: [ordenSamsungInstance: ordenSamsungInstance])
@@ -59,7 +60,7 @@ class OrdenSamsungController {
 
                 if (!detalleCobroInstance.save(flush: true)) {
 
-
+                    println "no se guardo el detalle costo"
                 }
 
             }
@@ -244,7 +245,6 @@ class OrdenSamsungController {
                 println "el next es false " + next
                 ordenSamsungInstance.status = 'Cerrado'
                 ordenSamsungInstance.save(failOnError:true)
-
             }
 
             if (!tipoFechaInstance)
@@ -281,9 +281,9 @@ class OrdenSamsungController {
     def generateReportByOrden() {
         println params.id
         def parametros = ['idOrden' : params.id?.toInteger()]
-        println parametros
+        println "parametros"+parametros
         def reportDef = new JasperReportDef(name:'notaOrden.jasper',fileFormat:JasperExportFormat.PDF_FORMAT, parameters:parametros)
-        println reportDef.getFilePath()
+        println "reportDef.getFilePath() "+  reportDef.getFilePath()
         def data = jasperService.generateReport(reportDef)
         println "data: jasper: " + data
         response.setHeader("Content-disposition", "attachment; filename=notaVenta.pdf");
@@ -299,7 +299,6 @@ class OrdenSamsungController {
         println params.lotes
         def htmlRender=''
         def success = true
-        def mgs=''
         def detalleOrden = new DetalleOrden()
         if (params) {
             def ordenInstance = Orden.get(params.idOrdenSamsung)
@@ -313,21 +312,16 @@ class OrdenSamsungController {
             detalleOrden.cantidad = params.cantidad as int
             detalleOrden.precio = params.precioUnitario as double
             detalleOrden.total = detalleOrden.cantidad * detalleOrden.precio
-            def refCant = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad
-            println "*******************" + refCant
-            if (refCant < 0) {
-                println "no hay refacciones suficientes"
-                mgs ="No hay refacciones suficientes"
-                htmlRender = ''
-            }else{
-                detalleOrden.save(failOnError:true)
-                htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
-            }
+            detalleOrden.save(failOnError:true)
+
+            // refaccionAlmacenInstance.cantidad = refaccionAlmacenInstance.cantidad - detalleOrden.cantidad
             // refaccionAlmacenInstance.save()
         }else{
             success = false
         }
-        render ([html:htmlRender, success:success , mgs:mgs] as JSON)
+        htmlRender = "<tr><td><a href=/electronica-adn/detalleOrden/show/"+detalleOrden.id+"><spam>"+detalleOrden+"</<spam></a></td> <td><spam>"+detalleOrden.precio+"</spam></td> <td><spam>"+detalleOrden.cantidad+"</spam></td> <td><spam>"+detalleOrden.total+"</spam></td></tr>"
+        println "regresa el html al grid *****************${htmlRender}"
+        render ([html:htmlRender, success:success] as JSON)
     }
 
     def savePagoShow(){
